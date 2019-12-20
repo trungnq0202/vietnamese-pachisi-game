@@ -24,7 +24,7 @@ public class MenuController<circle, CircleList> {
     private MainController mainController;
     private int numOfPlayer;
     private int numOfMachine;
-    private String color[] = {"31cb01", "31cb01", "31cb01", "31cb01", "31cb01",
+    private String[] color = {"31cb01", "31cb01", "31cb01", "31cb01", "31cb01",
             "31cb01", "31cb01", "31cb01", "31cb01", "31cb01"};
     private ArrayList<Circle> circleLists;
 
