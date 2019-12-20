@@ -64,11 +64,11 @@ public class MenuController<circle, CircleList> {
                 for (int i = 0; i < getCircleLists().size() ; i++) {
                     if (getCircleLists().get(i).getId().equals(getC1().getId()) ||
                             getCircleLists().get(i).getId().equals(getC10().getId())) {
-                        getColor()[i] = "d5212e";
+                        getColor()[i] = "d5212e"; // RED
                     }
                     if (!getCircleLists().get(i).getId().equals(getC1().getId()) &&
                             !getCircleLists().get(i).getId().equals(getC10().getId())) {
-                        getColor()[i] = "31cb01";
+                        getColor()[i] = "31cb01"; // GREEN
                     }
                 }
                 updateColor();
@@ -121,7 +121,6 @@ public class MenuController<circle, CircleList> {
                     }
                 }
                 updateColor();
-
                 setNumOfPlayer(3);
                 setNumOfMachine(1);
             }
