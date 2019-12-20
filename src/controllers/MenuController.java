@@ -157,7 +157,7 @@ public class MenuController<circle, CircleList> {
         getCircleLists().add(getC10());
     }
     public void updateColor() {
-        for (int i = 0; i < 10 ; i++) {
+        for (int i = 0; i < getCircleLists().size() ; i++) {
             getCircleLists().get(i).setFill(Paint.valueOf(getColor()[i]));
         }
     }
