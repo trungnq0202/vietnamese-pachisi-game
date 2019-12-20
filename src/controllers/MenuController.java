@@ -28,6 +28,15 @@ public class MenuController {
     public void injectMainController(MainController mainController){this.mainController = mainController;}
 
     public MenuController() {
+
+    }
+
+    public void initialize() {
+        setMouseClickedHandler();
+    }
+
+
+    private void setMouseClickedHandler() {
         getC1().setOnMouseClicked(getMenuHandler());
         getC2().setOnMouseClicked(getMenuHandler());
         getC3().setOnMouseClicked(getMenuHandler());
@@ -38,12 +47,6 @@ public class MenuController {
         getC8().setOnMouseClicked(getMenuHandler());
         getC9().setOnMouseClicked(getMenuHandler());
         getC10().setOnMouseClicked(getMenuHandler());
-
-
-    }
-
-    public void initialize() {
-
     }
 
 
@@ -85,6 +88,11 @@ public class MenuController {
             }
         }
     };
+
+    private void setColor() {
+
+    }
+
     private MainController getMainController() {
         return mainController;
     }
