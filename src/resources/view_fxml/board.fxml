@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="59.0" prefWidth="1900.0" style="-fx-background-color: gray;" />
+      <HBox prefHeight="942.0" prefWidth="200.0" spacing="22.0">
+         <children>
+            <VBox prefHeight="942.0" prefWidth="600.0">
+               <children>
+                  <HBox prefHeight="400.0" prefWidth="633.0">
+                     <children>
+                        <VBox prefHeight="396.0" prefWidth="488.0">
+                           <children>
+                              <StackPane prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: black; -fx-border-width: 3px;">
+                                 <children>
+                                    <Circle fill="#b5e5fc" radius="156.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="3.0" />
+                                    <GridPane maxHeight="300.0" maxWidth="300.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <ImageView fitHeight="151.0" fitWidth="150.0" pickOnBounds="true">
+                                             <image>
+                                                <Image url="@../images/blue_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="151.0" fitWidth="152.0" pickOnBounds="true" GridPane.columnIndex="1">
+                                             <image>
+                                                <Image url="@../images/blue_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="150.0" fitWidth="151.0" pickOnBounds="true" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@../images/blue_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="150.0" fitWidth="151.0" pickOnBounds="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@../images/blue_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </StackPane>
+                              <HBox alignment="CENTER" prefHeight="73.0" prefWidth="463.0">
+                                 <children>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" prefHeight="396.0" prefWidth="150.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="4.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                     </children></HBox>
+                  <HBox prefHeight="155.0" prefWidth="487.0">
+                     <children>
+                        <HBox prefHeight="140.0" prefWidth="628.0">
+                           <children>
+                              <HBox prefHeight="147.0" prefWidth="648.0">
+                                 <children>
+                                    <StackPane prefHeight="135.0" prefWidth="211.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </children></HBox>
+                  <HBox prefHeight="400.0" prefWidth="633.0">
+                     <children>
+                        <VBox prefHeight="396.0" prefWidth="488.0">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="73.0" prefWidth="463.0">
+                                 <children>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="4.0" StackPane.alignment="CENTER" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </HBox>
+                              <StackPane prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: black; -fx-border-width: 3px;">
+                                 <children>
+                                    <Circle fill="#ebebb7" radius="156.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="3.0" />
+                                    <GridPane maxHeight="300.0" maxWidth="300.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <ImageView fitHeight="151.0" fitWidth="150.0" pickOnBounds="true">
+                                             <image>
+                                                <Image url="@../images/yellow_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="151.0" fitWidth="152.0" pickOnBounds="true" GridPane.columnIndex="1">
+                                             <image>
+                                                <Image url="@../images/yellow_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="150.0" fitWidth="151.0" pickOnBounds="true" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@../images/yellow_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="150.0" fitWidth="151.0" pickOnBounds="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@../images/yellow_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" prefHeight="396.0" prefWidth="150.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                     </children></HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="942.0" prefWidth="220.0">
+               <children>
+                  <VBox prefHeight="400.0" prefWidth="205.0" spacing="1.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                           </children>
+                        </StackPane>
+                     </children></VBox>
+                  <Pane prefHeight="147.0" prefWidth="205.0" />
+                  <VBox prefHeight="400.0" prefWidth="205.0" spacing="1.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                           </children>
+                        </StackPane>
+                     </children></VBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="942.0" prefWidth="600.0" spacing="7.0">
+               <children>
+                  <HBox prefHeight="400.0" prefWidth="606.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" prefHeight="396.0" prefWidth="150.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="396.0" prefWidth="497.0">
+                           <children>
+                              <StackPane prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: black; -fx-border-width: 3px;">
+                                 <children>
+                                    <Circle fill="#ffb0b0" radius="156.0" stroke="RED" strokeType="INSIDE" strokeWidth="3.0" />
+                                    <GridPane maxHeight="300.0" maxWidth="300.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <ImageView fitHeight="151.0" fitWidth="150.0" pickOnBounds="true">
+                                             <image>
+                                                <Image url="@../images/red_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="151.0" fitWidth="152.0" pickOnBounds="true" GridPane.columnIndex="1">
+                                             <image>
+                                                <Image url="@../images/red_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="150.0" fitWidth="151.0" pickOnBounds="true" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@../images/red_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="150.0" fitWidth="151.0" pickOnBounds="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@../images/red_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </StackPane>
+                              <HBox alignment="CENTER" prefHeight="73.0" prefWidth="463.0">
+                                 <children>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="4.0" StackPane.alignment="CENTER" />
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children></HBox>
+                  <HBox prefHeight="140.0" prefWidth="628.0">
+                     <children>
+                        <HBox prefHeight="147.0" prefWidth="648.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="135.0" prefWidth="211.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </HBox>
+                     </children></HBox>
+                  <HBox prefHeight="400.0" prefWidth="648.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" prefHeight="396.0" prefWidth="150.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="4.0" />
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="396.0" prefWidth="497.0">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="73.0" prefWidth="463.0">
+                                 <children>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </HBox>
+                              <StackPane prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: black; -fx-border-width: 3px;">
+                                 <children>
+                                    <Circle fill="#d4ffc4" radius="156.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="3.0" />
+                                    <GridPane maxHeight="300.0" maxWidth="300.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <ImageView fitHeight="151.0" fitWidth="150.0" pickOnBounds="true">
+                                             <image>
+                                                <Image url="@../images/green_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="151.0" fitWidth="152.0" pickOnBounds="true" GridPane.columnIndex="1">
+                                             <image>
+                                                <Image url="@../images/green_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="150.0" fitWidth="151.0" pickOnBounds="true" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@../images/green_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="150.0" fitWidth="151.0" pickOnBounds="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@../images/green_horse.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                     </children></HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>
