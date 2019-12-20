@@ -4,10 +4,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
-public class MenuController {
+import java.util.ArrayList;
+
+public class MenuController<circle, CircleList> {
     @FXML private AnchorPane menu;
     @FXML private Circle c1;
     @FXML private Circle c2;
@@ -22,6 +24,9 @@ public class MenuController {
     private MainController mainController;
     private int numOfPlayer;
     private int numOfMachine;
+    private String color[] = {"31cb01", "31cb01", "31cb01", "31cb01", "31cb01",
+            "31cb01", "31cb01", "31cb01", "31cb01", "31cb01"};
+    private ArrayList<Circle> circleLists;
 
 
     //Injecting MainController
@@ -32,6 +37,8 @@ public class MenuController {
     }
 
     public void initialize() {
+        setCircleLists(new ArrayList<>(10));
+        addCircleToList();
         setMouseClickedHandler();
     }
 
@@ -49,49 +56,112 @@ public class MenuController {
         getC10().setOnMouseClicked(getMenuHandler());
     }
 
-
-
-
     private EventHandler<MouseEvent> mouseClicked = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
             Circle x  = (Circle) event.getSource();
             if (x.getId().equals(getC1().getId()) || x.getId().equals(getC10().getId())) {
-                getC1().setFill(Color.RED);
-                getC10().setFill(Color.RED);
+                for (int i = 0; i < getCircleLists().size() ; i++) {
+                    if (getCircleLists().get(i).getId().equals(getC1().getId()) ||
+                            getCircleLists().get(i).getId().equals(getC10().getId())) {
+                        getColor()[i] = "d5212e";
+                    }
+                    if (!getCircleLists().get(i).getId().equals(getC1().getId()) &&
+                            !getCircleLists().get(i).getId().equals(getC10().getId())) {
+                        getColor()[i] = "31cb01";
+                    }
+                }
+                updateColor();
+                for (int i = 0; i < getCircleLists().size() ; i++) {
+                    System.out.println(i + "." + getColor()[i]);
+                    System.out.println(getCircleLists().get(i).getId());
+                }
                 setNumOfPlayer(0);
                 setNumOfMachine(4);
             }
             else if (x.getId().equals(getC2().getId()) || x.getId().equals(getC9().getId())) {
-                getC2().setFill(Color.RED);
-                getC9().setFill(Color.RED);
+                for (int i = 0; i < getCircleLists().size() ; i++) {
+                    if (getCircleLists().get(i).getId().equals(getC2().getId()) ||
+                            getCircleLists().get(i).getId().equals(getC9().getId())) {
+                        getColor()[i] = "d5212e";
+                    }
+                    if (!getCircleLists().get(i).getId().equals(getC2().getId()) &&
+                            !getCircleLists().get(i).getId().equals(getC9().getId())) {
+                        getColor()[i] = "31cb01";
+                    }
+                }
+                updateColor();
                 setNumOfPlayer(1);
                 setNumOfMachine(3);
             }
             else if (x.getId().equals(getC3().getId()) || x.getId().equals(getC8().getId())) {
-                getC3().setFill(Color.RED);
-                getC8().setFill(Color.RED);
+                for (int i = 0; i < getCircleLists().size() ; i++) {
+                    if (getCircleLists().get(i).getId().equals(getC3().getId()) ||
+                            getCircleLists().get(i).getId().equals(getC8().getId())) {
+                        getColor()[i] = "d5212e";
+                    }
+                    if (!getCircleLists().get(i).getId().equals(getC3().getId()) &&
+                            !getCircleLists().get(i).getId().equals(getC8().getId())) {
+                        getColor()[i] = "31cb01";
+                    }
+                }
+                updateColor();
                 setNumOfPlayer(2);
                 setNumOfMachine(2);
             }
             else if (x.getId().equals(getC4().getId()) || x.getId().equals(getC7().getId())) {
-                getC4().setFill(Color.RED);
-                getC7().setFill(Color.RED);
+                for (int i = 0; i < getCircleLists().size() ; i++) {
+                    if (getCircleLists().get(i).getId().equals(getC4().getId()) ||
+                            getCircleLists().get(i).getId().equals(getC7().getId())) {
+                        getColor()[i] = "d5212e";
+                    }
+                    if (!getCircleLists().get(i).getId().equals(getC4().getId()) &&
+                            !getCircleLists().get(i).getId().equals(getC7().getId())) {
+                        getColor()[i] = "31cb01";
+                    }
+                }
+                updateColor();
+
                 setNumOfPlayer(3);
                 setNumOfMachine(1);
             }
             else if (x.getId().equals(getC5().getId()) || x.getId().equals(getC6().getId())) {
-                getC5().setFill(Color.RED);
-                getC6().setFill(Color.RED);
+                for (int i = 0; i < getCircleLists().size() ; i++) {
+                    if (getCircleLists().get(i).getId().equals(getC5().getId()) ||
+                            getCircleLists().get(i).getId().equals(getC6().getId())) {
+                        getColor()[i] = "d5212e";
+                    }
+                    if (!getCircleLists().get(i).getId().equals(getC5().getId()) &&
+                            !getCircleLists().get(i).getId().equals(getC6().getId())) {
+                        getColor()[i] = "31cb01";
+                    }
+                }
+                updateColor();
                 setNumOfPlayer(4);
                 setNumOfMachine(0);
+
             }
+
         }
     };
-
-    private void setColor() {
-
+    private void addCircleToList() {
+        getCircleLists().add(getC1());
+        getCircleLists().add(getC2());
+        getCircleLists().add(getC3());
+        getCircleLists().add(getC4());
+        getCircleLists().add(getC5());
+        getCircleLists().add(getC6());
+        getCircleLists().add(getC7());
+        getCircleLists().add(getC8());
+        getCircleLists().add(getC9());
+        getCircleLists().add(getC10());
     }
+    public void updateColor() {
+        for (int i = 0; i < 10 ; i++) {
+            getCircleLists().get(i).setFill(Paint.valueOf(getColor()[i]));
+        }
+    }
+
 
     private MainController getMainController() {
         return mainController;
@@ -213,5 +283,19 @@ public class MenuController {
         this.numOfMachine = numOfMachine;
     }
 
+    public ArrayList<Circle> getCircleLists() {
+        return circleLists;
+    }
 
+    public void setCircleLists(ArrayList<Circle> circleLists) {
+        this.circleLists = circleLists;
+    }
+
+    public String[] getColor() {
+        return color;
+    }
+
+    public void updateColor(String[] color) {
+        this.color = color;
+    }
 }
