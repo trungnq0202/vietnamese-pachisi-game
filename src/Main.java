@@ -8,9 +8,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("resources/view_fxml/board.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("resources/view_fxml/game_board.fxml"));
         primaryStage.setTitle("Co ca ngua");
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(new Scene(root,1500,1100));
         primaryStage.show();
     }
 
