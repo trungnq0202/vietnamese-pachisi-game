@@ -300,12 +300,30 @@ package controllers;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 
 public class MenuController{
+    // Recently added
+    @FXML private VBox userSetNameMenu;
+    @FXML private StackPane userPane0;
+    @FXML private StackPane userPane1;
+    @FXML private StackPane userPane2;
+    @FXML private StackPane userPane3;
+    @FXML private TextField TF0;
+    @FXML private TextField TF1;
+    @FXML private TextField TF2;
+    @FXML private TextField TF3;
+    @FXML private Button backLevelBtn;
+    @FXML private Button nextPlaySceneBtn;
+    @FXML private Button noHumanBackBtn;
+    @FXML private StackPane noHumanPane;
+    @FXML private Button noHumanPlayBtn;
+    @FXML private VBox noHumanPlayerVbox;
+    //
     @FXML private Button exitErrorBtn;
     @FXML private VBox startMenuError;
     @FXML private Button backBtn;
@@ -329,8 +347,8 @@ public class MenuController{
     private MainController mainController;  //Make connection with mainController
     private int noHumanPlayers;             //Number of human players
     private int noVirtualPlayers;            //Number of virtual players
-    private static final String UNCHOSEN_COLOR = "#1e90ff";
-    private static final String CHOSEN_COLOR = "#ffac1f";
+    private static final String UNCHOSEN_COLOR = "#48da40";
+    private static final String CHOSEN_COLOR = "#c93b14";
     private static final int MAX_NO_PLAYERS = 4;
 
     public MenuController(){
@@ -364,6 +382,10 @@ public class MenuController{
         setBackBtnEventHandler();
         setNextBtnEventHandler();
         setExitErrorBtnEventHandler();
+        // Recently add these 3 function
+//        setUserSelectionMenuTextField();
+        setBackLevelBtnEventHandler();
+        setNextPlaySceneBtnEventHandler();
     }
 
     //Event handler when clicking on the circles to choose the number of human and machine players
@@ -429,11 +451,12 @@ public class MenuController{
         nextBtn.setOnMouseClicked(event -> {
             if (noHumanPlayers == 0 && noVirtualPlayers == 0) {
                 startMenuError.setVisible(true);
-                return;
             }
-
-            System.exit(0); //Finish testing, get rid of this when resume developing next features
-
+            else {
+                preGameMenu.setVisible(false);
+                userSetNameMenu.setVisible(true);
+                createSetPlayerNameMenu();
+            }
         });
     }
 
@@ -444,4 +467,28 @@ public class MenuController{
 
         });
     }
+
+    private void setBackLevelBtnEventHandler(){
+        backLevelBtn.setOnMouseClicked(event->{
+            preGameMenu.setVisible(true);
+            userSetNameMenu.setVisible(false);
+        });
+    }
+
+    private void setNextPlaySceneBtnEventHandler(){
+        nextPlaySceneBtn.setOnMouseClicked(event->{
+            userSetNameMenu.setVisible(false);
+            System.exit(1);             //Jump into board game scene, delete this if necessary
+        });
+    }
+
+    // Set Name Menu added
+    private void createSetPlayerNameMenu() {
+        for (int i = 0; i < noHumanPlayers; i++) {
+            StackPane noHumanPlayerName = (StackPane)rootMenu.lookup("#userPane" + i);
+            noHumanPlayerName.setVisible(true);
+        }
+    }
+
+
 }
