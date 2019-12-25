@@ -1,0 +1,14 @@
+/*---------style Button--------------*/
+.button{
+    -fx-background-color: transparent;
+}
+/*---------style Button on hover--------------*/
+.button:hover {
+    -fx-scale-y: 1.2;
+    -fx-scale-x: 1.2;
+}
+/*---------style Button on pressed--------------*/
+.button:pressed{
+    -fx-scale-x:0.9;
+    -fx-scale-y:0.9;
+}
