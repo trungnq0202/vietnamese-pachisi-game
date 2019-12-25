@@ -7,4 +7,7 @@
 .btn:hover{
     -fx-background-color: #ffac1f;
 }
+.background{
+    -fx-background-image: url("../image/Board.PNG") ;
+}
 
