@@ -8,4 +8,5 @@
            fx:controller="controllers.MainController">
    <MediaView fx:id="backgroundVideo" fitHeight="1000.0" fitWidth="1400.0" preserveRatio="false"/>
    <fx:include fx:id="menu" source="menu.fxml"/>
+   <fx:include fx:id="gameboard" source="gameboard.fxml" visible="false"/>
 </StackPane>
