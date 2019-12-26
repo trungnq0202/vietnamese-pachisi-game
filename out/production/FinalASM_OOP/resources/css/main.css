@@ -1,0 +1,13 @@
+
+/*CSS for every button*/
+
+.btn{
+    -fx-background-color: #1e90ff;
+}
+.btn:hover{
+    -fx-background-color: #ffac1f;
+}
+.background{
+    -fx-background-image: url("../image/Board.PNG") ;
+}
+
