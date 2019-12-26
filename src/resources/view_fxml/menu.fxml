@@ -25,7 +25,7 @@
          <children>
             <VBox prefHeight="137.0" prefWidth="562.0" spacing="15.0">
                <children>
-                  <Label prefHeight="40.0" prefWidth="577.0" text="NUMBER OF HUMAN PLAYERS" textAlignment="CENTER">
+                  <Label prefHeight="40.0" prefWidth="577.0" text="NUMBER OF HUMAN PLAYERS" textAlignment="CENTER" textFill="#fcf940">
                      <font>
                         <Font name="System Bold Italic" size="24.0" />
                      </font>
@@ -94,7 +94,7 @@
             </VBox>
             <VBox layoutX="15.0" layoutY="15.0" prefHeight="137.0" prefWidth="562.0" spacing="15.0">
                <children>
-                  <Label prefHeight="40.0" prefWidth="577.0" text="NUMBER OF VIRTUAL PLAYERS" textAlignment="CENTER">
+                  <Label prefHeight="40.0" prefWidth="577.0" text="NUMBER OF VIRTUAL PLAYERS" textAlignment="CENTER" textFill="#fcf940">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>

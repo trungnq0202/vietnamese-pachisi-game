@@ -1,4 +1,4 @@
-package models;
+package resources.images;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -9,7 +9,7 @@ public class Dice extends Button {
     private int rollNumber; //roll number for dice
     private Image rollImage; //roll image for dice
     private ImageView imageView; //ImageView for rollImage
-    private static String DEFAULT_IMAGE_URL = "resources/dice/6.png";
+    private static String DEFAULT_IMAGE_URL = "resources/images/6.png";
     private static final Image defaultImage = new Image(DEFAULT_IMAGE_URL); //default roll image
 
     //constructor
@@ -40,7 +40,7 @@ public class Dice extends Button {
 
     //method to set roll image according to input roll number
     public void setRollImage(int i){
-        rollImage = new Image("resources/dice/" + i +".png");
+        rollImage = new Image("resources/images/" + i +".png");
         imageView = new ImageView(rollImage);
         imageView.setFitWidth(80);
         imageView.setPreserveRatio(true);

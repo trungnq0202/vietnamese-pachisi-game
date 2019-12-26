@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
-import models.Dice;
+import resources.images.Dice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class PairOfDicesController {
     //method to load images into array images
     static{
         for (int i = 1; i < 7; i++){
-            Image rollAnimationImage = new Image("resources/dice_animation/" + i +".png");
+            Image rollAnimationImage = new Image("resources/images/" + i +"a.png");
             images.add(rollAnimationImage);
         }
     }
