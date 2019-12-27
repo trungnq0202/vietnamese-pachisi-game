@@ -24,7 +24,7 @@ public class PairOfDicesController {
     }
 
     //populate HBox with 2 dices
-    public void initialize() {
+    @FXML public void initialize() {
         Dice dice1 = new Dice();
         Dice dice2 = new Dice();
         eventHandlerForDice(dice1,dice2);

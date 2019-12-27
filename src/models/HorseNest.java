@@ -1,46 +1,60 @@
 package models;
 
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
 public class HorseNest extends GridPane {
-    private ArrayList<Horse> horseNest;
+    private ArrayList<Integer> horseHomePos;
 
     public HorseNest(String color){
-        this.setMinWidth(100);
-        this.setMinHeight(100);
-        this.setPrefWidth(100);
-        this.setPrefHeight(100);
-        this.maxWidth(300);
-        this.maxHeight(300);
+        setProperties();
+        setNestId(color);
+        addHorses(color);
+    }
 
-//        this.setStyle("-fx-background-color: red");
+    private void addHorses(String color){
+        this.horseHomePos = new ArrayList<>(){
+            {for (int i = 0; i < 4; i++) add(0);}
+        };
+        this.add(new Horse(color, 0, 0, 0), 0, 0);
+        this.add(new Horse(color, 0, 1, 1), 1, 0);
+        this.add(new Horse(color, 1, 0, 2), 0, 1);
+        this.add(new Horse(color, 1, 1, 3), 1, 1);
+    }
 
-//        this.color = color;
+    private void setNestId(String color){
         switch (color){
-            case "RED":     this.setId("RN");
+            case "RED": {
+                this.setId("RN");
+                break;
+            }
             case "GREEN": {
                 this.setId("GN");
-                this.getChildren().addAll(new Horse("GREEN",0,0,1));
+                break;
             }
-            case "BLUE":    this.setId("BN");
-            case "YELLOW":  this.setId("YN");
+            case "BLUE": {
+                this.setId("BN");
+                break;
+            }
+            case "YELLOW":  {
+                this.setId("YN");
+                break;
+            }
         }
     }
 
-    public void addHorse(Horse horse){
-//        this.horseNest.add(horse);
-        this.add(horse, horse.getNestColumn(), horse.getNestRow());
+    private void setProperties(){
+        this.setMinWidth(USE_PREF_SIZE);
+        this.setMinHeight(USE_PREF_SIZE);
+        this.setPrefWidth(300);
+        this.setPrefHeight(300);
+        this.maxWidth(USE_PREF_SIZE);
+        this.maxHeight(USE_PREF_SIZE);
+        this.setAlignment(Pos.CENTER);
     }
 
-    public void removeHorse(Horse horse){
-//        this.horseNest.remove(horse);
-        this.getChildren().remove(horse);
-    }
 
-//    public String getColor() {
-//        return color;
-//    }
 }

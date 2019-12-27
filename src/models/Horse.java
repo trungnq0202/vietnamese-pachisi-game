@@ -26,38 +26,8 @@ public class Horse extends ImageView {
         this.homePosition = null;
         this.setFitHeight(150);
         this.setFitWidth(150);
-        Image horseImg;
-        switch (horseColor){
-            case "RED":{
-                this.setId("RH" + Integer.toString(horseNo));
-                horseImg = new Image(RED_HORSE_IMG_URL);
-                this.setImage(horseImg);
-                break;
-            }
-            case "GREEN":{
-                this.setId("GH" + Integer.toString(horseNo));
-                horseImg = new Image(GREEN_HORSE_IMG_URL);
-                this.setImage(horseImg);
-                break;
-            }
-            case "BLUE":{
-                this.setId("BH" + Integer.toString(horseNo));
-                horseImg = new Image(BLUE_HORSE_IMG_URL);
-                this.setImage(horseImg);
-                break;
-            }
-            case "YELLOW":{
-                this.setId("YH" + Integer.toString(horseNo));
-                horseImg = new Image(YELLOW_HORSE_IMG_URL);
-                this.setImage(horseImg);
-                break;
-            }
-        }
+        setHorseIdAndImg(horseColor, horseNo);
     }
-
-//    public String getHorseColor() {
-//        return horseColor;
-//    }
 
     public char getHorseColor() {
         return horseColor;
@@ -71,39 +41,75 @@ public class Horse extends ImageView {
         return nestRow;
     }
 
+    public void setTempPosition(String tempPosition) {
+        this.tempPosition = tempPosition;
+    }
+
+    private void setHorseIdAndImg(String horseColor, int horseNo){
+        Image horseImg = null;
+        switch (horseColor){
+            case "RED":{
+                this.setId("RH" + horseNo);
+                horseImg = new Image(RED_HORSE_IMG_URL);
+                break;
+            }
+            case "GREEN":{
+                this.setId("GH" + horseNo);
+                horseImg = new Image(GREEN_HORSE_IMG_URL);
+                break;
+            }
+            case "BLUE":{
+                this.setId("BH" + horseNo);
+                horseImg = new Image(BLUE_HORSE_IMG_URL);
+                break;
+            }
+            case "YELLOW":{
+                this.setId("YH" + horseNo);
+                horseImg = new Image(YELLOW_HORSE_IMG_URL);
+                break;
+            }
+        }
+        this.setImage(horseImg);
+    }
+
+    //Check if this
     private boolean checkFinalPosition(){
         return horseColor == tempPosition.charAt(0) && tempPosition.charAt(1) == 0;
     }
 
-
-    //Test calculate next position
-    public String getNextPosition(int steps){
-        if (tempPosition == null) {
-            tempPosition = "G1";
-            return tempPosition;
-        }
+    //Calculate next position
+    public String calculateNextPosition(int steps, String tmpNextPosition){
+        //If the position of this horse is in the nest
+        if (tempPosition == null) return horseColor + "1";
 
 //        if (checkFinalPosition()) return ... (Handle this later)
 
-        if (tempPosition.substring(1).equals("11")) {
-            switch (tempPosition.charAt(0)) {
+
+        int integerPartOfId = Integer.parseInt(tempPosition.substring(1));
+        if ( (integerPartOfId + steps) > 11)
+            return calculateNextPosition(steps - (11 - integerPartOfId) ,  tmpNextPosition.substring(0,1) + integerPartOfId);
+
+
+        //If the tmpNextPosition is at the final position of a specific color area
+        if (tmpNextPosition.substring(1).equals("11")) {
+            switch (tmpNextPosition.charAt(0)) {
                 case 'R':
-                    tempPosition = "B0";
+                    tmpNextPosition = "B0";
                     break;
                 case 'G':
-                    tempPosition = "R0";
+                    tmpNextPosition = "R0";
                     break;
                 case 'B':
-                    tempPosition = "Y0";
+                    tmpNextPosition = "Y0";
                     break;
                 case 'Y':
-                    tempPosition = "G0";
+                    tmpNextPosition = "G0";
                     break;
             }
-            return tempPosition;
+            return tmpNextPosition;
         }
 
-        tempPosition = tempPosition.charAt(0) + Integer.toString(Integer.parseInt(tempPosition.substring(1)) + steps);
+        tmpNextPosition = tempPosition.charAt(0) + Integer.toString(Integer.parseInt(tempPosition.substring(1)) + steps);
         return tempPosition;
     }
 }

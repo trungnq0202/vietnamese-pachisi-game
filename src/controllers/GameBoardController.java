@@ -29,8 +29,11 @@ public class GameBoardController {
     @FXML private Label PN1;
     @FXML private Label PN2;
     @FXML private Label PN3;
+//    @FXML private StackPane BNSP;
+//    @FXML private StackPane RNSP;
+//    @FXML private StackPane YNSP;
+//    @FXML private StackPane GNSP;
     @FXML private VBox gameBoard;
-    @FXML private GridPane GN;
     @FXML private Button testMoveGreenHorse;
 
     private MainController mainController;
@@ -40,7 +43,6 @@ public class GameBoardController {
     }
 
     @FXML private void initialize(){
-        createHorses();
         setMoveEventHorse();
     }
 
@@ -48,23 +50,21 @@ public class GameBoardController {
         this.mainController = mainController;
     }
 
-    private void createHorses(){
-        //Create 4 green horses
-        GN.add(new Horse("GREEN", 0, 0, 1), 0, 0);
-        GN.add(new Horse("GREEN", 0, 1, 2), 1, 0);
-        GN.add(new Horse("GREEN", 1, 0, 3), 0, 1);
-        GN.add(new Horse("GREEN", 1, 1, 4), 1, 1);
-
+    private void createHorseNests(){
+        for (int i = 0; i < mainController.getNoHumanPlayers() + mainController.getNoVirtualPlayers(); i++){
+            StackPane tempNestSP = (StackPane)gameBoard.lookup("#" + colors[i].substring(0,1) + "NSP");
+            tempNestSP.getChildren().add(1, new HorseNest(colors[i]));
+        }
     }
 
     private void setMoveEventHorse(){
         testMoveGreenHorse.setOnMouseClicked(e -> {
             Horse horse = (Horse) gameBoard.lookup("#GH1");
-            String tempPos = "#"+horse.getNextPosition(1);
+            String tempPos = "#" + horse.calculateNextPosition(1, null);
             System.out.println(tempPos);
             Circle position = (Circle) gameBoard.lookup(tempPos);
             Bounds boundsInScene = position.localToScene(position.getBoundsInLocal());
-            System.out.println("position coordinates: "+ boundsInScene);
+            System.out.println("position coordinates: " + boundsInScene);
             Bounds boundsInScene1 = horse.localToScene(horse.getBoundsInLocal());
             System.out.println("horse coordinates: " + boundsInScene1);
 
@@ -86,6 +86,7 @@ public class GameBoardController {
 
     public void showGameBoard(boolean isDisplayed){
         if (isDisplayed) {
+            createHorseNests();
             updatePlayersNameView();
             gameBoard.setVisible(true);
         } else {

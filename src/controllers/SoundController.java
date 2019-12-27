@@ -1,5 +1,14 @@
 package controllers;
 
-public class SoundController {
+import javafx.fxml.FXML;
 
+public class SoundController {
+    public SoundController(){
+
+    }
+
+    @FXML
+    public void initialize(){
+
+    }
 }

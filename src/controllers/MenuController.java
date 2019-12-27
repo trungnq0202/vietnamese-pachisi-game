@@ -13,20 +13,20 @@ import java.util.ArrayList;
 public class MenuController{
     // Recently added
     @FXML private VBox userSetNameMenu;
-    @FXML private StackPane userPane0;
-    @FXML private StackPane userPane1;
-    @FXML private StackPane userPane2;
-    @FXML private StackPane userPane3;
-    @FXML private TextField TF0;
-    @FXML private TextField TF1;
-    @FXML private TextField TF2;
-    @FXML private TextField TF3;
+//    @FXML private StackPane userPane0;
+//    @FXML private StackPane userPane1;
+//    @FXML private StackPane userPane2;
+//    @FXML private StackPane userPane3;
+//    @FXML private TextField TF0;
+//    @FXML private TextField TF1;
+//    @FXML private TextField TF2;
+//    @FXML private TextField TF3;
     @FXML private Button backLevelBtn;
     @FXML private Button nextPlaySceneBtn;
-    @FXML private Button noHumanBackBtn;
-    @FXML private StackPane noHumanPane;
-    @FXML private Button noHumanPlayBtn;
-    @FXML private VBox noHumanPlayerVbox;
+//    @FXML private Button noHumanBackBtn;
+//    @FXML private StackPane noHumanPane;
+//    @FXML private Button noHumanPlayBtn;
+//    @FXML private VBox noHumanPlayerVbox;
     //
     @FXML private Button exitErrorBtn1;
     @FXML private VBox emptyPlayerNameError;
@@ -72,7 +72,7 @@ public class MenuController{
         this.mainController = mainController;
     }
 
-    public void initialize(){
+    @FXML public void initialize(){
         setNoPlayersChoiceEventHandler();
         setMenuButtonsEventHandler();
     }

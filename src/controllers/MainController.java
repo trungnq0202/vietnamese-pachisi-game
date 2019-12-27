@@ -49,7 +49,6 @@ public class MainController {
             gameBoardController.showGameBoard(true);
             backgroundVideo.setVisible(false);
         }
-
         else {
             gameBoardController.showGameBoard(false);
             backgroundVideo.setVisible(true);
