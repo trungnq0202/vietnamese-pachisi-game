@@ -32,7 +32,6 @@ public class GameBoardController {
     @FXML private VBox gameBoard;
     @FXML private GridPane GN;
     @FXML private Button testMoveGreenHorse;
-    @FXML private StackPane cc;
 
     private MainController mainController;
     private static final String[] colors = {"BLUE","RED","YELLOW","GREEN"};
@@ -56,23 +55,6 @@ public class GameBoardController {
         GN.add(new Horse("GREEN", 1, 0, 3), 0, 1);
         GN.add(new Horse("GREEN", 1, 1, 4), 1, 1);
 
-
-//        //Create 4
-//        GN.add(new Horse("GREEN", 0, 0, 1), 0, 0);
-//        GN.add(new Horse("GREEN", 0, 1, 2), 1, 0);
-//        GN.add(new Horse("GREEN", 1, 0, 3), 0, 1);
-//        GN.add(new Horse("GREEN", 1, 1, 4), 1, 1);
-//
-//        GN.add(new Horse("GREEN", 0, 0, 1), 0, 0);
-//        GN.add(new Horse("GREEN", 0, 1, 2), 1, 0);
-//        GN.add(new Horse("GREEN", 1, 0, 3), 0, 1);
-//        GN.add(new Horse("GREEN", 1, 1, 4), 1, 1);
-//
-//        GN.add(new Horse("GREEN", 0, 0, 1), 0, 0);
-//        GN.add(new Horse("GREEN", 0, 1, 2), 1, 0);
-//        GN.add(new Horse("GREEN", 1, 0, 3), 0, 1);
-//        GN.add(new Horse("GREEN", 1, 1, 4), 1, 1);
-
     }
 
     private void setMoveEventHorse(){
@@ -86,6 +68,7 @@ public class GameBoardController {
             Bounds boundsInScene1 = horse.localToScene(horse.getBoundsInLocal());
             System.out.println("horse coordinates: " + boundsInScene1);
 
+            System.out.println(horse.getParent());
             TranslateTransition translateTransition = new TranslateTransition(Duration.millis(500), horse);
             translateTransition.setByX(boundsInScene.getMinX() - boundsInScene1.getMinX() - 50);
             translateTransition.setByY(boundsInScene.getMinY() - boundsInScene1.getMinY() - 70 );

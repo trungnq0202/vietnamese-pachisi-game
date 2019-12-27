@@ -20,7 +20,7 @@
                      <children>
                         <VBox prefHeight="396.0" prefWidth="488.0">
                            <children>
-                              <StackPane fx:id="cc" layoutX="23.0" prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: blue; -fx-border-width: 3px;">
+                              <StackPane fx:id="BNSP" layoutX="23.0" prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: blue; -fx-border-width: 3px;">
                                  <children>
                                     <Circle fill="#b5e5fc" radius="156.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="3.0" />
                                     <GridPane maxHeight="300.0" maxWidth="300.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0">
@@ -210,7 +210,7 @@
                                     </StackPane>
                                  </children>
                               </HBox>
-                              <StackPane prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: yellow; -fx-border-width: 3px;">
+                              <StackPane fx:id="YNSP" prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: yellow; -fx-border-width: 3px;">
                                  <children>
                                     <Circle fill="#ebebb7" radius="156.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="3.0" />
                                     <GridPane maxHeight="300.0" maxWidth="300.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0">
@@ -247,9 +247,9 @@
                                     </GridPane>
                                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="100.0">
                                        <children>
-                                          <Label fx:id="PN2" prefHeight="45.0" prefWidth="99.0" text="Consolas" textAlignment="CENTER">
+                                          <Label fx:id="PN2" prefHeight="45.0" prefWidth="99.0" textAlignment="CENTER">
                                              <font>
-                                                <Font size="14.0" />
+                                                <Font name="Consolas" size="14.0" />
                                              </font></Label>
                                        </children>
                                     </VBox>
@@ -415,7 +415,7 @@
                         </VBox>
                         <VBox prefHeight="396.0" prefWidth="497.0">
                            <children>
-                              <StackPane prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: red; -fx-border-width: 3px;">
+                              <StackPane fx:id="RNSP" prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: red; -fx-border-width: 3px;">
                                  <children>
                                     <Circle fill="#ffb0b0" radius="156.0" stroke="RED" strokeType="INSIDE" strokeWidth="3.0" />
                                     <GridPane maxHeight="300.0" maxWidth="300.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0">
@@ -601,7 +601,7 @@
                                     </StackPane>
                                  </children>
                               </HBox>
-                              <StackPane prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: green; -fx-border-width: 3px;">
+                              <StackPane fx:id="GNSP" prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: green; -fx-border-width: 3px;">
                                  <children>
                                     <Circle fill="#d4ffc4" radius="156.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="3.0" />
                                     <GridPane fx:id="GN" maxHeight="300.0" maxWidth="300.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0">
