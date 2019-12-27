@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
-import resources.images.Dice;
+import models.Dice;
 
 import java.util.ArrayList;
 import java.util.List;

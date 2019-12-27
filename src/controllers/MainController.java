@@ -7,12 +7,15 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
+import java.util.ArrayList;
+
 public class MainController {
     @FXML private StackPane root;
     @FXML private StackPane menu;
-    @FXML private VBox gameboard;
+    @FXML private VBox gameBoard;
     @FXML private MediaView backgroundVideo;
     @FXML private MenuController menuController;
+    @FXML private GameBoardController gameBoardController;
     private static final String VIDEO_URL = "../resources/videos/loopbackgroundvideo.mp4";
 
     public MainController(){
@@ -25,9 +28,10 @@ public class MainController {
 
     private void injectMainControllerInNestedControllers(){
         menuController.injectMainController(this);
+        gameBoardController.injectMainController(this);
     }
 
-
+    //Set loop background video when using menu
     private void setBackgroundVideo(){
         MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource(VIDEO_URL).toExternalForm()));
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -35,5 +39,28 @@ public class MainController {
         backgroundVideo.setMediaPlayer(mediaPlayer);
     }
 
+    public ArrayList<String> getPlayersNameList(){
+        return menuController.getPlayersNameList();
+    }
 
+    //Displaying game board, hide background video
+    public void displayGameBoard(boolean isDisplayed){
+        if (isDisplayed) {
+            gameBoardController.showGameBoard(true);
+            backgroundVideo.setVisible(false);
+        }
+
+        else {
+            gameBoardController.showGameBoard(false);
+            backgroundVideo.setVisible(true);
+        }
+    }
+
+    public int getNoHumanPlayers() {
+        return menuController.getNoHumanPlayers();
+    }
+
+    public int getNoVirtualPlayers() {
+        return menuController.getNoVirtualPlayers();
+    }
 }

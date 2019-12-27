@@ -8,6 +8,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 
+import java.util.ArrayList;
+
 public class MenuController{
     // Recently added
     @FXML private VBox userSetNameMenu;
@@ -26,6 +28,8 @@ public class MenuController{
     @FXML private Button noHumanPlayBtn;
     @FXML private VBox noHumanPlayerVbox;
     //
+    @FXML private Button exitErrorBtn1;
+    @FXML private VBox emptyPlayerNameError;
     @FXML private Button exitErrorBtn;
     @FXML private VBox startMenuError;
     @FXML private Button backBtn;
@@ -35,26 +39,32 @@ public class MenuController{
     @FXML private VBox preGameMenu;
     @FXML private VBox startMenu;
     @FXML private StackPane rootMenu;
-    @FXML private StackPane HP0;
-    @FXML private StackPane HP1;
-    @FXML private StackPane HP2;
-    @FXML private StackPane HP3;
-    @FXML private StackPane HP4;
-    @FXML private StackPane VP0;
-    @FXML private StackPane VP1;
-    @FXML private StackPane VP2;
-    @FXML private StackPane VP3;
-    @FXML private StackPane VP4;
+//    @FXML private StackPane HP0;
+//    @FXML private StackPane HP1;
+//    @FXML private StackPane HP2;
+//    @FXML private StackPane HP3;
+//    @FXML private StackPane HP4;
+//    @FXML private StackPane VP0;
+//    @FXML private StackPane VP1;
+//    @FXML private StackPane VP2;
+//    @FXML private StackPane VP3;
+//    @FXML private StackPane VP4;
 
     private MainController mainController;  //Make connection with mainController
     private int noHumanPlayers;             //Number of human players
     private int noVirtualPlayers;            //Number of virtual players
+    private ArrayList<String> playersNameList;
     private static final String UNCHOSEN_COLOR = "#48da40";
     private static final String CHOSEN_COLOR = "#c93b14";
     private static final int MAX_NO_PLAYERS = 4;
 
     public MenuController(){
-        noHumanPlayers  = 1;    //there is 1 human player by default
+        playersNameList = new ArrayList<>() {
+            {
+                for (int i = 0; i < 4; i++) add(" ");
+            }
+        };
+        noHumanPlayers  = 2;    //there is 1 human player by default
         noVirtualPlayers = 0;    //there is no virtual player by default
     }
 
@@ -125,36 +135,62 @@ public class MenuController{
         tempCircle.setStyle("-fx-fill: " + colorCode);  //Fill color in the circle
     }
 
+
+    public void resetPlayersNameList() {
+        playersNameList.set(0," ");
+        playersNameList.set(1," ");
+        playersNameList.set(2," ");
+        playersNameList.set(3," ");
+    }
+
+    //Set value for each object in playersNameList from textfield
+    public void setPlayersNameList(){
+        //Name of the human players
+        for (int i = 0;  i < noHumanPlayers; i++){
+            TextField tempPlayerNameTF =  (TextField)rootMenu.lookup("#TF" + i);
+            playersNameList.set(i, tempPlayerNameTF.getText());
+        }
+        //Name of the virtual players
+        for (int i = noHumanPlayers; i < noHumanPlayers + noVirtualPlayers ; i++){
+            playersNameList.set(i, "Virtual Player " + (i - noHumanPlayers + 1) );
+        }
+    }
+
+    public ArrayList<String> getPlayersNameList() {
+        return playersNameList;
+    }
+
     //Event handler for the newGameBtn
     private void setNewGameBtnEventHandler(){
         newGameBtn.setOnMouseClicked(event -> {
-            startMenu.setVisible(false);
-            preGameMenu.setVisible(true);
+            startMenu.setVisible(false);     //hide start menu
+            preGameMenu.setVisible(true);    //show pregame menu
         });
     }
 
     //Event handler for the exitGameBtn
     private void setExitGameBtnEventHandler(){
         exitGameBtn.setOnMouseClicked(event -> {
-            System.exit(0);
+            System.exit(0);         //Exit the program
         });
     }
 
-    //Event handler for the exitGameBtn
+    //Event handler for the get back to start menu GameBtn
     private void setBackBtnEventHandler(){
         backBtn.setOnMouseClicked(event -> {
-            preGameMenu.setVisible(false);
-            startMenu.setVisible(true);
+            preGameMenu.setVisible(false);  //hide pregame menu
+            startMenu.setVisible(true);     //show start menu
         });
     }
 
     //Event handler for the nextBtn
     private void setNextBtnEventHandler(){
         nextBtn.setOnMouseClicked(event -> {
-            if (noHumanPlayers == 0 && noVirtualPlayers == 0) {
+            if (noHumanPlayers + noVirtualPlayers < 2) {
                 startMenuError.setVisible(true);
             }
             else {
+                resetPlayersNameList();
                 preGameMenu.setVisible(false);
                 userSetNameMenu.setVisible(true);
                 createSetPlayerNameMenu();
@@ -168,6 +204,10 @@ public class MenuController{
             startMenuError.setVisible(false);
 
         });
+
+        exitErrorBtn1.setOnMouseClicked(event -> {
+            emptyPlayerNameError.setVisible(false);
+        });
     }
 
     private void setBackLevelBtnEventHandler(){
@@ -177,19 +217,57 @@ public class MenuController{
         });
     }
 
+    //Check if the user input nothing for the players'name
+    private boolean validatePlayersNameInput(){
+        for (int i = 0; i < noHumanPlayers; i++ ){
+            TextField tmpPlayerNameTF = (TextField)rootMenu.lookup("#TF" + i);
+            if (tmpPlayerNameTF.getText().equals("")) return false;
+        }
+        return true;
+    }
+
     private void setNextPlaySceneBtnEventHandler(){
         nextPlaySceneBtn.setOnMouseClicked(event->{
-            userSetNameMenu.setVisible(false);
-            System.exit(1);             //Jump into board game scene, delete this if necessary
+            if (!validatePlayersNameInput()){
+                emptyPlayerNameError.setVisible(true);
+            }else {
+                setPlayersNameList();
+                userSetNameMenu.setVisible(false);
+                mainController.displayGameBoard(true);
+            }
         });
     }
 
     // Set Name Menu added
     private void createSetPlayerNameMenu() {
+        //Show text field for inputting human players' name
         for (int i = 0; i < noHumanPlayers; i++) {
-            StackPane noHumanPlayerName = (StackPane)rootMenu.lookup("#userPane" + i);
-            noHumanPlayerName.setVisible(true);
+            StackPane humanPlayerNamePane = (StackPane)rootMenu.lookup("#userPane" + i);
+            humanPlayerNamePane.setVisible(true);
         }
+
+        //Show disabled text field with virtual players'name default as "Virtual Player + (i - noHumanPlayers + 1)"
+        for (int i = noHumanPlayers; i < noHumanPlayers + noVirtualPlayers; i++ ){
+            StackPane virtualPlayerNamePane = (StackPane)rootMenu.lookup("#userPane" + i);
+            virtualPlayerNamePane.setVisible(true);
+            TextField virtualPlayerNameTF = (TextField)virtualPlayerNamePane.getChildren().get(1);
+            virtualPlayerNameTF.setText("Virtual Player " + (i - noHumanPlayers + 1));
+            virtualPlayerNameTF.setDisable(true);
+        }
+
+        //Hide those text field if noHumanPlayers + noVirtualPlayers < 4
+        for (int i = noHumanPlayers + noVirtualPlayers; i < 4; i++){
+            StackPane playerNamePane = (StackPane)rootMenu.lookup("#userPane" + i);
+            playerNamePane.setVisible(false);
+        }
+    }
+
+    public int getNoHumanPlayers() {
+        return noHumanPlayers;
+    }
+
+    public int getNoVirtualPlayers() {
+        return noVirtualPlayers;
     }
 
 
