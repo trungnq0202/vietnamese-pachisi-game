@@ -84,32 +84,23 @@ public class Horse extends ImageView {
 
 //        if (checkFinalPosition()) return ... (Handle this later)
 
+        if (tmpNextPosition == null) tmpNextPosition = tempPosition;
+        int integerPartOfId = Integer.parseInt(tmpNextPosition.substring(1));  //Get the integer part of the fxid
 
-        int integerPartOfId = Integer.parseInt(tempPosition.substring(1));
-        if ( (integerPartOfId + steps) > 11)
-            return calculateNextPosition(steps - (11 - integerPartOfId) ,  tmpNextPosition.substring(0,1) + integerPartOfId);
-
+        //If (integer part) + (steps) > 11 -> move out of the temporary color area
+        if ( integerPartOfId != 11 && (integerPartOfId + steps) > 11)
+            return calculateNextPosition(steps - (11 - integerPartOfId) ,  tmpNextPosition.substring(0,1) + 11);
 
         //If the tmpNextPosition is at the final position of a specific color area
-        if (tmpNextPosition.substring(1).equals("11")) {
+        if (integerPartOfId == 11) {
             switch (tmpNextPosition.charAt(0)) {
-                case 'R':
-                    tmpNextPosition = "B0";
-                    break;
-                case 'G':
-                    tmpNextPosition = "R0";
-                    break;
-                case 'B':
-                    tmpNextPosition = "Y0";
-                    break;
-                case 'Y':
-                    tmpNextPosition = "G0";
-                    break;
+                case 'R': return calculateNextPosition(steps - 1, "B0");
+                case 'G': return calculateNextPosition(steps - 1, "R0");
+                case 'B': return calculateNextPosition(steps - 1, "Y0");
+                case 'Y': return calculateNextPosition(steps - 1, "G0");
             }
-            return tmpNextPosition;
         }
 
-        tmpNextPosition = tempPosition.charAt(0) + Integer.toString(Integer.parseInt(tempPosition.substring(1)) + steps);
-        return tempPosition;
+        return tmpNextPosition.charAt(0) + Integer.toString(Integer.parseInt(tmpNextPosition.substring(1)) + steps);
     }
 }

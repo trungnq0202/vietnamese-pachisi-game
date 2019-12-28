@@ -38,8 +38,22 @@ public class GameBoardController {
 
     private MainController mainController;
     private static final String[] colors = {"BLUE","RED","YELLOW","GREEN"};
+    private ArrayList<Horse> horseHomes;
+    private boolean isRollingDiceTurn;
 
     public GameBoardController(){
+        horseHomes = new ArrayList<>(){
+            {
+                for (int i = 1; i <= 24; i ++) add(null);
+            }
+        };
+    }
+
+    private void resetHorseHomes(){
+        horseHomes.clear();
+        for (int i = 1; i <= 24; i++){
+            horseHomes.set(i,null);
+        }
     }
 
     @FXML private void initialize(){
@@ -84,13 +98,40 @@ public class GameBoardController {
         PN3.setText(playersNameList.get(3));
     }
 
+    private int checkEndGame(){
+        int winnerId = 0;
+        for(int playerId = 1; playerId <= 4; playerId++){ //rightHome = homeId * player + (player - 1)
+            for (int homeId = 6; homeId >= 4; homeId--) {
+                if (horseHomes.get(homeId * playerId + (playerId - 1)) != null) winnerId = playerId;
+                else { winnerId = 0; break; }
+            }
+            if (winnerId != 0) return winnerId;
+        }
+        return 0;
+    }
+
     public void showGameBoard(boolean isDisplayed){
         if (isDisplayed) {
             createHorseNests();
+//            resetHorseHomes();
             updatePlayersNameView();
             gameBoard.setVisible(true);
+//            startGame();
         } else {
             gameBoard.setVisible(false);
         }
     }
+
+    public void startGame(){
+        while (true){
+            //If the dice has been rolled by one of the players
+            if (!isRollingDiceTurn){
+
+
+                isRollingDiceTurn = true;
+            }
+        }
+    }
+
+
 }
