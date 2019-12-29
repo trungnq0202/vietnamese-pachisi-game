@@ -17,12 +17,18 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
+import models.Dice;
 import models.Horse;
 import models.HorseNest;
 
 import java.util.ArrayList;
 
 public class GameBoardController {
+//    @FXML private GridPane ARROW0;
+//    @FXML private GridPane ARROW1;
+//    @FXML private GridPane ARROW2;
+//    @FXML private GridPane ARROW3;
+    @FXML private Button diceArrow;
     @FXML private HBox dices;
     @FXML private Label PN0;
     @FXML private Label PN1;
@@ -38,7 +44,9 @@ public class GameBoardController {
 
     private MainController mainController;
     @FXML private DicesController dicesController;
-    private static final String[] colors = {"BLUE","RED","YELLOW","GREEN"}; //Color of each player according to the order players' id
+    private static final String[] colors = {"RED","BLUE","YELLOW","GREEN"}; //Color of each player according to the order players' id
+//    private static final Character[] colors = {'R','B','Y','G'}; //Color of each player according to the order players' id
+
     private boolean isRollingDiceTurn;   //Variable indicating that this is the time for the player to roll the dices, no other action can be done
     private int playerId;
 
@@ -60,6 +68,7 @@ public class GameBoardController {
     private void createHorseNests(){
         for (int i = 0; i < mainController.getNoHumanPlayers() + mainController.getNoVirtualPlayers(); i++){
             StackPane tempNestSP = (StackPane)gameBoard.lookup("#" + colors[i].substring(0,1) + "NSP");
+//            StackPane tempNestSP = (StackPane)gameBoard.lookup("#" + colors[i] + "NSP");
             tempNestSP.getChildren().add(1, new HorseNest(colors[i]));
         }
     }
@@ -103,6 +112,8 @@ public class GameBoardController {
         return 0;
     }
 
+
+
     public void showGameBoard(boolean isDisplayed){
         if (isDisplayed) {
             createHorseNests();
@@ -115,15 +126,41 @@ public class GameBoardController {
         }
     }
 
-    private void highLightDices(){
-        dices.setStyle("-fx-background-color: yellow");
+    private void highLightDices(boolean isDisplayed){
+        if (isDisplayed)  diceArrow.setVisible(true);
+        else diceArrow.setVisible(false);
+    }
+
+    private void highLightHorsesNest(int playerId){
+        GridPane tmpGridArrow = (GridPane)gameBoard.lookup("#ARROW" + playerId);
+        tmpGridArrow.setVisible(true);
+        GridPane tmpHorseNest = (GridPane)gameBoard.lookup("#" + colors[playerId].substring(0,1) + "N");
+
+        for (int i = 0; i < 4; i++){
+            System.out.println("#" + colors[playerId].substring(0,1) + "H" + i);
+            Horse tmpHorse = (Horse)tmpHorseNest.lookup("#" + colors[playerId].substring(0,1) + "H" + i);
+            if (tmpHorse.isInNest()) tmpHorse.setVisible(true);
+            else tmpHorse.setVisible(false);
+        }
     }
 
     public void startGame(){
-        highLightDices();
+        highLightDices(true);
         isRollingDiceTurn = true;
-        playerId = 1;
+        playerId = 0;
     }
+
+    public void processPostDiceRolling(){
+//        System.out.println(dicesController.getDice1().getRollNumber());
+//        System.out.println(dicesController.getDice2().getRollNumber());
+//        System.out.println("///////////////////////");
+        highLightDices(false);
+        isRollingDiceTurn = false; //Do not allow the players to roll dice until they've finished their horses moves
+        //If the 1 dices contains a 6
+        if (dicesController.getDice1().getRollNumber() == 6 || dicesController.getDice2().getRollNumber() == 6) highLightHorsesNest(playerId);
+
+    }
+
 
     public boolean getIsRollingDiceTurn(){
         return isRollingDiceTurn;
@@ -139,5 +176,9 @@ public class GameBoardController {
 
     public void setPlayerId(int playerId) {
         this.playerId = playerId;
+    }
+
+    public void setDiceArrow(boolean isDisplayed) {
+        highLightDices(isDisplayed);
     }
 }
