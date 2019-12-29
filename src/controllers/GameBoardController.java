@@ -11,9 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -25,6 +23,7 @@ import models.HorseNest;
 import java.util.ArrayList;
 
 public class GameBoardController {
+    @FXML private HBox dices;
     @FXML private Label PN0;
     @FXML private Label PN1;
     @FXML private Label PN2;
@@ -36,32 +35,26 @@ public class GameBoardController {
     @FXML private VBox gameBoard;
     @FXML private Button testMoveGreenHorse;
 
+
     private MainController mainController;
-    private static final String[] colors = {"BLUE","RED","YELLOW","GREEN"};
-    private ArrayList<Horse> horseHomes;
-    private boolean isRollingDiceTurn;
+    @FXML private DicesController dicesController;
+    private static final String[] colors = {"BLUE","RED","YELLOW","GREEN"}; //Color of each player according to the order players' id
+    private boolean isRollingDiceTurn;   //Variable indicating that this is the time for the player to roll the dices, no other action can be done
+    private int playerId;
 
     public GameBoardController(){
-        horseHomes = new ArrayList<>(){
-            {
-                for (int i = 1; i <= 24; i ++) add(null);
-            }
-        };
-    }
-
-    private void resetHorseHomes(){
-        horseHomes.clear();
-        for (int i = 1; i <= 24; i++){
-            horseHomes.set(i,null);
-        }
+        System.out.println("gameboardcontroller construct");
     }
 
     @FXML private void initialize(){
+        System.out.println("gameboardcontroller init");
         setMoveEventHorse();
+        dicesController.injectGameBoardController(this);
     }
 
     public void injectMainController(MainController mainController){
         this.mainController = mainController;
+
     }
 
     private void createHorseNests(){
@@ -102,7 +95,7 @@ public class GameBoardController {
         int winnerId = 0;
         for(int playerId = 1; playerId <= 4; playerId++){ //rightHome = homeId * player + (player - 1)
             for (int homeId = 6; homeId >= 4; homeId--) {
-                if (horseHomes.get(homeId * playerId + (playerId - 1)) != null) winnerId = playerId;
+                if (mainController.getHorseHomes().get(homeId * playerId + (playerId - 1)) != null) winnerId = playerId;
                 else { winnerId = 0; break; }
             }
             if (winnerId != 0) return winnerId;
@@ -116,22 +109,35 @@ public class GameBoardController {
 //            resetHorseHomes();
             updatePlayersNameView();
             gameBoard.setVisible(true);
-//            startGame();
+            startGame();
         } else {
             gameBoard.setVisible(false);
         }
     }
 
-    public void startGame(){
-        while (true){
-            //If the dice has been rolled by one of the players
-            if (!isRollingDiceTurn){
-
-
-                isRollingDiceTurn = true;
-            }
-        }
+    private void highLightDices(){
+        dices.setStyle("-fx-background-color: yellow");
     }
 
+    public void startGame(){
+        highLightDices();
+        isRollingDiceTurn = true;
+        playerId = 1;
+    }
 
+    public boolean getIsRollingDiceTurn(){
+        return isRollingDiceTurn;
+    }
+
+    public void setIsRollingDiceTurn(boolean value){
+        isRollingDiceTurn = value;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
 }

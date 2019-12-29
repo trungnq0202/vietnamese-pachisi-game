@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
@@ -269,8 +270,11 @@
                            </children>
                         </StackPane>
                      </children></VBox>
-                  <Pane fx:id="cc" prefHeight="147.0" prefWidth="205.0" >
-                     <fx:include fx:id="dice" source="dice.fxml"/>
+                  <Pane fx:id="cc" prefHeight="147.0" prefWidth="205.0">
+                     <fx:include fx:id="dices" source="dices.fxml" />
+                     <VBox.margin>
+                        <Insets top="28.0" />
+                     </VBox.margin>
                   </Pane>
                   <VBox prefHeight="400.0" prefWidth="205.0" spacing="1.0">
                      <children>

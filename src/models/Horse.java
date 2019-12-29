@@ -24,6 +24,7 @@ public class Horse extends ImageView {
         this.isInHome = false;
         this.tempPosition = null;
         this.homePosition = null;
+        this.setStyle("-fx-background-color: gray");
         this.setFitHeight(150);
         this.setFitWidth(150);
         setHorseIdAndImg(horseColor, horseNo);

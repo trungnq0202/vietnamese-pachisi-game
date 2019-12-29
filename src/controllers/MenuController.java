@@ -59,6 +59,7 @@ public class MenuController{
     private static final int MAX_NO_PLAYERS = 4;
 
     public MenuController(){
+        System.out.println("menucontroller construct");
         playersNameList = new ArrayList<>() {
             {
                 for (int i = 0; i < 4; i++) add(" ");
@@ -73,6 +74,7 @@ public class MenuController{
     }
 
     @FXML public void initialize(){
+        System.out.println("menucontroller init");
         setNoPlayersChoiceEventHandler();
         setMenuButtonsEventHandler();
     }
