@@ -14,6 +14,7 @@ import java.util.List;
 public class DicesController {
     private MainController mainController;
     private GameBoardController gameBoardController;
+    private Dice dice1, dice2;
     private static List<Image> images = new ArrayList<>(); //array of animation for rolling dices
     @FXML private HBox dices; //HBox to store 2 dices
 
@@ -33,8 +34,8 @@ public class DicesController {
     @FXML public void initialize() {
         System.out.println("DicesController init");
 
-        Dice dice1 = new Dice();
-        Dice dice2 = new Dice();
+        dice1 = new Dice();
+        dice2 = new Dice();
         eventHandlerForDice(dice1,dice2);
         dices.getChildren().addAll(dice1, dice2);
     }
@@ -64,29 +65,33 @@ public class DicesController {
                     dice.setGraphic(imageView);
                 }
             };
-            rollAnimation.play();
             rollAnimation.setOnFinished(event -> { //after finishing the rolling animation, actual roll
                 dice.roll();
                 int i = dice.getRollNumber();
                 dice.setRollImage(i);
+                if (dice == dice2) gameBoardController.processPostDiceRolling();
             });
+            rollAnimation.play();
         }
     }
 
     //add event handler for each dice, clicking one dice will result in 2 dices being rolled
     public void eventHandlerForDice(Dice dice1, Dice dice2){
         dice1.setOnMouseClicked(event -> {
-            rollDices(dice1, dice2);
+            rollWithAnimation(dice1);
+            rollWithAnimation(dice2);
         });
         dice2.setOnMouseClicked(event -> {
-            rollDices(dice1, dice2);
+            rollWithAnimation(dice1);
+            rollWithAnimation(dice2);
         });
     }
 
-    private void rollDices(Dice dice1, Dice dice2){
-        rollWithAnimation(dice1);
-        rollWithAnimation(dice2);
-        gameBoardController.setIsRollingDiceTurn(false); //Do not allow the players to roll dice until they've finished their horses moves
-        dices.setStyle("-fx-background-color: transparent");
+    public Dice getDice1() {
+        return dice1;
+    }
+
+    public Dice getDice2() {
+        return dice2;
     }
 }

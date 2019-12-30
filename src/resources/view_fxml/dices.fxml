@@ -3,4 +3,4 @@
 <?import javafx.scene.layout.*?>
 
 
-<HBox fx:id="dices" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 3px;" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DicesController" />
+<HBox fx:id="dices" alignment="CENTER" prefHeight="85.0" prefWidth="156.0" stylesheets="@../css/dices.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DicesController" />

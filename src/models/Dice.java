@@ -14,9 +14,11 @@ public class Dice extends Button {
 
     //constructor
     public Dice (){
+        rollNumber = 0;
         rollImage = defaultImage;
         imageView = new ImageView(rollImage);
         imageView.setFitWidth(80);
+        imageView.setFitHeight(70);
         imageView.setPreserveRatio(true);
         setGraphic(imageView);
     }
@@ -43,6 +45,7 @@ public class Dice extends Button {
         rollImage = new Image("resources/images/" + i +".png");
         imageView = new ImageView(rollImage);
         imageView.setFitWidth(80);
+        imageView.setFitHeight(70);
         imageView.setPreserveRatio(true);
         setGraphic(imageView);
     }

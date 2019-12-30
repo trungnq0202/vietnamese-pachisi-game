@@ -58,6 +58,7 @@ public class HorseNest extends GridPane {
         this.maxWidth(USE_PREF_SIZE);
         this.maxHeight(USE_PREF_SIZE);
         this.setAlignment(Pos.CENTER);
+
     }
 
 

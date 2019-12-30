@@ -13,7 +13,7 @@ public class Horse extends ImageView {
     private char horseColor;
     private int nestRow;
     private int nestColumn;
-    private boolean isInHome;
+    private boolean isInNest;
     private String tempPosition;
     private String homePosition;
 
@@ -21,7 +21,7 @@ public class Horse extends ImageView {
         this.nestRow = nestRow;
         this.nestColumn = nestColumn;
         this.horseColor = horseColor.charAt(0);
-        this.isInHome = false;
+        this.isInNest = true;
         this.tempPosition = null;
         this.homePosition = null;
         this.setStyle("-fx-background-color: gray");
@@ -103,5 +103,13 @@ public class Horse extends ImageView {
         }
 
         return tmpNextPosition.charAt(0) + Integer.toString(Integer.parseInt(tmpNextPosition.substring(1)) + steps);
+    }
+
+    public boolean isInNest() {
+        return isInNest;
+    }
+
+    public void setInNest(boolean inNest) {
+        isInNest = inNest;
     }
 }
