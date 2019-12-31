@@ -6,13 +6,13 @@ import javafx.scene.media.MediaPlayer;
 import java.net.URL;
 
 public class Sound {
-    private static final String BACKGROUND_MUSIC_URL = "../resources/sounds/backgroundsong.wav";
-    private static final String DICE_ROLL_SFX_URL = "../resources/sounds/sound_dice.wav";
+    private static final String BACKGROUND_MUSIC_URL = "../resources/sounds/background.mp3";
+    private static final String DICE_ROLL_SFX_URL = "../resources/sounds/sound_dice.mp3";
     private static final String HORSE_JUMP_SFX_URL = "../resources/sounds/sound_jump.wav";
     private static final String HORSE_MOVE_SFX_URL = "../resources/sounds/sound_horse_move.wav";
     private static final String HORSE_APPEAR_SFX_URL = "../resources/sounds/sound_appear.wav";
-    private static final String BUTTON_CLICK_SFX_URL = "../resources/sounds/sound_button_click.wav";
-    private static final String NULL_SOUND_URL = "../resources/sounds/backgroundsong.wav"; // TODO: find a sound for htis
+    private static final String BUTTON_CLICK_SFX_URL = "../resources/sounds/sound_button_click.mp3";
+    private static final String NULL_SOUND_URL = "../resources/sounds/backgroundsong.wav"; // TODO: find a sound for this
 
     public enum SoundType {
         BACKGROUND_MUSIC,
@@ -32,7 +32,7 @@ public class Sound {
             System.out.println("Cannot load sound.");
         }
         if (soundType == SoundType.BACKGROUND_MUSIC) {
-            sound.setCycleCount(MediaPlayer.INDEFINITE);
+            this.sound.setCycleCount(MediaPlayer.INDEFINITE);
             // sound.setVolume(0.1); // FIXME: why set the volume down?
             // sound.play(); //play the music immediately after being loaded
             // FIXME: why play when loaded?
@@ -75,11 +75,15 @@ public class Sound {
         return resource.toString();
     }
 
-    public void play(){
-        sound.play();
+    public void play() {
+        this.sound.play();
     }
 
-    public void pause(){
-        sound.pause();
+    public void pause() {
+        this.sound.pause();
+    }
+
+    public void stop() {
+        this.sound.stop();
     }
 }
