@@ -53,6 +53,7 @@ public class MenuController{
     private MainController mainController;  //Make connection with mainController
     private int noHumanPlayers;             //Number of human players
     private int noVirtualPlayers;            //Number of virtual players
+
     private ArrayList<String> playersNameList;
     private static final String UNCHOSEN_COLOR = "#48da40";
     private static final String CHOSEN_COLOR = "#c93b14";

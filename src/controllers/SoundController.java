@@ -7,8 +7,7 @@ public class SoundController {
 
     }
 
-    @FXML
-    public void initialize(){
+    @FXML public void initialize(){
 
     }
 }

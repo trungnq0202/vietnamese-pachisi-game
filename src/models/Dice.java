@@ -11,6 +11,7 @@ public class Dice extends Button {
     private ImageView imageView; //ImageView for rollImage
     private static String DEFAULT_IMAGE_URL = "resources/images/6.png";
     private static final Image defaultImage = new Image(DEFAULT_IMAGE_URL); //default roll image
+    private boolean isUsable;
 
     //constructor
     public Dice (){
@@ -50,5 +51,12 @@ public class Dice extends Button {
         setGraphic(imageView);
     }
 
+    public boolean isUsable() {
+        return isUsable;
+    }
+
+    public void setUsable(boolean usable) {
+        isUsable = usable;
+    }
 }
 

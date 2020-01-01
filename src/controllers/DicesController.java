@@ -48,8 +48,11 @@ public class DicesController {
 
     //create rolling effect
     public void rollWithAnimation(Dice dice) {
+        System.out.println(gameBoardController.isFreeze());
+        if (gameBoardController.isFreeze() || !gameBoardController.isRollingDiceTurn()) return;
+        if (dice == dice2) gameBoardController.setFreeze(true);
+
         //If the dice rolling is temporarily allowed
-        if (gameBoardController.getIsRollingDiceTurn()) {
             ImageView imageView = new ImageView();
             Transition rollAnimation = new Transition() {
                 {
@@ -69,11 +72,11 @@ public class DicesController {
                 dice.roll();
                 int i = dice.getRollNumber();
                 dice.setRollImage(i);
+                gameBoardController.setFreeze(false);
                 if (dice == dice2) gameBoardController.processPostDiceRolling();
             });
             rollAnimation.play();
         }
-    }
 
     //add event handler for each dice, clicking one dice will result in 2 dices being rolled
     public void eventHandlerForDice(Dice dice1, Dice dice2){
