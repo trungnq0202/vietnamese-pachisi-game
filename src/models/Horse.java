@@ -3,6 +3,7 @@ package models;
 import controllers.GameBoardController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -43,7 +44,12 @@ public class Horse extends HBox {
         this.isInHome = false;
         this.isMovable = false;
         this.tempPosition = null;
-        listOfPossibleSteps = new ArrayList<>(3);
+//        this.setStyle("-fx-background-color: gray");
+        listOfPossibleSteps = new ArrayList<>(3){
+            {
+                add(0); add(0); add(0);
+            }
+        };
         setProperties();
         createMoveOptions();                        //Create list of move options for each horse
         createSideArrow();                          //Create side arrow for highlighting this horse object when needed
@@ -74,6 +80,7 @@ public class Horse extends HBox {
         switch (horseColor){
             case 'R':{
                 this.setId("RH" + horseNo);
+                Image redHorseImg = new Image(RED_HORSE_IMG_URL);
                 horseImg = new Background(new BackgroundImage(new Image(RED_HORSE_IMG_URL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(150, 150, false, false,  false, false)));
                 break;
             }
@@ -93,6 +100,7 @@ public class Horse extends HBox {
                 break;
             }
         }
+
         this.setBackground(horseImg);
     }
 
@@ -152,7 +160,7 @@ public class Horse extends HBox {
         this.setMinHeight(USE_PREF_SIZE);
         this.setMinWidth(USE_PREF_SIZE);
         this.setPrefHeight(150);
-        this.setPrefWidth(150);
+        this.setPrefWidth(80);
         this.setMaxHeight(USE_PREF_SIZE);
         this.setMaxWidth(USE_PREF_SIZE);
     }
@@ -172,11 +180,12 @@ public class Horse extends HBox {
     private void createMoveOptions(){
         moveOptionsContainer = new VBox();
         moveOptionsContainer.setPrefWidth(120);
-        moveOptionsContainer.setPrefHeight(50);
+        moveOptionsContainer.setPrefHeight(150);
         moveOptionsContainer.setStyle("-fx-background-color: transparent");
 //        moveOptionsContainer.setTranslateX(-90);
         moveOptionsContainer.setSpacing(5);
         moveOptionsContainer.setVisible(false);
+        moveOptionsContainer.setPadding(new Insets(30,0,0,0));
         createMoveOptionButton();
         moveOptionsContainer.getChildren().addAll(moveOptionOfDice1,moveOptionOfDice2,moveOptionOfDice1AndDice2);
         this.getChildren().add(moveOptionsContainer);
@@ -221,6 +230,10 @@ public class Horse extends HBox {
         else sideArrow.setTranslateX(0);
     }
 
+    public int convertPositionToIntegerForm(String position, int tempPlayerId){
+        return Integer.parseInt(position.substring(1)) + 11 * tempPlayerId + tempPlayerId;
+    }
+
     public int convertTempPositionToIntegerForm(int tempPlayerId){
         return Integer.parseInt(tempPosition.substring(1)) + 11 * tempPlayerId + tempPlayerId;
     }
@@ -234,7 +247,7 @@ public class Horse extends HBox {
     }
 
     public void setListOfPossibleSteps(int index, int steps) {
-         listOfPossibleSteps.add(steps);
+         listOfPossibleSteps.set(index, steps);
     }
 
     public void resetListOfPossibleSteps(){
@@ -293,11 +306,15 @@ public class Horse extends HBox {
     }
 
     public void deactivateShowMoveOptionsOnMouseHover(){
-        this.setOnMouseEntered(null);
-        this.setOnMouseExited(null);
+        moveOptionsContainer.setVisible(false);
+        this.setOnMouseEntered(mouseEvent -> {
+            moveOptionsContainer.setVisible(false);
+        });
+
+        this.setOnMouseExited(mouseEvent -> {
+            moveOptionsContainer.setVisible(false);
+        });
     }
-
-
 
     public void setMoveOptionOfDice1EventHandler(Node endPosition, GameBoardController gameBoardController){
         moveOptionOfDice1.setOnMouseEntered(mouseEvent -> {
@@ -353,11 +370,9 @@ public class Horse extends HBox {
         this.setOnMouseClicked(null);
     }
 
-//    public void showMoveOptions(){
-//        moveOptionsContainer.setVisible(true);
-//    }
-//
-//    public void hideMoveOptions(){
-//        moveOptionsContainer.setVisible(false);
-//    }
+    public void displayListOfPossibleSteps(){
+        for (int i = 0; i < listOfPossibleSteps.size(); i ++){
+            System.out.println("Possible steps " + i + " " + listOfPossibleSteps.get(i));
+        }
+    }
 }

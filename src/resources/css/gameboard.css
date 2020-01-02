@@ -1,7 +1,7 @@
 /*Turn button into arrow shape*/
 .arrow{
     -fx-shape: "M 400 300 L 400 250 L 400 200 L 450 200 L 500 200 L 550 200 L 600 200 L 600 250 L 600 300 L 550 300 L 500 300 L 450 300 L 400 300 L 400 350 L 400 400 L 150 250 L 400 100 L 400 200 ";
-    -fx-background-color: yellow;
+    -fx-background-color: red;
 }
 
 .arrowDice{
