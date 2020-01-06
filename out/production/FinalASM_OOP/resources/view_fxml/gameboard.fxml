@@ -8,11 +8,8 @@
 
 <VBox fx:id="gameBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" stylesheets="@../css/gameboard.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameBoardController">
    <children>
-      <Pane prefHeight="59.0" prefWidth="1900.0" style="-fx-background-color: gray;">
-         <children>
-            <Button fx:id="testMoveGreenHorse" layoutX="27.0" layoutY="1.0" mnemonicParsing="false" text="Move GH1" />
-         </children></Pane>
-      <HBox prefHeight="942.0" prefWidth="200.0" spacing="22.0">
+      <Pane pickOnBounds="false" prefHeight="59.0" prefWidth="1900.0" style="-fx-background-color: gray;" />
+      <HBox fx:id="subGameBoard" prefHeight="942.0" prefWidth="200.0" spacing="22.0">
          <children>
             <VBox prefHeight="942.0" prefWidth="600.0">
                <children>
@@ -44,16 +41,22 @@
                                           <Label fx:id="PN1" prefHeight="45.0" prefWidth="100.0" textAlignment="CENTER">
                                              <font>
                                                 <Font size="14.0" />
-                                             </font></Label>
+                                             </font>
+                                          </Label>
                                        </children>
                                     </VBox>
+                                    <Label fx:id="TURN1" prefHeight="38.0" prefWidth="92.0" style="-fx-border-width: 2px; -fx-border-color: black;" text="Your Turn" visible="false" StackPane.alignment="BOTTOM_RIGHT">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </StackPane>
                               <HBox alignment="CENTER" prefHeight="73.0" prefWidth="463.0">
                                  <children>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="B11" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
+                                          <Circle fx:id="B11" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER_LEFT" />
                                        </children>
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -114,7 +117,8 @@
                               </StackPane>
                            </children>
                         </VBox>
-                     </children></HBox>
+                     </children>
+                  </HBox>
                   <HBox prefHeight="155.0" prefWidth="487.0">
                      <children>
                         <HBox prefHeight="140.0" prefWidth="628.0">
@@ -128,39 +132,40 @@
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                          <Rectangle fx:id="HY1" arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                        </children>
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                          <Rectangle fx:id="HY2" arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                        </children>
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                          <Rectangle fx:id="HY3" arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                        </children>
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                          <Rectangle fx:id="HY4" arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                        </children>
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                          <Rectangle fx:id="HY5" arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                        </children>
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                          <Rectangle fx:id="HY6" arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                        </children>
                                     </StackPane>
                                  </children>
                               </HBox>
                            </children>
                         </HBox>
-                     </children></HBox>
+                     </children>
+                  </HBox>
                   <HBox prefHeight="400.0" prefWidth="633.0">
                      <children>
                         <VBox prefHeight="396.0" prefWidth="488.0">
@@ -169,7 +174,7 @@
                                  <children>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="Y1" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="4.0" StackPane.alignment="CENTER" />
+                                          <Circle fx:id="Y1" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="4.0" StackPane.alignment="CENTER_LEFT" />
                                        </children>
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -218,9 +223,15 @@
                                           <Label fx:id="PN2" prefHeight="45.0" prefWidth="99.0" textAlignment="CENTER">
                                              <font>
                                                 <Font size="14.0" />
-                                             </font></Label>
+                                             </font>
+                                          </Label>
                                        </children>
                                     </VBox>
+                                    <Label fx:id="TURN2" prefHeight="38.0" prefWidth="92.0" style="-fx-border-width: 2px; -fx-border-color: black;" text="Your Turn" visible="false" StackPane.alignment="TOP_RIGHT">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </StackPane>
                            </children>
@@ -259,7 +270,8 @@
                               </StackPane>
                            </children>
                         </VBox>
-                     </children></HBox>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <VBox prefHeight="942.0" prefWidth="220.0">
@@ -273,38 +285,39 @@
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Rectangle fx:id="HB1" arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Rectangle fx:id="HB2" arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Rectangle fx:id="HB3" arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Rectangle fx:id="HB4" arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Rectangle fx:id="HB5" arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Rectangle fx:id="HB6" arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
-                     </children></VBox>
-                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="141.0" prefWidth="200.0">
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="141.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="diceArrow" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" styleClass="arrowDice" visible="false">
+                        <Button fx:id="diceArrow" alignment="TOP_CENTER" cancelButton="true" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" styleClass="arrowDice" visible="false">
                            <padding>
                               <Insets top="10.0" />
                            </padding>
@@ -312,39 +325,38 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <fx:include fx:id="dices" source="dices.fxml" />
                      </children>
                   </VBox>
                   <VBox prefHeight="400.0" prefWidth="205.0" spacing="1.0">
                      <children>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Rectangle fx:id="HG6" arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Rectangle fx:id="HG5" arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Rectangle fx:id="HG4" arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Rectangle fx:id="HG3" arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Rectangle fx:id="HG2" arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Rectangle fx:id="HG1" arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -352,7 +364,8 @@
                               <Circle fx:id="G0" fill="WHITE" layoutX="-2.0" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
                            </children>
                         </StackPane>
-                     </children></VBox>
+                     </children>
+                  </VBox>
                </children>
             </VBox>
             <VBox prefHeight="942.0" prefWidth="600.0" spacing="7.0">
@@ -403,7 +416,8 @@
                                           <Label fx:id="PN0" prefHeight="45.0" prefWidth="100.0" wrapText="true">
                                              <font>
                                                 <Font size="14.0" />
-                                             </font></Label>
+                                             </font>
+                                          </Label>
                                        </children>
                                     </VBox>
                                     <GridPane fx:id="ARROW0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" visible="false">
@@ -415,7 +429,7 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        
-                                      </rowConstraints>
+                                            </rowConstraints>
                                        <StackPane.margin>
                                           <Insets />
                                        </StackPane.margin>
@@ -426,6 +440,11 @@
                                           <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="119.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
+                                    <Label fx:id="TURN0" prefHeight="38.0" prefWidth="92.0" style="-fx-border-width: 2px; -fx-border-color: black;" text="Your Turn" visible="false" StackPane.alignment="BOTTOM_LEFT">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                                  <VBox.margin>
                                     <Insets />
@@ -458,46 +477,47 @@
                                     </StackPane>
                                     <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="R1" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="4.0" StackPane.alignment="CENTER" />
+                                          <Circle fx:id="R1" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="4.0" StackPane.alignment="CENTER_RIGHT" />
                                        </children>
                                     </StackPane>
                                  </children>
                               </HBox>
                            </children>
                         </VBox>
-                     </children></HBox>
+                     </children>
+                  </HBox>
                   <HBox prefHeight="140.0" prefWidth="628.0">
                      <children>
                         <HBox prefHeight="147.0" prefWidth="648.0">
                            <children>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    <Rectangle fx:id="HR6" arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    <Rectangle fx:id="HR5" arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    <Rectangle fx:id="HR4" arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    <Rectangle fx:id="HR3" arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    <Rectangle fx:id="HR2" arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    <Rectangle fx:id="HR1" arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="135.0" prefWidth="211.0">
@@ -507,7 +527,8 @@
                               </StackPane>
                            </children>
                         </HBox>
-                     </children></HBox>
+                     </children>
+                  </HBox>
                   <HBox prefHeight="400.0" prefWidth="648.0">
                      <children>
                         <VBox alignment="CENTER_LEFT" prefHeight="396.0" prefWidth="150.0">
@@ -570,7 +591,7 @@
                                     </StackPane>
                                     <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="G11" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
+                                          <Circle fx:id="G11" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER_RIGHT" />
                                        </children>
                                     </StackPane>
                                  </children>
@@ -595,21 +616,29 @@
                                        </children>
                                     </GridPane>
 
-                                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="100.0">
+                                          <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="100.0">
                                        <children>
                                           <Label fx:id="PN3" prefHeight="45.0" prefWidth="100.0">
                                              <font>
                                                 <Font size="14.0" />
-                                             </font></Label>
+                                             </font>
+                                          </Label>
                                        </children>
                                     </VBox>
+                                    <Label fx:id="TURN3" prefHeight="38.0" prefWidth="92.0" style="-fx-border-width: 2px; -fx-border-color: black;" text="Your Turn" visible="false" StackPane.alignment="TOP_LEFT">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </StackPane>
                            </children>
                         </VBox>
-                     </children></HBox>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
+            <fx:include fx:id="dices" source="dices.fxml" translateX="-2060.0" />
          </children>
       </HBox>
    </children>

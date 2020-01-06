@@ -22,19 +22,15 @@ public class MainController {
 //    @FXML private DicesController dicesController;
     private static final String VIDEO_URL = "../resources/videos/loopbackgroundvideo.mp4";
 
-    //Variables for sound controler
+    //Variables for sound controller
     private boolean isSoundEnabled;
 
     //Variables for game playing process
     private ArrayList<Horse> horseHomes;
-//    private boolean isRollingDiceTurn;   //Variable indicating that this is the time for the player to roll the dices, no other action can be done
-//    private int playerId;
 
     public MainController(){
         System.out.println("maincontroller construct");
         isSoundEnabled = true;
-//        isRollingDiceTurn = true;
-//        playerId = 1;
         horseHomes = new ArrayList<>(){
             {
                 for (int i = 1; i <= 24; i ++) add(null);
@@ -51,8 +47,6 @@ public class MainController {
     private void injectMainControllerInNestedControllers(){
         menuController.injectMainController(this);
         gameBoardController.injectMainController(this);
-//        dicesController.injectMainController(this);
-
     }
 
 
@@ -95,24 +89,8 @@ public class MainController {
         return menuController.getNoVirtualPlayers();
     }
 
-
-//    public boolean getIsRollingDiceTurn(){
-//        return isRollingDiceTurn;
-//    }
-//
-//    public void setIsRollingDiceTurn(boolean value){
-//        isRollingDiceTurn = value;
-//    }
-
     public ArrayList<Horse> getHorseHomes() {
         return horseHomes;
     }
 
-//    public int getPlayerId() {
-//        return playerId;
-//    }
-//
-//    public void setPlayerId(int playerId) {
-//        this.playerId = playerId;
-//    }
 }
