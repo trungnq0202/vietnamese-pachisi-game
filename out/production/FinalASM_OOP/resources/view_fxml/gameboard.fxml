@@ -323,9 +323,9 @@
                         </StackPane>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="141.0" prefWidth="200.0">
+                  <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="141.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="diceArrow" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" styleClass="arrowDice" visible="false">
+                        <Button fx:id="diceArrow" alignment="TOP_CENTER" cancelButton="true" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" styleClass="arrowDice" visible="false">
                            <padding>
                               <Insets top="10.0" />
                            </padding>
@@ -333,7 +333,6 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <fx:include fx:id="dices" source="dices.fxml" />
                      </children>
                   </VBox>
                   <VBox prefHeight="400.0" prefWidth="205.0" spacing="1.0">
@@ -647,6 +646,7 @@
                   </HBox>
                </children>
             </VBox>
+            <fx:include fx:id="dices" source="dices.fxml" translateX="-2060.0" />
          </children>
       </HBox>
    </children>

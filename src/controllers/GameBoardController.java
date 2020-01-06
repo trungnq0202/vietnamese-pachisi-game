@@ -74,11 +74,39 @@ public class GameBoardController {
 
     }
 
+//    public String calculateNextPosition(int steps, String startPosition, int playerIdTurn, String tmpNextPosition){
+//        //If the position of this horse is in the nest
+//        if (startPosition == null) return colors[playerIdTurn] + "1";
+//
+//        if (tmpNextPosition == null) tmpNextPosition = startPosition;
+//        int integerPartOfId = Integer.parseInt(tmpNextPosition.substring(1));  //Get the integer part of the position's fxid
+//
+//        //If (integer part) + (steps) > 11 -> move out of the temporary color area
+//        if ( integerPartOfId != 11 && (integerPartOfId + steps) > 11)
+//            return calculateNextPosition(steps - (11 - integerPartOfId) ,  tmpNextPosition.substring(0,1) + 11);
+//
+//        //If the tmpNextPosition is at the final position of a specific color area
+//        if (integerPartOfId == 11) {
+//            switch (tmpNextPosition.charAt(0)) {
+//                case 'R': return calculateNextPosition(steps - 1, "B0");
+//                case 'G': return calculateNextPosition(steps - 1, "R0");
+//                case 'B': return calculateNextPosition(steps - 1, "Y0");
+//                case 'Y': return calculateNextPosition(steps - 1, "G0");
+//            }
+//        }
+//
+//        return tmpNextPosition.charAt(0) + Integer.toString(Integer.parseInt(tmpNextPosition.substring(1)) + steps);
+//    }
+//
+//    public String calculateNextHomePosition(){
+//
+//    }
+
     //Create all horse nests at the start of the game
     private void createHorseNests(){
         for (int i = 0; i < mainController.getNoHumanPlayers() + mainController.getNoVirtualPlayers(); i++){
             HBox subGameBoard = (HBox) gameBoard.getChildren().get(1);
-            subGameBoard.getChildren().add(new HorseNest(colors[i]));
+            subGameBoard.getChildren().add(3 + i, new HorseNest(colors[i]));
         }
     }
 
