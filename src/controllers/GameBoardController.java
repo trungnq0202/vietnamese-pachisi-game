@@ -139,8 +139,16 @@ public class GameBoardController {
         for (int i = 0; i < 4; i++){
             System.out.println("#" + colors[playerId].substring(0,1) + "H" + i);
             Horse tmpHorse = (Horse)tmpHorseNest.lookup("#" + colors[playerId].substring(0,1) + "H" + i);
-            if (tmpHorse.isInNest()) tmpHorse.setVisible(true);
-            else tmpHorse.setVisible(false);
+            if (tmpHorse.isInNest()) {
+//                tmpHorse.setVisible(true);
+//                tmpHorse.getStyleClass().add("activeHorse");
+                tmpHorse.setActiveHorse();
+            }
+            else {
+//                tmpHorse.setVisible(false);
+//                tmpHorse.getStyleClass().remove(0);
+                tmpHorse.setInactiveHorse();
+            }
         }
     }
 
@@ -155,7 +163,7 @@ public class GameBoardController {
 //        System.out.println(dicesController.getDice2().getRollNumber());
 //        System.out.println("///////////////////////");
         highLightDices(false);
-        isRollingDiceTurn = false; //Do not allow the players to roll dice until they've finished their horses moves
+//        isRollingDiceTurn = false; //Do not allow the players to roll dice until they've finished their horses moves
         //If the 1 dices contains a 6
         if (dicesController.getDice1().getRollNumber() == 6 || dicesController.getDice2().getRollNumber() == 6) highLightHorsesNest(playerId);
 

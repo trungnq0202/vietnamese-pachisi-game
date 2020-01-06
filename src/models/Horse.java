@@ -1,9 +1,11 @@
 package models;
 
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 
-public class Horse extends ImageView {
+public class Horse extends Button {
     private static final String RED_HORSE_IMG_URL = "file:src/resources/images/red_horse.png";
     private static final String GREEN_HORSE_IMG_URL = "file:src/resources/images/green_horse.png";
     private static final String BLUE_HORSE_IMG_URL = "file:src/resources/images/blue_horse.png";
@@ -24,9 +26,20 @@ public class Horse extends ImageView {
         this.isInNest = true;
         this.tempPosition = null;
         this.homePosition = null;
-        this.setStyle("-fx-background-color: gray");
-        this.setFitHeight(150);
-        this.setFitWidth(150);
+//        this.setStyle("-fx-background-color: gray");
+//        this.setFitHeight(150);
+//        this.setFitWidth(150);
+        this.setDisable(false);
+        this.setMinWidth(USE_PREF_SIZE);
+        this.setMinHeight(USE_PREF_SIZE);
+        this.setPrefWidth(150);
+        this.setPrefHeight(150);
+        this.setMaxWidth(USE_PREF_SIZE);
+        this.setMaxHeight(USE_PREF_SIZE);
+//        this.setOnMouseClicked(event -> {
+//            System.out.println("ccccc");
+//        });
+//        this.setText("concac");
         setHorseIdAndImg(horseColor, horseNo);
     }
 
@@ -47,30 +60,44 @@ public class Horse extends ImageView {
     }
 
     private void setHorseIdAndImg(String horseColor, int horseNo){
-        Image horseImg = null;
+//        Image horseImg = null;
+        //ImageView horseImg = null;
+        Background horseImg = null;
         switch (horseColor){
             case "RED":{
                 this.setId("RH" + horseNo);
-                horseImg = new Image(RED_HORSE_IMG_URL);
+//                horseImg = new Image(RED_HORSE_IMG_URL);
+//                horseImg = new ImageView(new Image(RED_HORSE_IMG_URL));
+                horseImg = new Background(new BackgroundImage(new Image(RED_HORSE_IMG_URL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(150, 150, false, false, false, false)));
+
                 break;
             }
             case "GREEN":{
                 this.setId("GH" + horseNo);
-                horseImg = new Image(GREEN_HORSE_IMG_URL);
+//                horseImg = new Image(GREEN_HORSE_IMG_URL);
+//                horseImg = new ImageView(new Image(GREEN_HORSE_IMG_URL));
+                horseImg = new Background(new BackgroundImage(new Image(GREEN_HORSE_IMG_URL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(this.getWidth(), this.getHeight() , true, true, true, false)));
+
                 break;
             }
             case "BLUE":{
                 this.setId("BH" + horseNo);
-                horseImg = new Image(BLUE_HORSE_IMG_URL);
+//                horseImg = new Image(BLUE_HORSE_IMG_URL);
+//                horseImg = new ImageView(new Image(BLUE_HORSE_IMG_URL));
                 break;
             }
             case "YELLOW":{
                 this.setId("YH" + horseNo);
-                horseImg = new Image(YELLOW_HORSE_IMG_URL);
+//                horseImg = new Image(YELLOW_HORSE_IMG_URL);
+//                horseImg = new ImageView(new Image(YELLOW_HORSE_IMG_URL));
                 break;
             }
         }
-        this.setImage(horseImg);
+//        this.setImage(horseImg);
+//        horseImg.setFitWidth(150);
+//        horseImg.setFitHeight(150);
+//        this.setGraphic(horseImg);
+        this.setBackground(horseImg);
     }
 
     //Check if this
@@ -111,5 +138,28 @@ public class Horse extends ImageView {
 
     public void setInNest(boolean inNest) {
         isInNest = inNest;
+    }
+
+    public void setActiveHorse(){
+        System.out.println("cc1");
+        this.getStyleClass().add("active");
+        System.out.println(this.getStyleClass().get(0));
+        this.setOnMouseClicked(event -> {
+            System.out.println("cl");
+//            this.setTranslateX(-20);
+//            this.setStyle("-fx-background-color: gray");
+        });
+
+        this.setOnMouseExited(event -> {
+//            this.setFitWidth(150);
+//            this.setFitHeight(150);
+            this.setStyle("-fx-background-color: transparent");
+        });
+    }
+
+    public void setInactiveHorse(){
+        System.out.println("cc");
+        this.setOnMouseEntered(null);
+        this.setOnMouseExited(null);
     }
 }
