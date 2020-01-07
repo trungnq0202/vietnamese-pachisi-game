@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<VBox fx:id="gameBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" stylesheets="@../css/gameboard.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameBoardController">
+<VBox fx:id="gameBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" stylesheets="@../css/gameboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameBoardController">
    <children>
       <Pane pickOnBounds="false" prefHeight="59.0" prefWidth="1900.0" style="-fx-background-color: gray;" />
       <HBox fx:id="subGameBoard" prefHeight="942.0" prefWidth="200.0" spacing="22.0">
@@ -20,22 +25,6 @@
                               <StackPane fx:id="BNSP" layoutX="23.0" prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: blue; -fx-border-width: 3px;">
                                  <children>
                                     <Circle fill="#b5e5fc" radius="156.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="3.0" />
-                                    <GridPane fx:id="ARROW1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" visible="false">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Button cancelButton="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
-                                          <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="119.0" layoutY="73.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
-                                          <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="269.0" layoutY="73.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                          <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="119.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                       </children>
-                                    </GridPane>
                                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="100.0">
                                        <children>
                                           <Label fx:id="PN1" prefHeight="45.0" prefWidth="100.0" textAlignment="CENTER">
@@ -45,38 +34,38 @@
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <Label fx:id="TURN1" prefHeight="38.0" prefWidth="92.0" style="-fx-border-width: 2px; -fx-border-color: black;" text="Your Turn" visible="false" StackPane.alignment="BOTTOM_RIGHT">
+                                    <Label fx:id="TURN1" alignment="CENTER" prefHeight="38.0" prefWidth="92.0" style="-fx-border-width: 2px; -fx-border-color: black;" text="Your Turn" visible="false" StackPane.alignment="BOTTOM_RIGHT">
                                        <font>
-                                          <Font size="21.0" />
+                                          <Font size="18.0" />
                                        </font>
                                     </Label>
                                  </children>
                               </StackPane>
                               <HBox alignment="CENTER" prefHeight="73.0" prefWidth="463.0">
                                  <children>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="B11" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="B11" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER_LEFT" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
                                        </children>
                                     </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="B10" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="B10" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="B9" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="B9" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="B8" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="B8" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="B7" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="B7" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
                                        </children>
                                     </StackPane>
                                  </children>
@@ -85,34 +74,34 @@
                         </VBox>
                         <VBox alignment="CENTER_LEFT" prefHeight="396.0" prefWidth="150.0">
                            <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="B1" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="B1" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="4.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="4.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="B2" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="B2" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="B3" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="B3" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="B4" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="B4" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="B5" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="B5" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="B6" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="B6" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
                            </children>
@@ -125,9 +114,9 @@
                            <children>
                               <HBox prefHeight="147.0" prefWidth="648.0">
                                  <children>
-                                    <StackPane prefHeight="135.0" prefWidth="211.0">
+                                    <StackPane fx:id="Y0" prefHeight="135.0" prefWidth="211.0">
                                        <children>
-                                          <Circle fx:id="Y0" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -172,29 +161,29 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="73.0" prefWidth="463.0">
                                  <children>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="Y1" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="Y1" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="4.0" StackPane.alignment="CENTER_LEFT" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="4.0" StackPane.alignment="CENTER" />
                                        </children>
                                     </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="Y2" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="Y2" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="Y3" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="Y3" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="Y4" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="Y4" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="Y5" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="Y5" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
                                        </children>
                                     </StackPane>
                                  </children>
@@ -202,22 +191,6 @@
                               <StackPane fx:id="YNSP" prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: yellow; -fx-border-width: 3px;">
                                  <children>
                                     <Circle fill="#ebebb7" radius="156.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="3.0" />
-                                    <GridPane fx:id="ARROW2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" visible="false">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Button cancelButton="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
-                                          <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="119.0" layoutY="73.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
-                                          <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="269.0" layoutY="73.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                          <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="119.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                       </children>
-                                    </GridPane>
                                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="100.0">
                                        <children>
                                           <Label fx:id="PN2" prefHeight="45.0" prefWidth="99.0" textAlignment="CENTER">
@@ -227,9 +200,9 @@
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <Label fx:id="TURN2" prefHeight="38.0" prefWidth="92.0" style="-fx-border-width: 2px; -fx-border-color: black;" text="Your Turn" visible="false" StackPane.alignment="TOP_RIGHT">
+                                    <Label fx:id="TURN2" alignment="CENTER" prefHeight="38.0" prefWidth="92.0" style="-fx-border-width: 2px; -fx-border-color: black;" text="Your Turn" visible="false" StackPane.alignment="TOP_RIGHT">
                                        <font>
-                                          <Font size="21.0" />
+                                          <Font size="18.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -238,34 +211,34 @@
                         </VBox>
                         <VBox alignment="CENTER_LEFT" prefHeight="396.0" prefWidth="150.0">
                            <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="Y6" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="Y6" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="Y7" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="Y7" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="Y8" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="Y8" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="Y9" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="Y9" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="Y10" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="Y10" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="Y11" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="Y11" fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
                            </children>
@@ -278,9 +251,9 @@
                <children>
                   <VBox prefHeight="400.0" prefWidth="205.0" spacing="1.0">
                      <children>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <StackPane fx:id="B0" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Circle fx:id="B0" fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
+                              <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
                            </children>
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -325,6 +298,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
+                        <fx:include fx:id="dices" source="dices.fxml" />
                      </children>
                   </VBox>
                   <VBox prefHeight="400.0" prefWidth="205.0" spacing="1.0">
@@ -359,9 +333,9 @@
                               <Rectangle fx:id="HG1" arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <StackPane fx:id="G0" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Circle fx:id="G0" fill="WHITE" layoutX="-2.0" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                              <Circle fill="WHITE" layoutX="-2.0" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
                            </children>
                         </StackPane>
                      </children>
@@ -374,34 +348,34 @@
                      <children>
                         <VBox alignment="CENTER_LEFT" prefHeight="396.0" prefWidth="150.0">
                            <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="R11" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="R11" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="R10" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="R10" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="R9" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="R9" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="R8" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="R8" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="R7" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="R7" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="R6" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="R6" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
                            </children>
@@ -420,29 +394,9 @@
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <GridPane fx:id="ARROW0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" visible="false">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       
-                                            </rowConstraints>
-                                       <StackPane.margin>
-                                          <Insets />
-                                       </StackPane.margin>
-                                       <children>
-                                          <Button cancelButton="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
-                                          <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="119.0" layoutY="73.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
-                                          <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="269.0" layoutY="73.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                          <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="119.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                       </children>
-                                    </GridPane>
-                                    <Label fx:id="TURN0" prefHeight="38.0" prefWidth="92.0" style="-fx-border-width: 2px; -fx-border-color: black;" text="Your Turn" visible="false" StackPane.alignment="BOTTOM_LEFT">
+                                    <Label fx:id="TURN0" alignment="CENTER" prefHeight="38.0" prefWidth="92.0" style="-fx-border-width: 2px; -fx-border-color: black;" text="Your Turn" visible="false" StackPane.alignment="BOTTOM_LEFT">
                                        <font>
-                                          <Font size="21.0" />
+                                          <Font size="18.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -455,29 +409,29 @@
                               </StackPane>
                               <HBox alignment="CENTER" prefHeight="73.0" prefWidth="463.0">
                                  <children>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="R5" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="R5" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="R4" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="R4" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="R3" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="R3" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="R2" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="R2" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="R1" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="R1" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="4.0" StackPane.alignment="CENTER_RIGHT" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="4.0" StackPane.alignment="CENTER" />
                                        </children>
                                     </StackPane>
                                  </children>
@@ -520,9 +474,9 @@
                                     <Rectangle fx:id="HR1" arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="135.0" prefWidth="211.0">
+                              <StackPane fx:id="R0" prefHeight="135.0" prefWidth="211.0">
                                  <children>
-                                    <Circle fx:id="R0" fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
                            </children>
@@ -533,34 +487,34 @@
                      <children>
                         <VBox alignment="CENTER_LEFT" prefHeight="396.0" prefWidth="150.0">
                            <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="G6" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="G6" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="G5" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="G5" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="G4" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="G4" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="G3" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="G3" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="G2" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="G2" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="G1" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Circle fx:id="G1" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="4.0" />
+                                    <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="4.0" />
                                  </children>
                               </StackPane>
                            </children>
@@ -569,29 +523,29 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="73.0" prefWidth="463.0">
                                  <children>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="G7" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="G7" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="G8" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="G8" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="G9" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="G9" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="G10" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="G10" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
                                     </StackPane>
-                                    <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                    <StackPane fx:id="G11" prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <Circle fx:id="G11" fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER_RIGHT" />
+                                          <Circle fill="WHITE" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" StackPane.alignment="CENTER" />
                                        </children>
                                     </StackPane>
                                  </children>
@@ -599,23 +553,6 @@
                               <StackPane fx:id="GNSP" prefHeight="322.0" prefWidth="463.0" style="-fx-border-color: green; -fx-border-width: 3px;">
                                  <children>
                                     <Circle fill="#d4ffc4" radius="156.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="3.0" />
-                                    <GridPane fx:id="ARROW3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" visible="false">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Button cancelButton="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
-                                          <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="119.0" layoutY="73.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
-                                          <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="269.0" layoutY="73.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                          <Button alignment="CENTER_RIGHT" cancelButton="true" layoutX="119.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" styleClass="arrow" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                       </children>
-                                    </GridPane>
-
                                           <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="100.0">
                                        <children>
                                           <Label fx:id="PN3" prefHeight="45.0" prefWidth="100.0">
@@ -625,9 +562,9 @@
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <Label fx:id="TURN3" prefHeight="38.0" prefWidth="92.0" style="-fx-border-width: 2px; -fx-border-color: black;" text="Your Turn" visible="false" StackPane.alignment="TOP_LEFT">
+                                    <Label fx:id="TURN3" alignment="CENTER" prefHeight="38.0" prefWidth="92.0" style="-fx-border-width: 2px; -fx-border-color: black;" text="Your Turn" visible="false" StackPane.alignment="TOP_LEFT">
                                        <font>
-                                          <Font size="21.0" />
+                                          <Font size="18.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -638,7 +575,6 @@
                   </HBox>
                </children>
             </VBox>
-            <fx:include fx:id="dices" source="dices.fxml" translateX="-2060.0" />
          </children>
       </HBox>
    </children>

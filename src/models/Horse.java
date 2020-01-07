@@ -1,11 +1,8 @@
 package models;
 
-import controllers.GameBoardController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -19,60 +16,42 @@ public class Horse extends HBox {
     private static final String BLUE_HORSE_IMG_URL = "file:src/resources/images/blue_horse.png";
     private static final String YELLOW_HORSE_IMG_URL = "file:src/resources/images/yellow_horse.png";
 
-//    private String horseColor;
     private char horseColor;
-    private int nestRow;
-    private int nestColumn;
     private boolean isInNest;
-    private boolean isMovable;
     private boolean isInHome;
-//    private boolean isReachedHomeDoor;
+    private int rowIndex;
+    private int columnIndex;
     private String tempPosition;
     private Button sideArrow;
     private Timeline arrowAnimation;
-    private VBox moveOptionsContainer;
-    private Button moveOptionOfDice1;
-    private Button moveOptionOfDice2;
-    private Button moveOptionOfDice1AndDice2;
     private ArrayList<Integer> listOfPossibleSteps;
 
-    public Horse(char horseColor, int nestRow, int nestColumn, int horseNo){
-        this.nestRow = nestRow;
-        this.nestColumn = nestColumn;
+    public Horse(char horseColor, int horseNo, int rowIndex, int columnIndex){
         this.horseColor = horseColor;
         this.isInNest = true;
         this.isInHome = false;
-        this.isMovable = false;
         this.tempPosition = null;
-//        this.setStyle("-fx-background-color: gray");
+        this.rowIndex = rowIndex;
+        this.columnIndex = columnIndex;
         listOfPossibleSteps = new ArrayList<>(3){
             {
                 add(0); add(0); add(0);
             }
         };
         setProperties();
-        createMoveOptions();                        //Create list of move options for each horse
+//        this.setStyle("-fx-background-color: rgba(255,255,255,0.2)");
         createSideArrow();                          //Create side arrow for highlighting this horse object when needed
-
         this.getStyleClass().add("activeHorse");    //Set css class for horse object
         setHorseIdAndImg(horseColor, horseNo);      //Set background image (horse image) and set this horse fxid
-
     }
 
-    public char getHorseColor() {
-        return horseColor;
-    }
-
-    public int getNestColumn() {
-        return nestColumn;
-    }
-
-    public int getNestRow() {
-        return nestRow;
-    }
-
-    public void setTempPosition(String tempPosition) {
-        this.tempPosition = tempPosition;
+    private void setProperties(){
+        this.setMinHeight(USE_PREF_SIZE);
+        this.setMinWidth(USE_PREF_SIZE);
+        this.setPrefHeight(70);
+        this.setPrefWidth(80);
+        this.setMaxHeight(USE_PREF_SIZE);
+        this.setMaxWidth(USE_PREF_SIZE);
     }
 
     private void setHorseIdAndImg(char horseColor, int horseNo){
@@ -80,72 +59,27 @@ public class Horse extends HBox {
         switch (horseColor){
             case 'R':{
                 this.setId("RH" + horseNo);
-                Image redHorseImg = new Image(RED_HORSE_IMG_URL);
-                horseImg = new Background(new BackgroundImage(new Image(RED_HORSE_IMG_URL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(150, 150, false, false,  false, false)));
+                horseImg = new Background(new BackgroundImage(new Image(RED_HORSE_IMG_URL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(120, 70, false, false,  false, false)));
                 break;
             }
             case 'G':{
                 this.setId("GH" + horseNo);
-                horseImg = new Background(new BackgroundImage(new Image(GREEN_HORSE_IMG_URL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(150, 150, false, false,  false, false)));
+                horseImg = new Background(new BackgroundImage(new Image(GREEN_HORSE_IMG_URL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(120, 70, false, false,  false, false)));
                 break;
             }
             case 'B':{
                 this.setId("BH" + horseNo);
-                horseImg = new Background(new BackgroundImage(new Image(BLUE_HORSE_IMG_URL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(150, 150, false, false,  false, false)));
+                horseImg = new Background(new BackgroundImage(new Image(BLUE_HORSE_IMG_URL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(120, 70, false, false,  false, false)));
                 break;
             }
             case 'Y':{
                 this.setId("YH" + horseNo);
-                horseImg = new Background(new BackgroundImage(new Image(YELLOW_HORSE_IMG_URL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(150, 150, false, false,  false, false)));
+                horseImg = new Background(new BackgroundImage(new Image(YELLOW_HORSE_IMG_URL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(120, 70, false, false,  false, false)));
                 break;
             }
         }
 
         this.setBackground(horseImg);
-    }
-
-    //Check if this
-    private boolean checkFinalPosition(){
-        return horseColor == tempPosition.charAt(0) && tempPosition.charAt(1) == 0;
-    }
-
-    //Calculate next position
-    public String calculateNextPosition(int steps, String tmpNextPosition){
-        //If the position of this horse is in the nest
-        if (tempPosition == null) return horseColor + "1";
-
-        if (tmpNextPosition == null) tmpNextPosition = tempPosition;
-        int integerPartOfId = Integer.parseInt(tmpNextPosition.substring(1));  //Get the integer part of the position's fxid
-
-        //If (integer part) + (steps) > 11 -> move out of the temporary color area
-        if ( integerPartOfId != 11 && (integerPartOfId + steps) > 11)
-            return calculateNextPosition(steps - (11 - integerPartOfId) ,  tmpNextPosition.substring(0,1) + 11);
-
-        //If the tmpNextPosition is at the final position of a specific color area
-        if (integerPartOfId == 11) {
-            switch (tmpNextPosition.charAt(0)) {
-                case 'R': return calculateNextPosition(steps - 1, "B0");
-                case 'G': return calculateNextPosition(steps - 1, "R0");
-                case 'B': return calculateNextPosition(steps - 1, "Y0");
-                case 'Y': return calculateNextPosition(steps - 1, "G0");
-            }
-        }
-
-        return tmpNextPosition.charAt(0) + Integer.toString(Integer.parseInt(tmpNextPosition.substring(1)) + steps);
-    }
-
-    public String calculateNextHomePosition(int steps){
-        //If the horse is already in home
-        if (isInHome){
-            if (steps != 1 || tempPosition.charAt(2) == '6') return null;
-            else return tempPosition.substring(0,2) + (Integer.parseInt(tempPosition.substring(2)) + 1);
-
-            //If the horse is at the home door position
-        } else {
-            if (steps <= 6)
-               return "H" + horseColor + steps;
-        }
-        return null;
     }
 
     public boolean isInNest() {
@@ -154,15 +88,6 @@ public class Horse extends HBox {
 
     public void setInNest(boolean inNest) {
         isInNest = inNest;
-    }
-
-    private void setProperties(){
-        this.setMinHeight(USE_PREF_SIZE);
-        this.setMinWidth(USE_PREF_SIZE);
-        this.setPrefHeight(150);
-        this.setPrefWidth(80);
-        this.setMaxHeight(USE_PREF_SIZE);
-        this.setMaxWidth(USE_PREF_SIZE);
     }
 
     private void createSideArrow(){
@@ -177,43 +102,6 @@ public class Horse extends HBox {
         arrowAnimation.setCycleCount(Timeline.INDEFINITE);
     }
 
-    private void createMoveOptions(){
-        moveOptionsContainer = new VBox();
-        moveOptionsContainer.setPrefWidth(120);
-        moveOptionsContainer.setPrefHeight(150);
-        moveOptionsContainer.setStyle("-fx-background-color: transparent");
-//        moveOptionsContainer.setTranslateX(-90);
-        moveOptionsContainer.setSpacing(5);
-        moveOptionsContainer.setVisible(false);
-        moveOptionsContainer.setPadding(new Insets(30,0,0,0));
-        createMoveOptionButton();
-        moveOptionsContainer.getChildren().addAll(moveOptionOfDice1,moveOptionOfDice2,moveOptionOfDice1AndDice2);
-        this.getChildren().add(moveOptionsContainer);
-    }
-
-    private void createMoveOptionButton(){
-        moveOptionOfDice1 = new Button();
-        moveOptionOfDice1.setPrefWidth(120);
-        moveOptionOfDice1.setPrefHeight(20);
-        moveOptionOfDice1.setText("Dice 1 move");
-        moveOptionOfDice1.setStyle("-fx-font-size: 8");
-//        moveOptionOfDice1.setVisible(false);
-
-        moveOptionOfDice2 = new Button();
-        moveOptionOfDice2.setPrefWidth(120);
-        moveOptionOfDice2.setPrefHeight(20);
-        moveOptionOfDice2.setText("Dice 2 move");
-        moveOptionOfDice2.setStyle("-fx-font-size: 8");
-//        moveOptionOfDice2.setVisible(false);
-
-        moveOptionOfDice1AndDice2 = new Button();
-        moveOptionOfDice1AndDice2.setPrefWidth(120);
-        moveOptionOfDice1AndDice2.setPrefHeight(20);
-        moveOptionOfDice1AndDice2.setText("Dice 1 and 2 move");
-        moveOptionOfDice1AndDice2.setStyle("-fx-font-size: 8");
-//        moveOptionOfDice1AndDice2.setVisible(false);
-    }
-
     public void showSideArrow(){
         sideArrow.setVisible(true);
         arrowAnimation.play();
@@ -222,7 +110,6 @@ public class Horse extends HBox {
     public void hideSideArrow(){
         arrowAnimation.stop();
         sideArrow.setVisible(false);
-
     }
 
     private void moveSideArrow(){
@@ -230,42 +117,27 @@ public class Horse extends HBox {
         else sideArrow.setTranslateX(0);
     }
 
-    public int convertPositionToIntegerForm(String position, int tempPlayerId){
-        return Integer.parseInt(position.substring(1)) + 11 * tempPlayerId + tempPlayerId;
+    public void pauseArrowAnimation(){
+        sideArrow.setStyle("-fx-background-color: orange");
+        arrowAnimation.pause();
     }
 
-    public int convertTempPositionToIntegerForm(int tempPlayerId){
-        return Integer.parseInt(tempPosition.substring(1)) + 11 * tempPlayerId + tempPlayerId;
+    public void resumeArrowAnimation(){
+        sideArrow.setStyle("-fx-background-color: red");
+        arrowAnimation.play();
     }
 
-    public int convertHomePositionToIntegerForm(int tempPlayerId, String homePosition){
-        return Integer.parseInt(homePosition.substring(1) + 5 * tempPlayerId + tempPlayerId);
-    }
-
-    public int getListOfPossibleSteps(int index) {
-        return listOfPossibleSteps.get(index);
-    }
-
-    public void setListOfPossibleSteps(int index, int steps) {
-         listOfPossibleSteps.set(index, steps);
-    }
-
-    public void resetListOfPossibleSteps(){
-        for (int i = 0; i < listOfPossibleSteps.size(); i++){
-            listOfPossibleSteps.set(i,0);
-        }
-    }
-
-    public boolean isMovable() {
-        return isMovable;
-    }
-
-    public void setMovable(boolean movable) {
-        isMovable = movable;
+    //Getters and setters
+    public char getHorseColor() {
+        return horseColor;
     }
 
     public String getTempPosition() {
         return tempPosition;
+    }
+
+    public void setTempPosition(String tempPosition) {
+        this.tempPosition = tempPosition;
     }
 
     public boolean isInHome() {
@@ -276,103 +148,35 @@ public class Horse extends HBox {
         isInHome = inHome;
     }
 
+    public void resetListOfPossibleSteps(){
+        for (int i = 0; i < listOfPossibleSteps.size(); i++){
+            listOfPossibleSteps.set(i,0);
+        }
+    }
+
+    public void setPossibleStepsListByIndex(int index, int steps) {
+        listOfPossibleSteps.set(index, steps);
+    }
+
+    public int getPossibleStepsListByIndex(int index) {
+        return listOfPossibleSteps.get(index);
+    }
+
     public boolean isInHomeDoorPosition(){
         return tempPosition.equals("H" + horseColor + 0);
-    }
-
-    public void showMoveOptionDice1(String text, boolean isValid){
-        moveOptionOfDice1.setText(text);
-        moveOptionOfDice1.setVisible(isValid);
-    }
-
-    public void showMoveOptionDice2(String text, boolean isValid){
-        moveOptionOfDice2.setText(text);
-        moveOptionOfDice2.setVisible(isValid);
-    }
-
-    public void showMoveOptionDice1andDice2(String text, boolean isValid){
-        moveOptionOfDice1AndDice2.setText(text);
-        moveOptionOfDice1AndDice2.setVisible(isValid);
-    }
-
-    public void activateShowMoveOptionsOnHover(){
-        this.setOnMouseEntered(mouseEvent -> {
-            moveOptionsContainer.setVisible(true);
-        });
-
-        this.setOnMouseExited(mouseEvent -> {
-            moveOptionsContainer.setVisible(false);
-        });
-    }
-
-    public void deactivateShowMoveOptionsOnMouseHover(){
-        moveOptionsContainer.setVisible(false);
-        this.setOnMouseEntered(mouseEvent -> {
-            moveOptionsContainer.setVisible(false);
-        });
-
-        this.setOnMouseExited(mouseEvent -> {
-            moveOptionsContainer.setVisible(false);
-        });
-    }
-
-    public void setMoveOptionOfDice1EventHandler(Node endPosition, GameBoardController gameBoardController){
-        moveOptionOfDice1.setOnMouseEntered(mouseEvent -> {
-            endPosition.setStyle("-fx-fill: yellow");
-
-        });
-
-        moveOptionOfDice1.setOnMouseExited(mouseEvent -> {
-            endPosition.setStyle("-fx-fill: transparent");
-        });
-
-        moveOptionOfDice1.setOnMouseClicked(mouseEvent -> {
-            gameBoardController.onOutsideNestHorseClickedEventHandler(this, 0);
-        });
-    }
-
-    public void setMoveOptionOfDice2EventHandler(Node endPosition, GameBoardController gameBoardController){
-        moveOptionOfDice2.setOnMouseEntered(mouseEvent -> {
-            endPosition.setStyle("-fx-fill: yellow");
-        });
-
-        moveOptionOfDice2.setOnMouseExited(mouseEvent -> {
-            endPosition.setStyle("-fx-fill: transparent");
-        });
-
-        moveOptionOfDice2.setOnMouseClicked(mouseEvent -> {
-            gameBoardController.onOutsideNestHorseClickedEventHandler(this, 1);
-        });
-    }
-
-    public void setMoveOptionOfDice1AndDice2EventHandler(Node endPosition, GameBoardController gameBoardController){
-        moveOptionOfDice1AndDice2.setOnMouseEntered(mouseEvent -> {
-            endPosition.setStyle("-fx-fill: yellow");
-
-        });
-
-        moveOptionOfDice1AndDice2.setOnMouseExited(mouseEvent -> {
-            endPosition.setStyle("-fx-fill: transparent");
-        });
-
-        moveOptionOfDice1AndDice2.setOnMouseClicked(mouseEvent -> {
-            gameBoardController.onOutsideNestHorseClickedEventHandler(this, 2);
-        });
-    }
-
-    public void activateEventHandlerForGoingOutOfNest(GameBoardController gameBoardController){
-        this.setOnMouseClicked(mouseEvent -> {
-            gameBoardController.onInsideNestHorseClickedEventHandler(this);
-        });
-    }
-
-    public void deactivateEventHandlerForGoingOutOfNest(){
-        this.setOnMouseClicked(null);
     }
 
     public void displayListOfPossibleSteps(){
         for (int i = 0; i < listOfPossibleSteps.size(); i ++){
             System.out.println("Possible steps " + i + " " + listOfPossibleSteps.get(i));
         }
+    }
+
+    public int getColumnIndex() {
+        return columnIndex;
+    }
+
+    public int getRowIndex() {
+        return rowIndex;
     }
 }
