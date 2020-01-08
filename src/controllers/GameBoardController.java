@@ -195,12 +195,6 @@ public class GameBoardController {
         System.out.println("next Pos int " + nextPositionInt);
         //If there is a horse in the end position => get kicked
 
-
-//        //If the temp position is not null => not in nest, set the state of this position to null (not occupied)
-//        horseIdOfPosition[convertPositionToIntegerForm(horse.getTempPosition())] = null;
-//        horse.setTempPosition(nextPosition);
-//        horseIdOfPosition[nextPositionInt] = horse.getId(); //Set the state of next position to be occupied
-
         //Moving animation
         StackPane nextPositionNode = (StackPane)gameBoard.lookup("#" + nextPosition);
         nextPositionNode.getChildren().add(1, horse);
