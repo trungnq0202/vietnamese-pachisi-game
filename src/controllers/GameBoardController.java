@@ -1,17 +1,10 @@
 package controllers;
 
-import com.sun.tools.javac.Main;
 import javafx.animation.*;
 import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.shape.*;
 import javafx.util.Duration;
 import models.Dice;
 import models.Horse;
@@ -132,7 +125,14 @@ public class GameBoardController {
 
     //Converting the fxid of the position to integer
     public int convertPositionToIntegerForm(String position){
-        return Integer.parseInt(position.substring(1)) + 11 * tempPlayerIdTurn + tempPlayerIdTurn;
+        int integerPartOfPos = Integer.parseInt(position.substring(1));
+        switch (position.charAt(0)){
+            case 'R' : return integerPartOfPos;
+            case 'B' : return integerPartOfPos + 11  + 1;
+            case 'Y' : return integerPartOfPos + 11 * 2 + 2;
+            case 'G' : return integerPartOfPos + 11 * 3 + 3;
+        }
+        return 0;
     }
 
     /**************** End Position id calculation and conversion **************/
@@ -188,21 +188,18 @@ public class GameBoardController {
     }
 
     //Horse moving animation
-    public void createHorseMovingAnimation(String endPosition, Horse horse){
-
-        String nextPosition = calculateNextPosition(1, horse.getTempPosition(), null);
+    public void createHorseMovingAnimation(String startPosition, String tempPosition, String endPosition, Horse horse){
+        String nextPosition = calculateNextPosition(1, tempPosition , null);
+        System.out.println("next Pos:" + nextPosition);
         int nextPositionInt = convertPositionToIntegerForm(nextPosition);
-
+        System.out.println("next Pos int " + nextPositionInt);
         //If there is a horse in the end position => get kicked
-        if (nextPosition.equals(endPosition) && horseIdOfPosition[nextPositionInt] != null) {
-            Horse horseGetKicked = (Horse)gameBoard.lookup("#" + nextPositionInt);
-            createKickedAnimation(horseGetKicked);
-        }
 
-        //If the temp position is not null => not in nest, set the state of this position to null (not occupied)
-        horseIdOfPosition[convertPositionToIntegerForm(horse.getTempPosition())] = null;
-        horse.setTempPosition(nextPosition);
-        horseIdOfPosition[nextPositionInt] = horse.getId(); //Set the state of next position to be occupied
+
+//        //If the temp position is not null => not in nest, set the state of this position to null (not occupied)
+//        horseIdOfPosition[convertPositionToIntegerForm(horse.getTempPosition())] = null;
+//        horse.setTempPosition(nextPosition);
+//        horseIdOfPosition[nextPositionInt] = horse.getId(); //Set the state of next position to be occupied
 
         //Moving animation
         StackPane nextPositionNode = (StackPane)gameBoard.lookup("#" + nextPosition);
@@ -210,16 +207,24 @@ public class GameBoardController {
 
         //If this horse has yet to be moved to its final position
         if (!nextPosition.equals(endPosition)) {
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(250), e -> {
-                createHorseMovingAnimation(endPosition, horse);
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(400), e -> {
+                createHorseMovingAnimation(startPosition, nextPosition, endPosition, horse);
             }));
             timeline.setCycleCount(1);
             timeline.play();
         } else {
+            if (horseIdOfPosition[nextPositionInt] != null) {
+                Horse horseGetKicked = (Horse)gameBoard.lookup("#" + horseIdOfPosition[nextPositionInt]);
+                createKickedAnimation(horseGetKicked);
+            }
             nextPositionNode.getChildren().get(0).setStyle("-fx-fill: transparent");
+            horseIdOfPosition[convertPositionToIntegerForm(startPosition)] = null;
+            horseIdOfPosition[nextPositionInt] = horse.getId();
+            horse.setTempPosition(nextPosition);
             showPossibleHorsesMoves();
         }
     }
+
 
     private void createHorseGoingOutsideNestAnimation(String startPosition, Horse horse){
         StackPane startPositionNode = (StackPane)gameBoard.lookup("#" + startPosition);
@@ -234,7 +239,7 @@ public class GameBoardController {
     private void createKickedAnimation(Horse horse){
         horse.setTempPosition(null);
         horse.setInNest(true);
-        GridPane nestSP = (GridPane)gameBoard.lookup("#" + horse.getHorseColor() + "NSP");
+        GridPane nestSP = (GridPane)gameBoard.lookup("#" + horse.getHorseColor() + "N");
         nestSP.add(horse,horse.getColumnIndex(), horse.getRowIndex());
     }
 
@@ -419,10 +424,19 @@ public class GameBoardController {
             }
             //If tempHorse is simply outside of nest , not in home and not at home door position
         } else {
-            System.out.println("cc");
-            if (dice1 != null && !checkBlocked(dice1.getRollNumber(),horse) && !checkOverstepHomeDoorPosition(dice1.getRollNumber(), horse))
+            System.out.println("CHECKKKKKKKKKKKKK");
+            if (dice1 != null) {
+                System.out.println("checkblocked_dice1 : " + checkBlocked(dice1.getRollNumber(), horse));
+                System.out.println("checkOverstepHomeDoorPosition_dice1 : " + checkOverstepHomeDoorPosition(dice1.getRollNumber(), horse));
+            }
+            if (dice1 != null && checkBlocked(dice1.getRollNumber(), horse) && checkOverstepHomeDoorPosition(dice1.getRollNumber(), horse))
             { hasPossibleMove = true; horse.setPossibleStepsListByIndex(0,dice1.getRollNumber()); }
-            if (dice2 != null && !checkBlocked(dice2.getRollNumber(),horse) && !checkOverstepHomeDoorPosition(dice2.getRollNumber(), horse))
+
+            if (dice2 != null) {
+                System.out.println("checkblocked_dice2 : " + checkBlocked(dice2.getRollNumber(), horse));
+                System.out.println("checkOverstepHomeDoorPosition_dice2 : " + checkOverstepHomeDoorPosition(dice2.getRollNumber(), horse));
+            }
+            if (dice2 != null && checkBlocked(dice2.getRollNumber(), horse) && checkOverstepHomeDoorPosition(dice2.getRollNumber(), horse))
             { hasPossibleMove = true; horse.setPossibleStepsListByIndex(1,dice2.getRollNumber());}
         }
 
@@ -433,17 +447,24 @@ public class GameBoardController {
     private boolean checkBlocked(int steps, Horse horse){
         //BUGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
         String tempPosition = horse.getTempPosition();
-
+        System.out.println("CHECKBLOCKED");
         //Check if there is no horse between start pos to end pos
         for (int tempStep = 1; tempStep < steps; tempStep++){
             String nextPosition = calculateNextPosition(tempStep, tempPosition, null);
+            System.out.println("next position - checkblocked:" + nextPosition);
             int nextPositionInInt = convertPositionToIntegerForm(nextPosition);
-            if (horseIdOfPosition[nextPositionInInt] != null) return true;
+            System.out.println("next position int - checkblocked:" + nextPositionInInt);
+            System.out.println("horseIdOfPosition[nextPositionInInt] = " + horseIdOfPosition[nextPositionInInt] );
+            if (horseIdOfPosition[nextPositionInInt] != null) return false;
         }
 
         int endPositionInt = convertPositionToIntegerForm(calculateNextPosition(steps,tempPosition, null));
+        System.out.println(calculateNextPosition(steps,tempPosition, null));
+        System.out.println("end position int - checkblocked:" + endPositionInt);
+        System.out.println("horseIdOfPosition[endPositionInt] = " + horseIdOfPosition[endPositionInt] );
         //Check if there is a horse at the last pos, and that horse must not be the same type as the one being considered, or else it would be considered blocked
-        return horseIdOfPosition[endPositionInt] != null && horseIdOfPosition[endPositionInt].charAt(0) != colors[tempPlayerIdTurn];
+        System.out.println(horseIdOfPosition[endPositionInt] == null || horseIdOfPosition[endPositionInt].charAt(0) != colors[tempPlayerIdTurn]);
+        return horseIdOfPosition[endPositionInt] == null || horseIdOfPosition[endPositionInt].charAt(0) != colors[tempPlayerIdTurn];
     }
 
     //Check if the next move of the horse will pass the home position
@@ -455,10 +476,10 @@ public class GameBoardController {
             //If the end position is IN the area with same color
             if (endPosition.charAt(0) == colors[tempPlayerIdTurn]){
                 //Confirm overstep home door position of the integer part of the end position is not 0
-                return endPosition.charAt(1) != '0';
+                return endPosition.charAt(1) == '0';
             }
         }
-        return false;
+        return true;
     }
 
     //Check if the home position the horse will move to is being blocked (this case is for those horses that are standing at the home door position)
@@ -480,11 +501,14 @@ public class GameBoardController {
 
 
     public void showPossibleHorsesMoves(){
+        displayHorseIdOfPosition();
+
         getHorsesWithValidMoves();
         //Debugging
 //        for (int i = 0; i < horsesWithValidMoves.size(); i++){
 //            System.out.println(horsesWithValidMoves.get(i).getId());
 //        }
+
         if ( horsesWithValidMoves.size() != 0 ){
             highlightHorseOutsideNest();
         } else {
@@ -565,4 +589,14 @@ public class GameBoardController {
     public void setUpdatePlayerAllowed(boolean updatePlayerAllowed) {
         isUpdatePlayerAllowed = updatePlayerAllowed;
     }
+
+    public static void setHorseIdOfHomePosition(int index, String value) {
+        horseIdOfPosition[index] = value;
+    }
+
+    public static String[] getHorseIdOfHomePosition() {
+        return horseIdOfHomePosition;
+    }
+
+
 }

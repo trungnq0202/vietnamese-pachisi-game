@@ -63,7 +63,7 @@ public class DicesController {
 
     public void setEventHandlerForDice1Pick(GameBoardController gameBoardController, Horse horse){
 //        gameBoardController.displayHorseIdOfPosition();
-
+        if (horse.getPossibleStepsListByIndex(0) == 0) return;
         showSideArrow1();   //Show side arrow of dice 1
         String endPosition = gameBoardController.calculateNextPosition(horse.getPossibleStepsListByIndex(0), horse.getTempPosition(), null);
         StackPane endPositionNodeSP = (StackPane) gameBoardController.getGameBoard().lookup("#" + endPosition);
@@ -86,11 +86,13 @@ public class DicesController {
             unsetEventHandlerForDices();
             gameBoardController.unhighlightHorsesInsideNest();
             gameBoardController.unhighlightHorseOutsideNest();
-            gameBoardController.createHorseMovingAnimation(endPosition, horse);
+            gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse);
         });
     }
 
     public void setEventHandlerForDice2Pick(GameBoardController gameBoardController, Horse horse){
+        if (horse.getPossibleStepsListByIndex(1) == 0) return;
+
         showSideArrow2();   //Show side arrow of dice 2
         String endPosition = gameBoardController.calculateNextPosition(horse.getPossibleStepsListByIndex(1), horse.getTempPosition(), null);
         StackPane endPositionNodeSP = (StackPane) gameBoardController.getGameBoard().lookup("#" + endPosition);
@@ -111,7 +113,7 @@ public class DicesController {
             unsetEventHandlerForDices();
             gameBoardController.unhighlightHorsesInsideNest();
             gameBoardController.unhighlightHorseOutsideNest();
-            gameBoardController.createHorseMovingAnimation(endPosition, horse);
+            gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse);
         });
     }
 
