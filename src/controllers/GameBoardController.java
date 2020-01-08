@@ -14,10 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GameBoardController {
-//    @FXML private GridPane ARROW0;
-//    @FXML private GridPane ARROW1;
-//    @FXML private GridPane ARROW2;
-//    @FXML private GridPane ARROW3;
     @FXML private Button diceArrow;
     private Timeline diceArrowAnimation;
     @FXML private HBox dices;
@@ -41,7 +37,6 @@ public class GameBoardController {
 
     private boolean isRollingDiceTurn;   //Variable indicating that this is the time for the player to roll the dices, no other action can be done
     private boolean isFreeze;
-    private boolean isUpdatePlayerAllowed;
     private int tempPlayerIdTurn;
 
 
@@ -221,8 +216,13 @@ public class GameBoardController {
 
 
     private void createHorseGoingOutsideNestAnimation(String startPosition, Horse horse){
-        StackPane startPositionNode = (StackPane)gameBoard.lookup("#" + startPosition);
         int startPositionInt = convertPositionToIntegerForm(startPosition);
+        if (horseIdOfPosition[startPositionInt] != null) {
+            Horse horseGetKicked = (Horse)gameBoard.lookup("#" + horseIdOfPosition[startPositionInt]);
+            horseIdOfPosition[startPositionInt] = null;
+            createKickedAnimation(horseGetKicked);
+        }
+        StackPane startPositionNode = (StackPane)gameBoard.lookup("#" + startPosition);
         horseIdOfPosition[startPositionInt] = horse.getId(); //Set the state of next position to be occupied
         horse.setTempPosition(startPosition);
         startPositionNode.getChildren().add(1, horse);
@@ -263,7 +263,9 @@ public class GameBoardController {
             horse.pauseArrowAnimation();
             System.out.println(horse.getTempPosition());
             //Shutdown other horses, which are also outside nest
-            for (Horse subHorse : horsesWithValidMoves) if (subHorse != horse) deactivateShowPossibleMovesForHorseOutsideNest(horse);
+            for (Horse subHorse : horsesWithValidMoves) if (subHorse != horse) {
+                deactivateShowPossibleMovesForHorseOutsideNest(subHorse);
+            }
             if (dicesController.getDice1().isUsable()) dicesController.setEventHandlerForDice1Pick(this, horse);
             if (dicesController.getDice2().isUsable()) dicesController.setEventHandlerForDice2Pick(this, horse);
         });
@@ -271,7 +273,9 @@ public class GameBoardController {
 
     public void deactivateShowPossibleMovesForHorseOutsideNest(Horse horse){
         horse.resumeArrowAnimation();
-        horse.setOnMouseClicked(null);
+//        horse.setOnMouseClicked(null);
+        dicesController.unsetEventHandlerForDices();
+
     }
 
     /********************************************** Game Flow ****************************************************/
@@ -289,6 +293,7 @@ public class GameBoardController {
     }
 
     private void updatePlayerTurn(){
+        //Check double
         if (dicesController.getDice1().getRollNumber() != dicesController.getDice2().getRollNumber()) {
             gameBoard.lookup("#TURN" + tempPlayerIdTurn).setVisible(false);
             if (tempPlayerIdTurn == 3) tempPlayerIdTurn = 0; else tempPlayerIdTurn++;
@@ -439,7 +444,6 @@ public class GameBoardController {
 
     //Check if the next move of the horse is blocked by other horses
     private boolean checkBlocked(int steps, Horse horse){
-        //BUGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
         String tempPosition = horse.getTempPosition();
         System.out.println("CHECKBLOCKED");
         //Check if there is no horse between start pos to end pos
@@ -495,13 +499,7 @@ public class GameBoardController {
 
 
     public void showPossibleHorsesMoves(){
-        displayHorseIdOfPosition();
-
         getHorsesWithValidMoves();
-        //Debugging
-//        for (int i = 0; i < horsesWithValidMoves.size(); i++){
-//            System.out.println(horsesWithValidMoves.get(i).getId());
-//        }
 
         if ( horsesWithValidMoves.size() != 0 ){
             highlightHorseOutsideNest();
@@ -574,22 +572,6 @@ public class GameBoardController {
 
     public VBox getGameBoard() {
         return gameBoard;
-    }
-
-    public boolean isUpdatePlayerAllowed() {
-        return isUpdatePlayerAllowed;
-    }
-
-    public void setUpdatePlayerAllowed(boolean updatePlayerAllowed) {
-        isUpdatePlayerAllowed = updatePlayerAllowed;
-    }
-
-    public static void setHorseIdOfHomePosition(int index, String value) {
-        horseIdOfPosition[index] = value;
-    }
-
-    public static String[] getHorseIdOfHomePosition() {
-        return horseIdOfHomePosition;
     }
 
 
