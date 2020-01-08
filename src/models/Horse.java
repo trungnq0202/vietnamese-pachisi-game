@@ -19,6 +19,7 @@ public class Horse extends HBox {
     private char horseColor;
     private boolean isInNest;
     private boolean isInHome;
+    private boolean isJustEnteredHome;
     private int rowIndex;
     private int columnIndex;
     private String tempPosition;
@@ -30,6 +31,7 @@ public class Horse extends HBox {
         this.horseColor = horseColor;
         this.isInNest = true;
         this.isInHome = false;
+        this.isJustEnteredHome = false;
         this.tempPosition = null;
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
@@ -108,6 +110,7 @@ public class Horse extends HBox {
     }
 
     public void hideSideArrow(){
+        sideArrow.setStyle("-fx-background-color: red");
         arrowAnimation.stop();
         sideArrow.setVisible(false);
     }
@@ -163,7 +166,7 @@ public class Horse extends HBox {
     }
 
     public boolean isInHomeDoorPosition(){
-        return tempPosition.equals("H" + horseColor + 0);
+        return tempPosition.equals(horseColor + "0");
     }
 
     public void displayListOfPossibleSteps(){
@@ -178,5 +181,13 @@ public class Horse extends HBox {
 
     public int getRowIndex() {
         return rowIndex;
+    }
+
+    public boolean isJustEnteredHome() {
+        return isJustEnteredHome;
+    }
+
+    public void setJustEnteredHome(boolean justEnteredHome) {
+        isJustEnteredHome = justEnteredHome;
     }
 }

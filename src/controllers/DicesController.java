@@ -31,6 +31,11 @@ public class DicesController {
     private static List<Image> images = new ArrayList<>(); //array of animation for rolling dices
     @FXML private HBox dices; //HBox to store 2 dices
 
+    private static final String RED_CODE = "#ff0000";
+    private static final String GREEN_CODE = "#0b940b";
+    private static final String BLUE_CODE = "#1183ee";
+    private static final String YELLOW_CODE = "#ddd31e";
+
     //method to load images into array images
     static{
         for (int i = 1; i < 7; i++){
@@ -46,7 +51,6 @@ public class DicesController {
     //populate HBox with 2 dices
     @FXML public void initialize() {
         System.out.println("DicesController init");
-
         dice1 = new Dice();
         dice2 = new Dice();
         createDiceArrow1();
@@ -62,59 +66,75 @@ public class DicesController {
     public void injectGameBoardController(GameBoardController gameBoardController){this.gameBoardController = gameBoardController;}
 
     public void setEventHandlerForDice1Pick(GameBoardController gameBoardController, Horse horse){
-//        gameBoardController.displayHorseIdOfPosition();
-        if (horse.getPossibleStepsListByIndex(0) == 0) return;
-        showSideArrow1();   //Show side arrow of dice 1
-        String endPosition = gameBoardController.calculateNextPosition(horse.getPossibleStepsListByIndex(0), horse.getTempPosition(), null);
-        StackPane endPositionNodeSP = (StackPane) gameBoardController.getGameBoard().lookup("#" + endPosition);
-
-
-        //When hovering, highlight end position
-        dice1.setOnMouseEntered(event -> {
-            endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: yellow");
-
-        });
-
-        //When not hovering, unhighlight end position
-        dice1.setOnMouseExited(event -> {
-            endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: transparent");
-        });
-
-        //When click, execute animation, check possible moves for all other horse again
-        dice1.setOnMouseClicked(event -> {
-            dice1.setUsable(false); //dice 1 can no longer be chosen for a horse move
-            unsetEventHandlerForDices();
-            gameBoardController.unhighlightHorsesInsideNest();
-            gameBoardController.unhighlightHorseOutsideNest();
-            gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse);
-        });
+        eventHandlerForDicePick(gameBoardController, horse, 0);
     }
 
     public void setEventHandlerForDice2Pick(GameBoardController gameBoardController, Horse horse){
-        if (horse.getPossibleStepsListByIndex(1) == 0) return;
+        eventHandlerForDicePick(gameBoardController, horse, 1);
+    }
 
-        showSideArrow2();   //Show side arrow of dice 2
-        String endPosition = gameBoardController.calculateNextPosition(horse.getPossibleStepsListByIndex(1), horse.getTempPosition(), null);
+    public void eventHandlerForDicePick(GameBoardController gameBoardController, Horse horse, int dicePickIndex){
+        System.out.println("cc");
+        if (horse.getPossibleStepsListByIndex(dicePickIndex) == 0) return;
+        Dice dicePick, otherDice;
+        if (dicePickIndex == 0) {
+            showSideArrow1();
+            dicePick = dice1;
+            otherDice = dice2;
+        } else {
+            showSideArrow2();
+            dicePick = dice2;
+            otherDice = dice1;
+        }
+
+        String endPosition;
+        if (horse.isInHome() || horse.isInHomeDoorPosition())
+            endPosition = gameBoardController.calculateNextHomePosition(horse.getPossibleStepsListByIndex(dicePickIndex), horse);
+        else
+            endPosition = gameBoardController.calculateNextPosition(horse.getPossibleStepsListByIndex(dicePickIndex), horse.getTempPosition(), null);
         StackPane endPositionNodeSP = (StackPane) gameBoardController.getGameBoard().lookup("#" + endPosition);
 
         //When hovering, highlight end position
-        dice2.setOnMouseEntered(event -> {
+        dicePick.setOnMouseEntered(event -> {
             endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: yellow");
         });
 
         //When not hovering, unhighlight end position
-        dice2.setOnMouseExited(event -> {
-            endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: transparent");
+        dicePick.setOnMouseExited(event -> {
+            resetFillColorOfPosition(endPositionNodeSP, horse);
         });
 
         //When click, execute animation, check possible moves for all other horse again
-        dice2.setOnMouseClicked(event -> {
-            dice2.setUsable(false); //dice 2 can no longer be chosen for a horse move
+        dicePick.setOnMouseClicked(event -> {
+            dicePick.setUsable(false); //dice 1 can no longer be chosen for a horse move
             unsetEventHandlerForDices();
             gameBoardController.unhighlightHorsesInsideNest();
-            gameBoardController.unhighlightHorseOutsideNest();
-            gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse);
+            if (horse.isInHome() ) {
+                gameBoardController.unhighlightHorseOutsideNest(false);
+                gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse);
+            }
+            else if (horse.isInHomeDoorPosition()) {
+                if (otherDice.isUsable()) {
+                    gameBoardController.unhighlightHorseOutsideNest(true);
+                    horse.setJustEnteredHome(true);
+                }
+                else gameBoardController.unhighlightHorseOutsideNest(false);
+                gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse);
+            }
+            else gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse);
         });
+    }
+
+    public void resetFillColorOfPosition(StackPane endPositionNodeSP, Horse horse){
+        if (horse.isInHome() || horse.isInHomeDoorPosition()){
+            switch (horse.getHorseColor()){
+                case 'R' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + RED_CODE); break;
+                case 'B' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + BLUE_CODE); break;
+                case 'Y' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + YELLOW_CODE); break;
+                case 'G' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + GREEN_CODE); break;
+            }
+        }
+        else endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: transparent");
     }
 
     public void unsetEventHandlerForDices(){
