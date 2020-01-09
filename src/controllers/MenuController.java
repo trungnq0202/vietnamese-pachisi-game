@@ -7,6 +7,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import models.Sound;
 
 import java.util.ArrayList;
 
@@ -49,10 +50,10 @@ public class MenuController{
 //    @FXML private StackPane VP2;
 //    @FXML private StackPane VP3;
 //    @FXML private StackPane VP4;
-
     private MainController mainController;  //Make connection with mainController
     private int noHumanPlayers;             //Number of human players
     private int noVirtualPlayers;            //Number of virtual players
+    private Sound btnClickSound;
 
     private ArrayList<String> playersNameList;
     private static final String UNCHOSEN_COLOR = "#48da40";
@@ -68,6 +69,7 @@ public class MenuController{
         };
         noHumanPlayers  = 2;    //there is 1 human player by default
         noVirtualPlayers = 0;    //there is no virtual player by default
+        btnClickSound = new Sound(Sound.SoundType.BUTTON_CLICK_SFX);
     }
 
     public void injectMainController(MainController mainController){
@@ -105,6 +107,7 @@ public class MenuController{
 
     //Event handler when clicking on the circles to choose the number of human and machine players
     private EventHandler<MouseEvent> stkPaneOnMouseClickedEventHandler = event -> {
+        btnClickSound.play();
         StackPane stackPane = (StackPane)event.getSource();  //Get the stack pane object being clicked
         //If the stack pane being clicked is a choice of a number of human players
         if (stackPane.getId().charAt(0) == 'H'){
@@ -166,6 +169,7 @@ public class MenuController{
     //Event handler for the newGameBtn
     private void setNewGameBtnEventHandler(){
         newGameBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
             startMenu.setVisible(false);     //hide start menu
             preGameMenu.setVisible(true);    //show pregame menu
         });
@@ -174,6 +178,7 @@ public class MenuController{
     //Event handler for the exitGameBtn
     private void setExitGameBtnEventHandler(){
         exitGameBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
             System.exit(0);         //Exit the program
         });
     }
@@ -181,6 +186,7 @@ public class MenuController{
     //Event handler for the get back to start menu GameBtn
     private void setBackBtnEventHandler(){
         backBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
             preGameMenu.setVisible(false);  //hide pregame menu
             startMenu.setVisible(true);     //show start menu
         });
@@ -189,6 +195,7 @@ public class MenuController{
     //Event handler for the nextBtn
     private void setNextBtnEventHandler(){
         nextBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
             if (noHumanPlayers + noVirtualPlayers < 2) {
                 startMenuError.setVisible(true);
             }
@@ -204,17 +211,20 @@ public class MenuController{
     //Event handler for "Got it" button
     private void setExitErrorBtnEventHandler(){
         exitErrorBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
             startMenuError.setVisible(false);
 
         });
 
         exitErrorBtn1.setOnMouseClicked(event -> {
+            btnClickSound.play();
             emptyPlayerNameError.setVisible(false);
         });
     }
 
     private void setBackLevelBtnEventHandler(){
         backLevelBtn.setOnMouseClicked(event->{
+            btnClickSound.play();
             preGameMenu.setVisible(true);
             userSetNameMenu.setVisible(false);
         });
@@ -231,6 +241,7 @@ public class MenuController{
 
     private void setNextPlaySceneBtnEventHandler(){
         nextPlaySceneBtn.setOnMouseClicked(event->{
+            btnClickSound.play();
             if (!validatePlayersNameInput()){
                 emptyPlayerNameError.setVisible(true);
             }else {

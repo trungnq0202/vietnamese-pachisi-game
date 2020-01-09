@@ -1,17 +1,10 @@
-package models;
+package resources.view;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import models.Horse;
 
 public class HorseNest extends GridPane {
-    private ArrayList<Integer> horseHomePos;
-    private boolean isOutOfNest[];
-
     public HorseNest(char color){
         setProperties();
         setNestId(color);
@@ -19,11 +12,6 @@ public class HorseNest extends GridPane {
     }
 
     private void addHorses(char color){
-        this.horseHomePos = new ArrayList<>(){
-            {for (int i = 0; i < 4; i++) add(0);}
-        };
-        isOutOfNest = new boolean[4];
-        Arrays.fill(isOutOfNest, false);
         this.add(new Horse(color,0, 0,0), 0, 0);
         this.add(new Horse(color,1,0,1), 1, 0);
         this.add(new Horse(color,2,1,0), 0, 1);

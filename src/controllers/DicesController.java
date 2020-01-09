@@ -15,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import models.Dice;
 import models.Horse;
+import models.Sound;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +32,9 @@ public class DicesController {
     private static List<Image> images = new ArrayList<>(); //array of animation for rolling dices
     @FXML private HBox dices; //HBox to store 2 dices
 
-    private static final String RED_CODE = "#ff0000";
-    private static final String GREEN_CODE = "#0b940b";
-    private static final String BLUE_CODE = "#1183ee";
-    private static final String YELLOW_CODE = "#ddd31e";
+
+
+    private Sound rollSound;
 
     //method to load images into array images
     static{
@@ -46,6 +46,7 @@ public class DicesController {
 
     public DicesController(){
         System.out.println("DicesController construct");
+        rollSound = new Sound(Sound.SoundType.DICE_ROLL_SFX);
     }
 
     //populate HBox with 2 dices
@@ -74,7 +75,6 @@ public class DicesController {
     }
 
     public void eventHandlerForDicePick(GameBoardController gameBoardController, Horse horse, int dicePickIndex){
-        System.out.println("cc");
         if (horse.getPossibleStepsListByIndex(dicePickIndex) == 0) return;
         Dice dicePick, otherDice;
         if (dicePickIndex == 0) {
@@ -95,52 +95,43 @@ public class DicesController {
         StackPane endPositionNodeSP = (StackPane) gameBoardController.getGameBoard().lookup("#" + endPosition);
 
         //When hovering, highlight end position
-        dicePick.setOnMouseEntered(event -> {
-            if (!horse.isInHome() && !horse.isInHomeDoorPosition() &&
-                    GameBoardController.getHorseIdOfPositionByIndex(gameBoardController.convertPositionToIntegerForm(endPosition)) != null)
-                endPositionNodeSP.setStyle("-fx-background-color: red");
-            endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: yellow");
-        });
+        dicePick.setOnMouseEntered(event -> onMouseEnteredDiceEventHandler(endPosition, endPositionNodeSP, horse));
 
         //When not hovering, unhighlight end position
-        dicePick.setOnMouseExited(event -> {
-            resetFillColorOfPosition(endPositionNodeSP, horse);
-        });
+        dicePick.setOnMouseExited(event -> onMouseExitedDiceEventHandler(endPositionNodeSP, horse));
 
         //When click, execute animation, check possible moves for all other horse again
-        dicePick.setOnMouseClicked(event -> {
-            dicePick.setUsable(false); //dice 1 can no longer be chosen for a horse move
-            unsetEventHandlerForDices();
-            gameBoardController.unhighlightHorsesInsideNest();
-            if (horse.isInHome() ) {
-                gameBoardController.unhighlightHorseOutsideNest(false);
-                gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse);
-            }
-            else if (horse.isInHomeDoorPosition()) {
-                if (otherDice.isUsable()) {
-                    gameBoardController.unhighlightHorseOutsideNest(true);
-                    horse.setJustEnteredHome(true);
-                }
-                else gameBoardController.unhighlightHorseOutsideNest(false);
-                gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse);
-            }
-            else gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse);
-        });
+        dicePick.setOnMouseClicked(event -> onMouseClickedDiceEventHandler(endPosition, horse, dicePick, otherDice));
     }
 
-    public void resetFillColorOfPosition(StackPane endPositionNodeSP, Horse horse){
-        if (horse.isInHome() || horse.isInHomeDoorPosition()){
-            switch (horse.getHorseColor()){
-                case 'R' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + RED_CODE); break;
-                case 'B' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + BLUE_CODE); break;
-                case 'Y' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + YELLOW_CODE); break;
-                case 'G' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + GREEN_CODE); break;
+    private void onMouseEnteredDiceEventHandler(String endPosition, StackPane endPositionNodeSP , Horse horse){
+        if (!horse.isInHome() && !horse.isInHomeDoorPosition() &&
+                GameBoardController.getHorseIdOfPositionByIndex(gameBoardController.convertPositionToIntegerForm(endPosition)) != null)
+            endPositionNodeSP.setStyle("-fx-background-color: red");
+        endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: yellow");
+    }
+
+    private void onMouseExitedDiceEventHandler(StackPane endPositionNodeSP , Horse horse){
+        gameBoardController.resetFillColorOfPosition(endPositionNodeSP, horse);
+    }
+
+    private void onMouseClickedDiceEventHandler(String endPosition, Horse horse, Dice dicePick, Dice otherDice){
+        dicePick.setUsable(false); //dice 1 can no longer be chosen for a horse move
+        unsetEventHandlerForDices();
+        gameBoardController.unhighlightHorsesInsideNest();
+        if (horse.isInHome() ) {
+            gameBoardController.unhighlightHorseOutsideNest(false);
+            gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse);
+        }
+        else if (horse.isInHomeDoorPosition()) {
+            if (otherDice.isUsable()) {
+                gameBoardController.unhighlightHorseOutsideNest(true);
+                horse.setJustEnteredHome(true);
             }
+            else gameBoardController.unhighlightHorseOutsideNest(false);
+            gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse);
         }
-        else {
-            endPositionNodeSP.setStyle("-fx-background-color: transparent");
-            endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: transparent");
-        }
+        else gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse);
     }
 
     public void unsetEventHandlerForDices(){
@@ -208,7 +199,7 @@ public class DicesController {
     public void rollWithAnimation(Dice dice) {
         if (gameBoardController.isFreeze() || !gameBoardController.isRollingDiceTurn()) return;
         if (dice == dice2) gameBoardController.setFreeze(true);
-
+        rollSound.play();
         //If the dice rolling is temporarily allowed
             ImageView imageView = new ImageView();
             Transition rollAnimation = new Transition() {
@@ -226,6 +217,7 @@ public class DicesController {
                 }
             };
             rollAnimation.setOnFinished(event -> { //after finishing the rolling animation, actual roll
+                rollSound.stop();
                 dice.roll();
                 int i = dice.getRollNumber();
                 dice.setRollImage(i);

@@ -8,14 +8,14 @@ import javafx.scene.layout.*;
 import javafx.util.Duration;
 import models.Dice;
 import models.Horse;
-import models.HorseNest;
+import resources.view.HorseNest;
+import models.Sound;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GameBoardController {
     @FXML private Button diceArrow;
-    private Timeline diceArrowAnimation;
     @FXML private HBox dices;
     @FXML private Label PN0;
     @FXML private Label PN1;
@@ -26,7 +26,11 @@ public class GameBoardController {
     @FXML private StackPane YNSP;
     @FXML private StackPane GNSP;
     @FXML private VBox gameBoard;
-    @FXML private Button testMoveGreenHorse;
+
+    private static final String RED_CODE = "#ff0000";
+    private static final String GREEN_CODE = "#0b940b";
+    private static final String BLUE_CODE = "#1183ee";
+    private static final String YELLOW_CODE = "#ddd31e";
 
     private MainController mainController;
     @FXML private DicesController dicesController;
@@ -34,11 +38,15 @@ public class GameBoardController {
     private static String[] horseIdOfPosition;  //String array indicating which horse(horseId) is occupying which position
     private static ArrayList<Horse> horsesWithValidMoves;
     private static String[] horseIdOfHomePosition;
-
+    private Timeline diceArrowAnimation;
     private boolean isRollingDiceTurn;   //Variable indicating that this is the time for the player to roll the dices, no other action can be done
     private boolean isFreeze;
     private int tempPlayerIdTurn;
-
+    private Sound horseMoveSound;
+    private Sound horseGoingHomeSound;
+    private Sound horseAppearSound;
+    private Sound horseKickedSound;
+    private Sound launchSound;
 
     public GameBoardController(){
 //        System.out.println("gameboardcontroller construct");
@@ -47,6 +55,11 @@ public class GameBoardController {
         horsesWithValidMoves = new ArrayList<>();
         Arrays.fill(horseIdOfPosition,null);
         Arrays.fill(horseIdOfHomePosition,null);
+        horseMoveSound = new Sound(Sound.SoundType.HORSE_MOVE_SFX);
+        horseGoingHomeSound = new Sound(Sound.SoundType.HORSE_JUMP_SFX);
+        horseAppearSound = new Sound(Sound.SoundType.HORSE_APPEAR_SFX);
+        horseKickedSound = new Sound(Sound.SoundType.HORSE_KICKED_SFX);
+        launchSound = new Sound(Sound.SoundType.GAME_LAUNCH_SFX);
     }
 
     /**************** DEBUG FUNCTIONS **************/
@@ -194,6 +207,7 @@ public class GameBoardController {
     //Show the game board
     public void showGameBoard(boolean isDisplayed){
         if (isDisplayed) {
+            launchSound.play();
             gameBoard.setVisible(true);
             startGame();
         } else {
@@ -214,6 +228,7 @@ public class GameBoardController {
         //Moving animation
         StackPane nextPositionNode = (StackPane)gameBoard.lookup("#" + nextPosition);
         nextPositionNode.getChildren().add(1, horse);
+        horseMoveSound.play();
 
         //If this horse has yet to be moved to its final position
         if (!nextPosition.equals(endPosition)) {
@@ -228,7 +243,7 @@ public class GameBoardController {
                 createKickedAnimation(horseGetKicked);
             }
 //            nextPositionNode.getChildren().get(0).setStyle("-fx-fill: transparent");
-            dicesController.resetFillColorOfPosition(nextPositionNode, horse);
+            resetFillColorOfPosition(nextPositionNode, horse);
             horseIdOfPosition[convertPositionToIntegerForm(startPosition)] = null;
             horseIdOfPosition[nextPositionInt] = horse.getId();
             horse.setTempPosition(nextPosition);
@@ -248,7 +263,7 @@ public class GameBoardController {
         horseIdOfPosition[startPositionInt] = horse.getId(); //Set the state of next position to be occupied
         horse.setTempPosition(startPosition);
         startPositionNode.getChildren().add(1, horse);
-
+        horseAppearSound.play();
     }
 
     //Horse going inside home animation
@@ -263,8 +278,9 @@ public class GameBoardController {
         horse.setTempPosition(endPosition);
         StackPane endPositionNode = (StackPane)gameBoard.lookup("#" + endPosition);
         endPositionNode.getChildren().add(1, horse);
-        dicesController.resetFillColorOfPosition(endPositionNode, horse);
-        dicesController.resetFillColorOfPosition(endPositionNode, horse);
+        horseGoingHomeSound.play();
+        resetFillColorOfPosition(endPositionNode, horse);
+        resetFillColorOfPosition(endPositionNode, horse);
         showPossibleHorsesMoves();
     }
 
@@ -274,15 +290,33 @@ public class GameBoardController {
         horse.setInNest(true);
         GridPane nestSP = (GridPane)gameBoard.lookup("#" + horse.getHorseColor() + "N");
         nestSP.add(horse,horse.getColumnIndex(), horse.getRowIndex());
+        horseKickedSound.play();
+    }
+
+    public void resetFillColorOfPosition(StackPane endPositionNodeSP, Horse horse){
+        if (horse.isInHome() || horse.isInHomeDoorPosition()){
+            switch (horse.getHorseColor()){
+                case 'R' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + RED_CODE); break;
+                case 'B' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + BLUE_CODE); break;
+                case 'Y' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + YELLOW_CODE); break;
+                case 'G' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + GREEN_CODE); break;
+            }
+        }
+        else {
+            endPositionNodeSP.setStyle("-fx-background-color: transparent");
+            endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: transparent");
+        }
     }
 
     /*************** End Horse Animation **************/
 
     /*************** Event Handlers for horse OnClick event **************/
     private void activateEventHandlerForHorseGoingOutOfNest(Horse horse){
+        String startPosition = calculateNextPosition(0, null, null);    //Get fxid of start position
+        StackPane startPositionSP = (StackPane)gameBoard.lookup("#" + startPosition);;
+
         horse.setOnMouseClicked(event -> {
             horse.setInNest(false); //This horse is no longer in the nest
-            String startPosition = calculateNextPosition(0, null, null);    //Get fxid of start position
             createHorseGoingOutsideNestAnimation(startPosition, horse);
             unhighlightHorsesInsideNest();
             dicesController.unsetEventHandlerForDices();
@@ -290,10 +324,21 @@ public class GameBoardController {
             setDicesUnusable();
             updatePlayerTurn();
         });
+
+        horse.setOnMouseEntered(event -> {
+            if (horseIdOfPosition[convertPositionToIntegerForm(startPosition)] != null)
+                startPositionSP.setStyle("-fx-background-color: red");
+        });
+
+        horse.setOnMouseExited(event -> {
+            startPositionSP.setStyle("-fx-background-color: transparent");
+        });
     }
 
     private void deactivateEventHandlerForHorseGoingOutOfNest(Horse horse){
         horse.setOnMouseClicked(null);
+        horse.setOnMouseEntered(null);
+        horse.setOnMouseExited(null);
     }
 
     private void activateEventHandlerForHorseOutsideNest(Horse horse){
@@ -606,12 +651,13 @@ public class GameBoardController {
         return horseIdOfPosition[index];
     }
 
+
 //        private void debug(){
-//        Horse horse = (Horse)gameBoard.lookup("#RH0");
-//        horse.setTempPosition("R0");
-//        horseIdOfPosition[convertPositionToIntegerForm("R0")] = "RH0";
+//        Horse horse = (Horse)gameBoard.lookup("#BH0");
+//        horse.setTempPosition("B0");
+//        horseIdOfPosition[convertPositionToIntegerForm("B0")] = "BH0";
 //        horse.setInNest(false);
-//        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#R0");
+//        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#B0");
 //        nextPositionNode.getChildren().add(1, horse);
 
 //        Horse horse = (Horse)gameBoard.lookup("#RH0");

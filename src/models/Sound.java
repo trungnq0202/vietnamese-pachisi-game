@@ -2,6 +2,7 @@ package models;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.net.URL;
 
@@ -12,6 +13,8 @@ public class Sound {
     private static final String HORSE_MOVE_SFX_URL = "../resources/sounds/sound_horse_move.wav";
     private static final String HORSE_APPEAR_SFX_URL = "../resources/sounds/sound_appear.wav";
     private static final String BUTTON_CLICK_SFX_URL = "../resources/sounds/sound_button_click.mp3";
+    private static final String HORSE_KICKED_SFX_URL = "../resources/sounds/sound_horsekicked.mp3";
+    private static final String GAME_LAUNCH_SFX_URL = "../resources/sounds/sound_launch.mp3";
     private static final String NULL_SOUND_URL = "../resources/sounds/backgroundsong.wav"; // TODO: find a sound for this
 
     public enum SoundType {
@@ -20,7 +23,9 @@ public class Sound {
         HORSE_JUMP_SFX,
         HORSE_MOVE_SFX,
         HORSE_APPEAR_SFX,
-        BUTTON_CLICK_SFX
+        BUTTON_CLICK_SFX,
+        HORSE_KICKED_SFX,
+        GAME_LAUNCH_SFX
     }
 
     private MediaPlayer sound;
@@ -31,7 +36,7 @@ public class Sound {
         } catch (Exception e) {
             System.out.println("Cannot load sound.");
         }
-        if (soundType == SoundType.BACKGROUND_MUSIC) {
+        if (soundType == SoundType.BACKGROUND_MUSIC || soundType == SoundType.DICE_ROLL_SFX) {
             this.sound.setCycleCount(MediaPlayer.INDEFINITE);
             // sound.setVolume(0.1); // FIXME: why set the volume down?
             // sound.play(); //play the music immediately after being loaded
@@ -66,6 +71,14 @@ public class Sound {
                 resource = getClass().getResource(BUTTON_CLICK_SFX_URL);
                 break;
             }
+            case HORSE_KICKED_SFX:{
+                resource = getClass().getResource(HORSE_KICKED_SFX_URL);
+                break;
+            }
+            case GAME_LAUNCH_SFX:{
+                resource = getClass().getResource(GAME_LAUNCH_SFX_URL);
+                break;
+            }
             default: {
                 // just to make sure resource var is initiated
                 resource = getClass().getResource(NULL_SOUND_URL);
@@ -76,6 +89,7 @@ public class Sound {
     }
 
     public void play() {
+        this.sound.seek(Duration.ZERO);
         this.sound.play();
     }
 

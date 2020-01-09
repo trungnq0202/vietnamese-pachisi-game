@@ -41,7 +41,6 @@ public class Horse extends HBox {
             }
         };
         setProperties();
-//        this.setStyle("-fx-background-color: rgba(255,255,255,0.2)");
         createSideArrow();                          //Create side arrow for highlighting this horse object when needed
         this.getStyleClass().add("activeHorse");    //Set css class for horse object
         setHorseIdAndImg(horseColor, horseNo);      //Set background image (horse image) and set this horse fxid
@@ -50,8 +49,8 @@ public class Horse extends HBox {
     private void setProperties(){
         this.setMinHeight(USE_PREF_SIZE);
         this.setMinWidth(USE_PREF_SIZE);
-        this.setPrefHeight(70);
-        this.setPrefWidth(80);
+        this.setPrefHeight(55);
+        this.setPrefWidth(70);
         this.setMaxHeight(USE_PREF_SIZE);
         this.setMaxWidth(USE_PREF_SIZE);
     }
@@ -166,13 +165,8 @@ public class Horse extends HBox {
     }
 
     public boolean isInHomeDoorPosition(){
+        if (tempPosition == null) return false;
         return tempPosition.equals(horseColor + "0");
-    }
-
-    public void displayListOfPossibleSteps(){
-        for (int i = 0; i < listOfPossibleSteps.size(); i ++){
-            System.out.println("Possible steps " + i + " " + listOfPossibleSteps.get(i));
-        }
     }
 
     public int getColumnIndex() {

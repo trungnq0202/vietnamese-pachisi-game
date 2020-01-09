@@ -19,7 +19,6 @@ public class MainController {
     @FXML private MediaView backgroundVideo;
     @FXML private MenuController menuController;
     @FXML private GameBoardController gameBoardController;
-//    @FXML private DicesController dicesController;
     private static final String VIDEO_URL = "../resources/videos/loopbackgroundvideo.mp4";
 
     //Variables for sound controller
@@ -49,13 +48,6 @@ public class MainController {
         gameBoardController.injectMainController(this);
     }
 
-
-    private void resetHorseHomes(){
-        horseHomes.clear();
-        for (int i = 1; i <= 24; i++){
-            horseHomes.set(i,null);
-        }
-    }
 
     //Set loop background video when using menu
     private void setBackgroundVideo(){
