@@ -112,9 +112,9 @@
                      <children>
                         <HBox prefHeight="140.0" prefWidth="628.0">
                            <children>
-                              <HBox prefHeight="147.0" prefWidth="648.0">
+                              <HBox alignment="CENTER" prefHeight="147.0" prefWidth="648.0">
                                  <children>
-                                    <StackPane fx:id="Y0" prefHeight="135.0" prefWidth="211.0">
+                                    <StackPane fx:id="Y0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="83.0" prefWidth="78.0">
                                        <children>
                                           <Circle fill="WHITE" radius="30.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="2.0" />
                                        </children>
@@ -249,9 +249,9 @@
             </VBox>
             <VBox prefHeight="942.0" prefWidth="220.0">
                <children>
-                  <VBox prefHeight="400.0" prefWidth="205.0" spacing="1.0">
+                  <VBox alignment="CENTER" prefHeight="400.0" prefWidth="205.0" spacing="1.0">
                      <children>
-                        <StackPane fx:id="B0" prefHeight="150.0" prefWidth="200.0">
+                        <StackPane fx:id="B0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="86.0">
                            <children>
                               <Circle fill="WHITE" radius="30.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="2.0" />
                            </children>
@@ -301,7 +301,7 @@
                         <fx:include fx:id="dices" source="dices.fxml" />
                      </children>
                   </VBox>
-                  <VBox prefHeight="400.0" prefWidth="205.0" spacing="1.0">
+                  <VBox alignment="CENTER" prefHeight="400.0" prefWidth="205.0" spacing="1.0">
                      <children>
                         <StackPane fx:id="HG6" prefHeight="150.0" prefWidth="200.0">
                            <children>
@@ -333,7 +333,7 @@
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
                            </children>
                         </StackPane>
-                        <StackPane fx:id="G0" prefHeight="150.0" prefWidth="200.0">
+                        <StackPane fx:id="G0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="66.0" prefWidth="87.0">
                            <children>
                               <Circle fill="WHITE" layoutX="-2.0" radius="30.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="2.0" />
                            </children>
@@ -442,7 +442,7 @@
                   </HBox>
                   <HBox prefHeight="140.0" prefWidth="628.0">
                      <children>
-                        <HBox prefHeight="147.0" prefWidth="648.0">
+                        <HBox alignment="CENTER" prefHeight="147.0" prefWidth="648.0">
                            <children>
                               <StackPane fx:id="HR6" prefHeight="150.0" prefWidth="200.0">
                                  <children>
@@ -474,7 +474,7 @@
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
                                  </children>
                               </StackPane>
-                              <StackPane fx:id="R0" prefHeight="135.0" prefWidth="211.0">
+                              <StackPane fx:id="R0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="82.0" prefWidth="78.0">
                                  <children>
                                     <Circle fill="WHITE" radius="30.0" stroke="RED" strokeType="INSIDE" strokeWidth="2.0" />
                                  </children>

@@ -96,6 +96,9 @@ public class DicesController {
 
         //When hovering, highlight end position
         dicePick.setOnMouseEntered(event -> {
+            if (!horse.isInHome() && !horse.isInHomeDoorPosition() &&
+                    GameBoardController.getHorseIdOfPositionByIndex(gameBoardController.convertPositionToIntegerForm(endPosition)) != null)
+                endPositionNodeSP.setStyle("-fx-background-color: red");
             endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: yellow");
         });
 
@@ -134,7 +137,10 @@ public class DicesController {
                 case 'G' : endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: " + GREEN_CODE); break;
             }
         }
-        else endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: transparent");
+        else {
+            endPositionNodeSP.setStyle("-fx-background-color: transparent");
+            endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: transparent");
+        }
     }
 
     public void unsetEventHandlerForDices(){

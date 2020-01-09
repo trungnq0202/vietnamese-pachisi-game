@@ -172,7 +172,7 @@ public class GameBoardController {
         isFreeze = false;                                   //unfreeze rolling dices
         tempPlayerIdTurn = 0;                               //First turn belongs to player "GREEN"
         gameBoard.lookup("#TURN0").setVisible(true);
-        debug();
+//        debug();
     }
 
     //Show the game board
@@ -430,13 +430,13 @@ public class GameBoardController {
         if (horse.isInHome() && !horse.isJustEnteredHome()){
             System.out.println("th1");
             //If dice1 roll number is 1
-            if (dice1 != null && dice1.getRollNumber() == 1 && checkInvalidScalingHome(horse)){
+            if (dice1 != null && (dice1.getRollNumber() == Integer.parseInt(horse.getTempPosition().substring(2)) + 1) && checkInvalidScalingHome(horse)){
                 hasPossibleMove = true;
                 horse.setPossibleStepsListByIndex(0,1);
             }
 
             //If dice2 roll number is 1
-            if (dice2 != null && dice2.getRollNumber() == 1 && checkInvalidScalingHome(horse)){
+            if (dice2 != null && (dice2.getRollNumber() == Integer.parseInt(horse.getTempPosition().substring(2)) + 1) && checkInvalidScalingHome(horse)){
                 hasPossibleMove = true;
                 horse.setPossibleStepsListByIndex(1,1);
             }
@@ -519,7 +519,6 @@ public class GameBoardController {
         else return false;
     }
 
-
     /*************** End Check possible moves and display **************/
     public void showPossibleHorsesMoves(){
         getHorsesWithValidMoves();
@@ -599,13 +598,17 @@ public class GameBoardController {
         return gameBoard;
     }
 
-    private void debug(){
-        Horse horse = (Horse)gameBoard.lookup("#RH0");
-        horse.setTempPosition("R0");
-        horseIdOfPosition[convertPositionToIntegerForm("R0")] = "RH0";
-        horse.setInNest(false);
-        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#R0");
-        nextPositionNode.getChildren().add(1, horse);
+    public static String getHorseIdOfPositionByIndex(int index) {
+        return horseIdOfPosition[index];
+    }
+
+//        private void debug(){
+//        Horse horse = (Horse)gameBoard.lookup("#RH0");
+//        horse.setTempPosition("R0");
+//        horseIdOfPosition[convertPositionToIntegerForm("R0")] = "RH0";
+//        horse.setInNest(false);
+//        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#R0");
+//        nextPositionNode.getChildren().add(1, horse);
 
 //        Horse horse = (Horse)gameBoard.lookup("#RH0");
 //        horse.setTempPosition("HR3");
@@ -614,5 +617,5 @@ public class GameBoardController {
 //        horse.setInHome(true);
 //        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#HR3");
 //        nextPositionNode.getChildren().add(1, horse);
-    }
+//    }
 }
