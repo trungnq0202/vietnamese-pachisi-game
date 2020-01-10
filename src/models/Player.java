@@ -3,8 +3,9 @@ package models;
 public class Player {
     private String playerName;
     private int score;
+    private int clientNo;
 
-    Player(String playerName, int score){
+    Player(){
         this.score = 0;
 
     }
