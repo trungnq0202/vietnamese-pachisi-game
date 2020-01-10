@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+
+<HBox fx:id="dices" alignment="CENTER" prefHeight="85.0" prefWidth="156.0" stylesheets="@../css/dices.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DicesController" />

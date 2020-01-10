@@ -1,49 +1,60 @@
 package controllers;
+import com.sun.media.jfxmediaimpl.platform.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import models.Player;
 import models.Sound;
+import networking.Server;
 
 import java.util.ArrayList;
 
 public class MenuController{
-    @FXML private VBox userSetNameMenu;
-    @FXML private VBox emptyPlayerNameError;
-    @FXML private VBox startMenuError;
-    @FXML private VBox preGameMenu;
-    @FXML private VBox startMenu;
-    @FXML private VBox langMenu;
-    @FXML private StackPane rootMenu;
+    // Recently added
+    public VBox onlinePromptMenu;
+    public Button serverBtn;
+    public VBox serverPromptMenu;
+    public Button serverBackToMenuBtn;
+    public Button serverPlayBtn;
+    public Button onlinePlayerBtn;
+    public Text serverConnectionText;
+    public Button backToMessageMenuBtn;
 
-    @FXML private Button exitErrorBtn1;
+
+    public Button onlineGameBtn;
+    public Button offlineGameBtn;
+    public VBox onlinePlayMenu;
+    public TextField onlinePlayerTextField;
+    public Text connectionMessageText;
+    public Button backToMainMenuBtn;
+    public Button onlinePlayBtn;
+    public VBox onlinePromptMessage;
+    public Button noBtn;
+    public Button yesBtn;
+
+
+    //Old ones
+    @FXML private VBox userSetNameMenu;
     @FXML private Button backLevelBtn;
     @FXML private Button nextPlaySceneBtn;
+    @FXML private Button exitErrorBtn1;
+    @FXML private VBox emptyPlayerNameError;
     @FXML private Button exitErrorBtn;
+    @FXML private VBox startMenuError;
     @FXML private Button backBtn;
     @FXML private Button nextBtn;
     @FXML private Button exitGameBtn;
-    @FXML private Button newGameBtn;
-    @FXML private Button changeLanguageBtn;
-    @FXML private Button vietnameseLangBtn;
-    @FXML private Button englishLangBtn;
-    @FXML private Button langBackBtn;
 
-    @FXML private Label noHumanPlayersLabel;
-    @FXML private Label noVirtualPlayersLabel;
-    @FXML private Label noPlayersErrLabel;
-    @FXML private Label emptyPlayerNameLabel;
-    @FXML private Label langSelectLabel;
-    @FXML private Label player1NameLabel;
-    @FXML private Label player2NameLabel;
-    @FXML private Label player3NameLabel;
-    @FXML private Label player4NameLabel;
-
+    //    @FXML private Button newGameBtn;
+    @FXML private VBox preGameMenu;
+    @FXML private VBox startMenu;
+    @FXML private StackPane rootMenu;
     private MainController mainController;  //Make connection with mainController
     private int noHumanPlayers;             //Number of human players
     private int noVirtualPlayers;            //Number of virtual players
@@ -66,7 +77,7 @@ public class MenuController{
         btnClickSound = new Sound(Sound.SoundType.BUTTON_CLICK_SFX);
     }
 
-    public void injectMainController(MainController mainController){
+    void injectMainController(MainController mainController){
         this.mainController = mainController;
     }
 
@@ -74,34 +85,6 @@ public class MenuController{
         System.out.println("menucontroller init");
         setNoPlayersChoiceEventHandler();
         setMenuButtonsEventHandler();
-        setBtnBindingText();
-        setLabelBindingText();
-    }
-
-    private void setBtnBindingText(){
-        I18NController.setUpButtonText(newGameBtn, "menu.new_game");
-        I18NController.setUpButtonText(changeLanguageBtn, "menu.change_language");
-        I18NController.setUpButtonText(exitGameBtn, "menu.exit");
-        I18NController.setUpButtonText(backBtn, "menu.back");
-        I18NController.setUpButtonText(nextBtn, "menu.next");
-        I18NController.setUpButtonText(exitErrorBtn, "menu.error_exit_btn");
-        I18NController.setUpButtonText(exitErrorBtn1, "menu.error_exit_btn");
-        I18NController.setUpButtonText(langBackBtn, "menu.back");
-        I18NController.setUpButtonText(backLevelBtn, "menu.back");
-        I18NController.setUpButtonText(nextPlaySceneBtn, "menu.play");
-
-    }
-
-    private void setLabelBindingText(){
-        I18NController.setUpLabelText(noHumanPlayersLabel, "menu.no_human_players");
-        I18NController.setUpLabelText(noVirtualPlayersLabel, "menu.no_virtual_players");
-        I18NController.setUpLabelText(noPlayersErrLabel, "menu.noPlayers_error");
-        I18NController.setUpLabelText(emptyPlayerNameLabel, "menu.empty_player_name");
-        I18NController.setUpLabelText(langSelectLabel, "menu.lang_title");
-        I18NController.setUpLabelText(player1NameLabel, "menu.player_1_name");
-        I18NController.setUpLabelText(player2NameLabel, "menu.player_2_name");
-        I18NController.setUpLabelText(player3NameLabel, "menu.player_3_name");
-        I18NController.setUpLabelText(player4NameLabel, "menu.player_4_name");
     }
 
     //Set event handler for
@@ -116,17 +99,26 @@ public class MenuController{
 
     //Set event handler for all menu buttons
     private void setMenuButtonsEventHandler(){
-        setNewGameBtnEventHandler();
+        setOfflineGameBtnEventHandler();
         setExitGameBtnEventHandler();
         setBackBtnEventHandler();
         setNextBtnEventHandler();
         setExitErrorBtnEventHandler();
+
+        //recently added for online players
+        setOnlineGameBtnEventHandler();
+        setOnlinePlayBtnEventHandler();
+        setPromptMessageEventHandler();
+        setServerPromptMenuEventHandler();
+        setOnlinePlayerBtnEventHandler();
+        setServerPlayBtnEventHandler();
+        setServerBackToMenuBtnEventHandler();
+        setBackToMessageMenuBtnEventHandler();
+
+        // Recently add these 3 function
+//        setUserSelectionMenuTextField();
         setBackLevelBtnEventHandler();
         setNextPlaySceneBtnEventHandler();
-        setChangeLanguageBtnEventHandler();
-        setEnglishLangBtnEventHandler();
-        setVietnameseLangBtnEventHandler();
-        setLangBackBtnEventHandler();
     }
 
     //Event handler when clicking on the circles to choose the number of human and machine players
@@ -165,7 +157,8 @@ public class MenuController{
         tempCircle.setStyle("-fx-fill: " + colorCode);  //Fill color in the circle
     }
 
-    public void resetPlayersNameList() {
+
+    private void resetPlayersNameList() {
         playersNameList.set(0," ");
         playersNameList.set(1," ");
         playersNameList.set(2," ");
@@ -173,7 +166,7 @@ public class MenuController{
     }
 
     //Set value for each object in playersNameList from textfield
-    public void setPlayersNameList(){
+    private void setPlayersNameList(){
         //Name of the human players
         for (int i = 0;  i < noHumanPlayers; i++){
             TextField tempPlayerNameTF =  (TextField)rootMenu.lookup("#TF" + i);
@@ -185,44 +178,13 @@ public class MenuController{
         }
     }
 
-    //Event handler for the "language" button
-    public void setChangeLanguageBtnEventHandler(){
-        changeLanguageBtn.setOnMouseClicked(event -> {
-            btnClickSound.play();
-            startMenu.setVisible(false);
-            langMenu.setVisible(true);
-        });
-    }
-
-    public void setVietnameseLangBtnEventHandler(){
-        vietnameseLangBtn.setOnMouseClicked(event -> {
-            btnClickSound.play();
-            vietnameseLangBtn.setStyle("-fx-background-color: #c93b14");
-            englishLangBtn.setStyle("-fx-background-color: #1e90ff");
-            I18NController.switchLanguage(I18NController.getLanguageLocale(I18NController.Language.VIETNAMESE));
-        });
-    }
-
-    public void setEnglishLangBtnEventHandler(){
-        englishLangBtn.setOnMouseClicked(event -> {
-            btnClickSound.play();
-            englishLangBtn.setStyle("-fx-background-color: #c93b14");
-            vietnameseLangBtn.setStyle("-fx-background-color: #1e90ff");
-            I18NController.switchLanguage(I18NController.getLanguageLocale(I18NController.Language.ENGLISH));
-        });
-    }
-
-    private void setLangBackBtnEventHandler(){
-        langBackBtn.setOnMouseClicked(event -> {
-            btnClickSound.play();
-            langMenu.setVisible(false);
-            startMenu.setVisible(true);
-        });
+    ArrayList<String> getPlayersNameList() {
+        return playersNameList;
     }
 
     //Event handler for the newGameBtn
-    private void setNewGameBtnEventHandler(){
-        newGameBtn.setOnMouseClicked(event -> {
+    private void setOfflineGameBtnEventHandler(){
+        offlineGameBtn.setOnMouseClicked(event -> {
             btnClickSound.play();
             startMenu.setVisible(false);     //hide start menu
             preGameMenu.setVisible(true);    //show pregame menu
@@ -276,7 +238,6 @@ public class MenuController{
         });
     }
 
-    //Event handler for "Back" button
     private void setBackLevelBtnEventHandler(){
         backLevelBtn.setOnMouseClicked(event->{
             btnClickSound.play();
@@ -331,15 +292,138 @@ public class MenuController{
         }
     }
 
-    public int getNoHumanPlayers() {
+    int getNoHumanPlayers() {
         return noHumanPlayers;
     }
 
-    public int getNoVirtualPlayers() {
+    int getNoVirtualPlayers() {
         return noVirtualPlayers;
     }
 
-    public ArrayList<String> getPlayersNameList() {
-        return playersNameList;
+
+    //recently added
+    private void setOnlineGameBtnEventHandler(){
+        onlineGameBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            startMenu.setVisible(false);             //hide start menu
+            onlinePromptMenu.setVisible(true);       //online prompt menu
+        });
     }
+
+    //create server button
+    private void setServerPlayBtnEventHandler(){
+        serverPlayBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            serverPlayBtn.setText("Waiting...");
+            serverPlayBtn.setMouseTransparent(true);
+
+            //create server
+            Server server = new Server();
+            new Thread(server).start();
+            serverConnectionText.setText("[Menu controller] Create server!");            //connection message
+            serverConnectionText.setVisible(true);
+        });
+    }
+
+    private void setServerBackToMenuBtnEventHandler(){
+        serverBackToMenuBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            onlinePromptMessage.setVisible(true);
+            setYesBtnServerEventHandler();
+            setNoBtnServerEventHandler();
+        });
+    }
+
+    private void setYesBtnServerEventHandler(){
+        yesBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            serverPromptMenu.setVisible(false);
+            serverPlayBtn.setText("Ready");
+            onlinePromptMenu.setVisible(true);
+            serverConnectionText.setText("");
+            serverConnectionText.setVisible(false);
+            onlinePromptMessage.setVisible(false);
+        });
+    }
+
+    private void setNoBtnServerEventHandler(){
+        noBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            onlinePromptMessage.setVisible(false);
+        });
+    }
+
+    private void setOnlinePlayerBtnEventHandler(){
+        onlinePlayerBtn.setOnMouseClicked(event->{
+            btnClickSound.play();
+            onlinePlayMenu.setVisible(true);
+            onlinePromptMenu.setVisible(false);
+        });
+    }
+
+    private void setServerPromptMenuEventHandler(){
+        serverBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            onlinePromptMenu.setVisible(false);
+            serverPromptMenu.setVisible(true);
+        });
+    }
+
+    private void setBackToMessageMenuBtnEventHandler(){
+        backToMessageMenuBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            startMenu.setVisible(true);
+            onlinePromptMenu.setVisible(false);
+        });
+    }
+
+    private void setOnlinePlayBtnEventHandler(){
+        onlinePlayBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            if(onlinePlayerTextField.getText().equals("")){
+                emptyPlayerNameError.setVisible(true);
+            }
+            else {
+                if (onlinePlayerTextField.getText() != null) {
+                    //create new player for this session
+                    Player player = new Player();
+                    player.setPlayerName(onlinePlayerTextField.getText());
+                    onlinePlayBtn.setMouseTransparent(true);
+                }
+                connectionMessageText.setVisible(true);
+                onlinePlayBtn.setText("Waiting...");
+            }
+        });
+    }
+
+    private void setYesBtnEventHandler(){
+        yesBtn.setOnMouseClicked(event1 -> {
+            btnClickSound.play();
+            onlinePromptMenu.setVisible(true);
+            onlinePlayMenu.setVisible(false);
+            connectionMessageText.setText("");
+            connectionMessageText.setVisible(false);
+            onlinePlayBtn.setText("Ready");
+            onlinePromptMessage.setVisible(false);
+        });
+    }
+
+    private void setNoBtnEventHandler(){
+        noBtn.setOnMouseClicked(event2->{
+            btnClickSound.play();
+            onlinePromptMessage.setVisible(false);
+
+        });
+    }
+
+    private void setPromptMessageEventHandler() {
+        backToMainMenuBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            onlinePromptMessage.setVisible(true);
+            setYesBtnEventHandler();
+            setNoBtnEventHandler();
+        });
+    }
+
+
 }
