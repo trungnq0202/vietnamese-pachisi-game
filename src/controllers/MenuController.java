@@ -94,7 +94,6 @@ public class MenuController{
         //recently added for online players
         setOnlineGameBtnEventHandler();
         setOnlinePlayBtnEventHandler();
-        setBackToMainMenuBtnEventHandler();
         setPromptMessageEventHandler();
 
         // Recently add these 3 function
@@ -285,6 +284,7 @@ public class MenuController{
 
     //recently added
     private void setOnlineGameBtnEventHandler(){
+        onlinePlayBtn.setText("Ready");
         onlineGameBtn.setOnMouseClicked(event -> {
             btnClickSound.play();
             startMenu.setVisible(false);     //hide start menu
@@ -300,43 +300,43 @@ public class MenuController{
             }
             else {
                 connectionMessageText.setText("You- " +onlinePlayerTextField.getText()+" has connected.\n" +
-                        "Waiting for User 2, User 3, User 4....\n" +
+                        "Waiting for Player 2, Player 3, Player 4....\n" +
                         "Anne has connected.\n" +
-                        "Waiting for User 2, User 4...\n" +
+                        "Waiting for Player 2, Player 4...\n" +
                         "Jack has connected.\n" +
-                        "Waiting for User 4...\n" +
-                        "User 4 disconnected.");            //connection message
+                        "Waiting for Player 4...\n" +
+                        "Player 4 disconnected.");            //connection message
                 connectionMessageText.setVisible(true);
                 onlinePlayBtn.setText("Waiting...");
             }
         });
     }
 
-    private void setBackToMainMenuBtnEventHandler(){
-        backToMainMenuBtn.setOnMouseClicked(mouseEvent -> {
+    private void setYesBtnEventHandler(){
+        yesBtn.setOnMouseClicked(event1 -> {
             btnClickSound.play();
             startMenu.setVisible(true);
             onlinePlayMenu.setVisible(false);
+            connectionMessageText.setText("");
+            connectionMessageText.setVisible(false);
+            onlinePlayBtn.setText("Ready");
+            onlinePromptMessage.setVisible(false);
         });
     }
 
-    private boolean setPromptMessageEventHandler(){
-        if(!(connectionMessageText.getText().equals(""))){
+    private void setNoBtnEventHandler(){
+        noBtn.setOnMouseClicked(event2->{
+            btnClickSound.play();
+            onlinePromptMessage.setVisible(false);
+        });
+    }
+
+    private void setPromptMessageEventHandler() {
+        backToMainMenuBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
             onlinePromptMessage.setVisible(true);
-            backToMainMenuBtn.setOnMouseClicked(event->{
-                btnClickSound.play();
-                yesBtn.setOnMouseClicked(event1 -> {
-                    btnClickSound.play();
-                    startMenu.setVisible(true);
-                    onlinePlayMenu.setVisible(false);
-                });
-                noBtn.setOnMouseClicked(event2->{
-                    btnClickSound.play();
-                    onlinePromptMessage.setVisible(false);
-                });
-            });
-            return true;
-        }
-        return false;
+            setYesBtnEventHandler();
+            setNoBtnEventHandler();
+        });
     }
 }
