@@ -391,7 +391,7 @@ public class MenuController{
     private void setYesBtnEventHandler(){
         yesBtn.setOnMouseClicked(event1 -> {
             btnClickSound.play();
-            startMenu.setVisible(true);
+            onlinePromptMenu.setVisible(true);
             onlinePlayMenu.setVisible(false);
             connectionMessageText.setText("");
             connectionMessageText.setVisible(false);
