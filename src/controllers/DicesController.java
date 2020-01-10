@@ -31,9 +31,6 @@ public class DicesController {
 
     private static List<Image> images = new ArrayList<>(); //array of animation for rolling dices
     @FXML private HBox dices; //HBox to store 2 dices
-
-
-
     private Sound rollSound;
 
     //method to load images into array images

@@ -141,7 +141,6 @@ public class MenuController{
         tempCircle.setStyle("-fx-fill: " + colorCode);  //Fill color in the circle
     }
 
-
     public void resetPlayersNameList() {
         playersNameList.set(0," ");
         playersNameList.set(1," ");

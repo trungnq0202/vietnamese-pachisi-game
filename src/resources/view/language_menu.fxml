@@ -15,11 +15,11 @@
                   <Font size="29.0" />
                </font>
             </Label>
-            <Button fx:id="vietnameseLangBtn" mnemonicParsing="false" onAction="#changeLanguageToVietnamese" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text=" Tiếng Việt " textFill="WHITE">
+            <Button fx:id="vietnameseLangBtn" mnemonicParsing="false"  style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text=" Tiếng Việt " textFill="WHITE">
                <font>
                   <Font name="Consolas" size="18.0" />
                </font></Button>
-            <Button fx:id="englishLangBtn" layoutX="198.0" layoutY="191.0" mnemonicParsing="false" onAction="#changeLanguageToEnglish" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="English" textFill="WHITE">
+            <Button fx:id="englishLangBtn" layoutX="198.0" layoutY="191.0" mnemonicParsing="false"  style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="English" textFill="WHITE">
                <font>
                   <Font name="Consolas" size="18.0" />
                </font>
