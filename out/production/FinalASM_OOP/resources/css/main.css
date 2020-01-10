@@ -2,10 +2,28 @@
 /*CSS for every button*/
 
 .btn{
-    -fx-background-color: #1e90ff;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #380da3 0%, #2f2b90 100%),
+            #0b169d, #5b50ff,
+            radial-gradient(center 50% 50%, radius 100%, #5b50ff, #3b4ec5);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75), 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
 }
+.btn:pressed{
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+
 .btn:hover{
-    -fx-background-color: #ffac1f;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #9ea327 0%, #906720 100%),
+            #e2e033, #ffff8f,
+            radial-gradient(center 50% 50%, radius 100%, #ffcb13, #c5ab23);
+    -fx-text-fill: black;
 }
 
 
