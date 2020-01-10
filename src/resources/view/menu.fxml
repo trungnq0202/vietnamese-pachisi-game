@@ -389,5 +389,37 @@
             </Button>
          </children>
       </VBox>
+      <VBox fx:id="winningMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="342.0" prefWidth="382.0" spacing="51.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,0.3);" visible="false">
+         <children>
+            <StackPane prefHeight="31.0" prefWidth="389.0">
+               <children>
+                  <Label text="Leaderboards">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="366.0" prefWidth="356.0">
+               <children>
+                  <TextField fx:id="winnerTextField" editable="false" prefHeight="196.0" prefWidth="356.0" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="114.0" prefWidth="356.0">
+               <children>
+                  <Button fx:id="playAgainBtn" mnemonicParsing="false" prefHeight="120.0" prefWidth="120.0" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="Play Again" textFill="WHITE" translateX="90.0" translateY="-10.0">
+                     <font>
+                        <Font name="Consolas" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="exitMenuBtn" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="Exit" textFill="WHITE" translateX="-120.0" translateY="-10.0">
+                     <font>
+                        <Font name="Consolas" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
    </children>
 </StackPane>
