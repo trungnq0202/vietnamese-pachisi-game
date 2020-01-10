@@ -14,6 +14,16 @@ import java.util.ArrayList;
 
 public class MenuController{
     // Recently added
+    public VBox onlinePromptMenu;
+    public Button serverBtn;
+    public VBox serverPromptMenu;
+    public Button serverBackToMenuBtn;
+    public Button serverPlayBtn;
+    public Button onlinePlayerBtn;
+    public Text serverConnectionText;
+    public Button backToMessageMenuBtn;
+
+
     public Button onlineGameBtn;
     public Button offlineGameBtn;
     public VBox onlinePlayMenu;
@@ -24,6 +34,7 @@ public class MenuController{
     public VBox onlinePromptMessage;
     public Button noBtn;
     public Button yesBtn;
+
 
     //Old ones
     @FXML private VBox userSetNameMenu;
@@ -63,7 +74,7 @@ public class MenuController{
         btnClickSound = new Sound(Sound.SoundType.BUTTON_CLICK_SFX);
     }
 
-    public void injectMainController(MainController mainController){
+    void injectMainController(MainController mainController){
         this.mainController = mainController;
     }
 
@@ -95,6 +106,11 @@ public class MenuController{
         setOnlineGameBtnEventHandler();
         setOnlinePlayBtnEventHandler();
         setPromptMessageEventHandler();
+        setServerPromptMenuEventHandler();
+        setOnlinePlayerBtnEventHandler();
+        setServerPlayBtnEventHandler();
+        setServerBackToMenuBtnEventHandler();
+        setBackToMessageMenuBtnEventHandler();
 
         // Recently add these 3 function
 //        setUserSelectionMenuTextField();
@@ -139,7 +155,7 @@ public class MenuController{
     }
 
 
-    public void resetPlayersNameList() {
+    private void resetPlayersNameList() {
         playersNameList.set(0," ");
         playersNameList.set(1," ");
         playersNameList.set(2," ");
@@ -147,7 +163,7 @@ public class MenuController{
     }
 
     //Set value for each object in playersNameList from textfield
-    public void setPlayersNameList(){
+    private void setPlayersNameList(){
         //Name of the human players
         for (int i = 0;  i < noHumanPlayers; i++){
             TextField tempPlayerNameTF =  (TextField)rootMenu.lookup("#TF" + i);
@@ -159,7 +175,7 @@ public class MenuController{
         }
     }
 
-    public ArrayList<String> getPlayersNameList() {
+    ArrayList<String> getPlayersNameList() {
         return playersNameList;
     }
 
@@ -273,22 +289,82 @@ public class MenuController{
         }
     }
 
-    public int getNoHumanPlayers() {
+    int getNoHumanPlayers() {
         return noHumanPlayers;
     }
 
-    public int getNoVirtualPlayers() {
+    int getNoVirtualPlayers() {
         return noVirtualPlayers;
     }
 
 
     //recently added
     private void setOnlineGameBtnEventHandler(){
-        onlinePlayBtn.setText("Ready");
         onlineGameBtn.setOnMouseClicked(event -> {
             btnClickSound.play();
-            startMenu.setVisible(false);     //hide start menu
-            onlinePlayMenu.setVisible(true);    //show online pregame menu
+            startMenu.setVisible(false);             //hide start menu
+            onlinePromptMenu.setVisible(true);       //online prompt menu
+        });
+    }
+
+    private void setServerPlayBtnEventHandler(){
+      serverPlayBtn.setOnMouseClicked(mouseEvent -> {
+          btnClickSound.play();
+          serverPlayBtn.setText("Waiting...");
+          serverConnectionText.setText("Server text field ... blah blah blah");            //connection message
+          serverConnectionText.setVisible(true);
+      });
+    }
+
+    private void setServerBackToMenuBtnEventHandler(){
+        serverBackToMenuBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            onlinePromptMessage.setVisible(true);
+            setYesBtnServerEventHandler();
+            setNoBtnServerEventHandler();
+        });
+    }
+
+    private void setYesBtnServerEventHandler(){
+        yesBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            serverPromptMenu.setVisible(false);
+            serverPlayBtn.setText("Ready");
+            onlinePromptMenu.setVisible(true);
+            serverConnectionText.setText("");
+            serverConnectionText.setVisible(false);
+            onlinePromptMessage.setVisible(false);
+        });
+    }
+
+    private void setNoBtnServerEventHandler(){
+        noBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            onlinePromptMessage.setVisible(false);
+        });
+    }
+
+    private void setOnlinePlayerBtnEventHandler(){
+        onlinePlayerBtn.setOnMouseClicked(event->{
+            btnClickSound.play();
+            onlinePlayMenu.setVisible(true);
+            onlinePromptMenu.setVisible(false);
+        });
+    }
+
+    private void setServerPromptMenuEventHandler(){
+        serverBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            onlinePromptMenu.setVisible(false);
+            serverPromptMenu.setVisible(true);
+        });
+    }
+
+    private void setBackToMessageMenuBtnEventHandler(){
+        backToMessageMenuBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            startMenu.setVisible(true);
+            onlinePromptMenu.setVisible(false);
         });
     }
 
@@ -328,6 +404,7 @@ public class MenuController{
         noBtn.setOnMouseClicked(event2->{
             btnClickSound.play();
             onlinePromptMessage.setVisible(false);
+
         });
     }
 
@@ -339,4 +416,6 @@ public class MenuController{
             setNoBtnEventHandler();
         });
     }
+
+
 }
