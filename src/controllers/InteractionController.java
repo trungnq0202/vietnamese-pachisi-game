@@ -1,10 +1,15 @@
 package controllers;
 
 
+import networking.Client;
 import networking.Message;
 
 public class InteractionController {
     private static InteractionController interactionController;
+    private Client client;
+
+
+
 
     public static InteractionController getInteractionController(){
         if (interactionController == null){
@@ -12,8 +17,12 @@ public class InteractionController {
         } return interactionController;
     }
 
+    public void sendMessageForClient(Object message){
+        client.sendMessage(message);
+    }
+
     public void processInput(Object input){
-        // if receive a string object
+
         if (input instanceof Message){
             Message incomingMessage = (Message)input;
             System.out.println("I received a message");
@@ -21,7 +30,6 @@ public class InteractionController {
                     incomingMessage.getSenderName(),
                     incomingMessage.getContent());
         }
-
 
     }
 

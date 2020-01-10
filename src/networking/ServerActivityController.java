@@ -6,8 +6,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityController {
-    private static ActivityController activityController;
+public class ServerActivityController {
+    private static ServerActivityController serverActivityController;
     private ArrayList<Socket> clientSockets;
     private ArrayList<ObjectOutputStream> serverSocketOutputs;
     private ObjectOutputStream messageOutputStream;
@@ -15,16 +15,16 @@ public class ActivityController {
 
 
 
-    private ActivityController(){
+    private ServerActivityController(){
         this.clientSockets = new ArrayList<>();
         this.serverSocketOutputs = new ArrayList<>();
     }
 
-    public static ActivityController getActivityController(){
-        if (activityController == null){
-            activityController = new ActivityController();
+    public static ServerActivityController getServerActivityController(){
+        if (serverActivityController == null){
+            serverActivityController = new ServerActivityController();
         }
-        return activityController;
+        return serverActivityController;
     }
 
     public void addSocket(Socket client){

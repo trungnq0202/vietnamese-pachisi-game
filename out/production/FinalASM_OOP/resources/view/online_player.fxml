@@ -9,9 +9,8 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="models.PlayerController">
-   <children>
       <TextField fx:id="nameField" layoutX="280.0" layoutY="77.0" prefHeight="25.0" prefWidth="175.0" promptText="Enter your name here" />
-      <Button fx:id="createNewPlayerButton" layoutX="351.0" layoutY="158.0" mnemonicParsing="false" text="Create session &gt;" textFill="#0f0e0e" />
+      <Button fx:id="createNewPlayerButton" layoutX="351.0" layoutY="151.0" mnemonicParsing="false" text="Create session &gt;" textFill="#0f0e0e" />
       <ButtonBar layoutX="14.0" layoutY="70.0" prefHeight="40.0" prefWidth="200.0">
          <buttons>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Your name is:" wrappingWidth="128.1171652674675">
@@ -21,6 +20,6 @@
             </Text>
          </buttons>
       </ButtonBar>
-      <TextArea layoutX="43.0" layoutY="158.0" prefHeight="200.0" prefWidth="237.0" promptText="System message will be displayed here" />
-   </children>
+      <TextArea layoutX="34.0" layoutY="137.0" prefHeight="200.0" prefWidth="237.0" promptText="System message will be displayed here" />
+      <Button fx:id="createNewClient" layoutX="351.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Create client &gt;" />
 </AnchorPane>

@@ -15,7 +15,7 @@ public class Client extends Thread{
     private Socket socket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
-    private final int PORT = 8888 ;
+    private final int PORT = 62341  ;
     private final String HOST_NAME = "localhost";
     private InteractionController interactionController = InteractionController.getInteractionController();
 
@@ -93,6 +93,13 @@ public class Client extends Thread{
         }).start();
     }
 
+    public void sendMessage(Object message){
+        try {
+            this.outputStream.writeObject(message);
+        } catch (IOException e){
+            System.out.println("Can't send message from this client" + e);
+        }
+    }
 
     public boolean isServer() {
         return false;

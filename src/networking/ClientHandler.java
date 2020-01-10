@@ -5,8 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.UUID;
 
 class ClientHandler extends Thread {
 
@@ -16,20 +14,20 @@ class ClientHandler extends Thread {
     private ObjectOutputStream outputStream;
     private InetAddress inetAddress;
     private String threadName;
-    private ActivityController activityController;
+    private ServerActivityController serverActivityController;
 
 
     public ClientHandler(Socket socket) {
         this.socket  = socket;
         this.inetAddress = socket.getInetAddress();
-        this.activityController = ActivityController.getActivityController();
+        this.serverActivityController = ServerActivityController.getServerActivityController();
     }
 
     @Override
     public void run() {
         Message message;
         message = new Message("welcome to server!");
-        activityController.sendMessage(message);
+        serverActivityController.sendMessage(message);
         System.out.printf("%s just connected...\n", inetAddress.getHostAddress());
 
         try {
@@ -41,11 +39,7 @@ class ClientHandler extends Thread {
                         message.getSenderName(),
                         message.getContent());
                 //}
-
-
-                this.activityController.sendMessage(message);
-
-
+                this.serverActivityController.sendMessage(message);
             }
         } catch (IOException e) {
             // client probably disconnected

@@ -5,9 +5,8 @@ public class Player {
     private int score;
     private int clientNo;
 
-    Player(){
+    public Player(){
         this.score = 0;
-
     }
 
     public int getScore() {
