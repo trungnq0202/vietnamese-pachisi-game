@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -45,7 +46,11 @@
             </StackPane>
             <StackPane prefHeight="166.0" prefWidth="483.0">
                <children>
-                  <Text fx:id="connectionMessageText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="276.0" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" translateX="450.0">
+                     <children>
+                        <TextField fx:id="connectionMessageText" editable="false" prefHeight="115.0" prefWidth="418.0" />
+                     </children>
+                  </Pane>
                </children>
             </StackPane>
             <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -83,7 +88,7 @@
                      <children>
                         <StackPane fx:id="HP0" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Circle fx:id="HPC0" fill="#48da40" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+                              <Circle fill="#48da40" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                                  <font>
                                     <Font name="Consolas" size="31.0" />
@@ -93,7 +98,7 @@
                         </StackPane>
                         <StackPane fx:id="HP1" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Circle fx:id="HPC1" fill="#48da40" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+                              <Circle  fill="#48da40" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
                                  <font>
                                     <Font name="Consolas" size="31.0" />
@@ -103,7 +108,7 @@
                         </StackPane>
                         <StackPane fx:id="HP2" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Circle fx:id="HPC2" fill="#c93b14" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+                              <Circle  fill="#c93b14" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
                                  <font>
                                     <Font name="Consolas" size="31.0" />
@@ -113,7 +118,7 @@
                         </StackPane>
                         <StackPane fx:id="HP3" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Circle fx:id="HPC3" fill="#48da40" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+                              <Circle  fill="#48da40" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
                                  <font>
                                     <Font name="Consolas" size="31.0" />
@@ -123,7 +128,7 @@
                         </StackPane>
                         <StackPane fx:id="HP4" layoutX="158.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Circle fx:id="HPC4" fill="#48da40" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+                              <Circle fill="#48da40" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
                                  <font>
                                     <Font name="Consolas" size="31.0" />
@@ -352,7 +357,11 @@
          <children>
             <StackPane prefHeight="298.0" prefWidth="483.0">
                <children>
-                  <Text fx:id="serverConnectionText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="157.0" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" translateX="420.0">
+                     <children>
+                        <TextField fx:id="serverConnectionText" editable="false" prefHeight="181.0" prefWidth="416.0" translateX="30.0" translateY="60.0" />
+                     </children>
+                  </Pane>
                </children></StackPane>
             <StackPane prefHeight="104.0" prefWidth="483.0">
                <children>

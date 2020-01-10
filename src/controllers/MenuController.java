@@ -23,7 +23,6 @@ public class MenuController{
     public Button serverBackToMenuBtn;
     public Button serverPlayBtn;
     public Button onlinePlayerBtn;
-    public Text serverConnectionText;
     public Button backToMessageMenuBtn;
 
 
@@ -31,12 +30,14 @@ public class MenuController{
     public Button offlineGameBtn;
     public VBox onlinePlayMenu;
     public TextField onlinePlayerTextField;
-    public Text connectionMessageText;
     public Button backToMainMenuBtn;
     public Button onlinePlayBtn;
     public VBox onlinePromptMessage;
     public Button noBtn;
     public Button yesBtn;
+
+    public TextField connectionMessageText;
+    public TextField serverConnectionText;
 
 
     //Old ones
