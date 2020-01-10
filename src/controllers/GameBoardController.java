@@ -242,7 +242,6 @@ public class GameBoardController {
                 Horse horseGetKicked = (Horse)gameBoard.lookup("#" + horseIdOfPosition[nextPositionInt]);
                 createKickedAnimation(horseGetKicked);
             }
-//            nextPositionNode.getChildren().get(0).setStyle("-fx-fill: transparent");
             resetFillColorOfPosition(nextPositionNode, horse);
             horseIdOfPosition[convertPositionToIntegerForm(startPosition)] = null;
             horseIdOfPosition[nextPositionInt] = horse.getId();
