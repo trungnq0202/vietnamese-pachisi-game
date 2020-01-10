@@ -1,24 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<StackPane fx:id="rootMenu" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
+<StackPane fx:id="rootMenu" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
    <children>
-      <VBox fx:id="startMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" spacing="51.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,0.3);" StackPane.alignment="CENTER">
+      <VBox fx:id="startMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="248.0" prefWidth="250.0" spacing="51.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,0.3);" StackPane.alignment="CENTER">
          <children>
-            <Button fx:id="newGameBtn" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="New Game" textFill="WHITE">
+            <Button fx:id="onlineGameBtn" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="Play Online" textFill="WHITE">
                <font>
                   <Font name="Consolas" size="18.0" />
                </font></Button>
+            <Button fx:id="offlineGameBtn" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="Play Offline" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="18.0" />
+               </font>
+            </Button>
             <Button fx:id="exitGameBtn" layoutX="198.0" layoutY="191.0" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="Exit" textFill="WHITE">
                <font>
                   <Font name="Consolas" size="18.0" />
                </font>
             </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="onlinePlayMenu" prefHeight="200.0" prefWidth="100.0" visible="false">
+         <children>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Label text="YOUR NAME:" translateX="-130.0">
+                     <font>
+                        <Font name="System Bold" size="23.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="onlinePlayerTextField" maxWidth="249.0" prefHeight="26.0" prefWidth="249.0" translateX="100.0" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Text fx:id="connectionMessageText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Button id="cc" fx:id="backToMainMenuBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="125.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Back" textFill="WHITE" translateX="-120.0" translateY="30.0">
+                     <font>
+                        <Font name="Consolas" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button id="cc" fx:id="onlinePlayBtn" mnemonicParsing="false" prefHeight="37.0" prefWidth="140.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Ready" textFill="WHITE" translateX="150.0" translateY="30.0">
+                     <font>
+                        <Font name="Consolas" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </StackPane>
          </children>
       </VBox>
       <VBox fx:id="preGameMenu" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="483.0" spacing="20.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px;" stylesheets="/resources/css/main.css" visible="false">
@@ -280,6 +323,25 @@
                </font>
             </Label>
             <Button id="cc" fx:id="exitErrorBtn1" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Got it" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="onlinePromptMessage" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="197.0" prefWidth="367.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,1);" visible="false">
+         <children>
+            <Label prefHeight="75.0" prefWidth="327.0" text="All the data will be lost. Are you sure?" wrapText="true">
+               <font>
+                  <Font name="Consolas" size="18.0" />
+               </font>
+            </Label>
+            <Button id="cc" fx:id="noBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="No" textFill="WHITE" translateX="100.0" translateY="30.0">
+               <font>
+                  <Font name="Consolas" size="18.0" />
+               </font>
+            </Button>
+            <Button id="cc" fx:id="yesBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Yes" textFill="WHITE" translateX="-100.0" translateY="-7.0">
                <font>
                   <Font name="Consolas" size="18.0" />
                </font>

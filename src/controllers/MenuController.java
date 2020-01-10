@@ -7,28 +7,28 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import models.Sound;
 
 import java.util.ArrayList;
 
 public class MenuController{
     // Recently added
+    public Button onlineGameBtn;
+    public Button offlineGameBtn;
+    public VBox onlinePlayMenu;
+    public TextField onlinePlayerTextField;
+    public Text connectionMessageText;
+    public Button backToMainMenuBtn;
+    public Button onlinePlayBtn;
+    public VBox onlinePromptMessage;
+    public Button noBtn;
+    public Button yesBtn;
+
+    //Old ones
     @FXML private VBox userSetNameMenu;
-//    @FXML private StackPane userPane0;
-//    @FXML private StackPane userPane1;
-//    @FXML private StackPane userPane2;
-//    @FXML private StackPane userPane3;
-//    @FXML private TextField TF0;
-//    @FXML private TextField TF1;
-//    @FXML private TextField TF2;
-//    @FXML private TextField TF3;
     @FXML private Button backLevelBtn;
     @FXML private Button nextPlaySceneBtn;
-//    @FXML private Button noHumanBackBtn;
-//    @FXML private StackPane noHumanPane;
-//    @FXML private Button noHumanPlayBtn;
-//    @FXML private VBox noHumanPlayerVbox;
-    //
     @FXML private Button exitErrorBtn1;
     @FXML private VBox emptyPlayerNameError;
     @FXML private Button exitErrorBtn;
@@ -36,20 +36,11 @@ public class MenuController{
     @FXML private Button backBtn;
     @FXML private Button nextBtn;
     @FXML private Button exitGameBtn;
-    @FXML private Button newGameBtn;
+
+//    @FXML private Button newGameBtn;
     @FXML private VBox preGameMenu;
     @FXML private VBox startMenu;
     @FXML private StackPane rootMenu;
-//    @FXML private StackPane HP0;
-//    @FXML private StackPane HP1;
-//    @FXML private StackPane HP2;
-//    @FXML private StackPane HP3;
-//    @FXML private StackPane HP4;
-//    @FXML private StackPane VP0;
-//    @FXML private StackPane VP1;
-//    @FXML private StackPane VP2;
-//    @FXML private StackPane VP3;
-//    @FXML private StackPane VP4;
     private MainController mainController;  //Make connection with mainController
     private int noHumanPlayers;             //Number of human players
     private int noVirtualPlayers;            //Number of virtual players
@@ -94,11 +85,18 @@ public class MenuController{
 
     //Set event handler for all menu buttons
     private void setMenuButtonsEventHandler(){
-        setNewGameBtnEventHandler();
+        setOfflineGameBtnEventHandler();
         setExitGameBtnEventHandler();
         setBackBtnEventHandler();
         setNextBtnEventHandler();
         setExitErrorBtnEventHandler();
+
+        //recently added for online players
+        setOnlineGameBtnEventHandler();
+        setOnlinePlayBtnEventHandler();
+        setBackToMainMenuBtnEventHandler();
+        setPromptMessageEventHandler();
+
         // Recently add these 3 function
 //        setUserSelectionMenuTextField();
         setBackLevelBtnEventHandler();
@@ -167,8 +165,8 @@ public class MenuController{
     }
 
     //Event handler for the newGameBtn
-    private void setNewGameBtnEventHandler(){
-        newGameBtn.setOnMouseClicked(event -> {
+    private void setOfflineGameBtnEventHandler(){
+        offlineGameBtn.setOnMouseClicked(event -> {
             btnClickSound.play();
             startMenu.setVisible(false);     //hide start menu
             preGameMenu.setVisible(true);    //show pregame menu
@@ -285,4 +283,60 @@ public class MenuController{
     }
 
 
+    //recently added
+    private void setOnlineGameBtnEventHandler(){
+        onlineGameBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            startMenu.setVisible(false);     //hide start menu
+            onlinePlayMenu.setVisible(true);    //show online pregame menu
+        });
+    }
+
+    private void setOnlinePlayBtnEventHandler(){
+        onlinePlayBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            if(onlinePlayerTextField.getText().equals("")){
+                emptyPlayerNameError.setVisible(true);
+            }
+            else {
+                connectionMessageText.setText("You- " +onlinePlayerTextField.getText()+" has connected.\n" +
+                        "Waiting for User 2, User 3, User 4....\n" +
+                        "Anne has connected.\n" +
+                        "Waiting for User 2, User 4...\n" +
+                        "Jack has connected.\n" +
+                        "Waiting for User 4...\n" +
+                        "User 4 disconnected.");            //connection message
+                connectionMessageText.setVisible(true);
+                onlinePlayBtn.setText("Waiting...");
+            }
+        });
+    }
+
+    private void setBackToMainMenuBtnEventHandler(){
+        backToMainMenuBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            startMenu.setVisible(true);
+            onlinePlayMenu.setVisible(false);
+        });
+    }
+
+    private boolean setPromptMessageEventHandler(){
+        if(!(connectionMessageText.getText().equals(""))){
+            onlinePromptMessage.setVisible(true);
+            backToMainMenuBtn.setOnMouseClicked(event->{
+                btnClickSound.play();
+                yesBtn.setOnMouseClicked(event1 -> {
+                    btnClickSound.play();
+                    startMenu.setVisible(true);
+                    onlinePlayMenu.setVisible(false);
+                });
+                noBtn.setOnMouseClicked(event2->{
+                    btnClickSound.play();
+                    onlinePromptMessage.setVisible(false);
+                });
+            });
+            return true;
+        }
+        return false;
+    }
 }
