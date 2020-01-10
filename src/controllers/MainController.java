@@ -48,7 +48,6 @@ public class MainController {
         gameBoardController.injectMainController(this);
     }
 
-
     //Set loop background video when using menu
     private void setBackgroundVideo(){
         MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource(VIDEO_URL).toExternalForm()));

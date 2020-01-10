@@ -1,58 +1,66 @@
 package controllers;
 
-import javafx.event.ActionEvent;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.Callable;
 
-public class I18NController {
-    //FXML
-    @FXML private Button englishLangBtn;
-    @FXML private Button vietnameseLangBtn;
-
+public final class I18NController {
     // Attributes
-    private MainController mainController;
-    private ResourceBundle bundle;
+    public enum Language {ENGLISH, VIETNAMESE}
 
-    public enum Language { ENGLISH, VIETNAMESE }
+    private static final ObjectProperty<Locale> locale;
 
-    public I18NController() {
-        // constructing this controller with English as the default language
-        this.bundle = ResourceBundle.getBundle("lang", getLanguageLocale(Language.ENGLISH));
+    static {
+        locale = new SimpleObjectProperty<>(getLanguageLocale(Language.ENGLISH));
+        locale.addListener((observable, oldValue, newValue) -> Locale.setDefault(newValue));
     }
 
-    public void injectMainController(MainController mainController){
-        this.mainController = mainController;
+    public static Locale getLocale() {
+        return locale.get();
     }
 
-    public void initialize() {
-        setMenuButtonsEventHandler();
+    public static void setLocale(Locale locale) {
+        localeProperty().set(locale);
+        Locale.setDefault(locale);
     }
 
-    // Set event handler for all language menu buttons
-    private void setMenuButtonsEventHandler(){
-        setEnglishLangBtnEventHandler();
-
+    public static ObjectProperty<Locale> localeProperty() {
+        return locale;
     }
 
-    // Event handler for the englishLangBtn
-    private void setEnglishLangBtnEventHandler(){
-        englishLangBtn.setOnMouseClicked(event -> {
-            changeLanguage(Language.ENGLISH);
-        });
+    public static String get(final String key, final Object... args) {
+        ResourceBundle bundle = ResourceBundle.getBundle("lang", getLocale());
+        return MessageFormat.format(bundle.getString(key), args);
     }
 
-    // Event handler for the vietnameseLangBtn
-    private void setVietnameseLangBtnEventHandler(){
-        vietnameseLangBtn.setOnMouseClicked(event -> {
-            changeLanguage(Language.VIETNAMESE);
-        });
+    public static StringBinding createStringBinding(final String key, Object... args) {
+        return Bindings.createStringBinding(() -> get(key, args), locale);
+    }
+
+
+    public static StringBinding createStringBinding(Callable<String> func) {
+        return Bindings.createStringBinding(func, locale);
+    }
+
+    public static void setUpLabelText(Label label, final String key, final Object... args) {
+        label.textProperty().bind(createStringBinding(key));
+    }
+
+    public static void setUpButtonText(Button button, final String key, final Object... args) {
+        button.textProperty().bind(createStringBinding(key));
     }
 
     // Get the Locale object of a language
-    private Locale getLanguageLocale(Language language) {
+    public static Locale getLanguageLocale(Language language) {
         switch (language) {
             case ENGLISH: {
                 return new Locale("en", "US");
@@ -65,16 +73,8 @@ public class I18NController {
         }
     }
 
-    // Change the language
-    private void changeLanguage(Language language) {
-        Locale.setDefault(getLanguageLocale(language));
-        // reload language bundle
-        this.bundle = ResourceBundle.getBundle("lang");
-    }
-
-    // Return text message from key value
-    public String text(String key) {
-        return this.bundle.getString(key);
+    public static void switchLanguage(Locale locale) {
+        setLocale(locale);
     }
 
 }

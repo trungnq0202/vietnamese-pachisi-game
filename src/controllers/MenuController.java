@@ -2,6 +2,7 @@ package controllers;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -12,44 +13,37 @@ import models.Sound;
 import java.util.ArrayList;
 
 public class MenuController{
-    // Recently added
     @FXML private VBox userSetNameMenu;
-//    @FXML private StackPane userPane0;
-//    @FXML private StackPane userPane1;
-//    @FXML private StackPane userPane2;
-//    @FXML private StackPane userPane3;
-//    @FXML private TextField TF0;
-//    @FXML private TextField TF1;
-//    @FXML private TextField TF2;
-//    @FXML private TextField TF3;
+    @FXML private VBox emptyPlayerNameError;
+    @FXML private VBox startMenuError;
+    @FXML private VBox preGameMenu;
+    @FXML private VBox startMenu;
+    @FXML private VBox langMenu;
+    @FXML private StackPane rootMenu;
+
+    @FXML private Button exitErrorBtn1;
     @FXML private Button backLevelBtn;
     @FXML private Button nextPlaySceneBtn;
-//    @FXML private Button noHumanBackBtn;
-//    @FXML private StackPane noHumanPane;
-//    @FXML private Button noHumanPlayBtn;
-//    @FXML private VBox noHumanPlayerVbox;
-    //
-    @FXML private Button exitErrorBtn1;
-    @FXML private VBox emptyPlayerNameError;
     @FXML private Button exitErrorBtn;
-    @FXML private VBox startMenuError;
     @FXML private Button backBtn;
     @FXML private Button nextBtn;
     @FXML private Button exitGameBtn;
     @FXML private Button newGameBtn;
-    @FXML private VBox preGameMenu;
-    @FXML private VBox startMenu;
-    @FXML private StackPane rootMenu;
-//    @FXML private StackPane HP0;
-//    @FXML private StackPane HP1;
-//    @FXML private StackPane HP2;
-//    @FXML private StackPane HP3;
-//    @FXML private StackPane HP4;
-//    @FXML private StackPane VP0;
-//    @FXML private StackPane VP1;
-//    @FXML private StackPane VP2;
-//    @FXML private StackPane VP3;
-//    @FXML private StackPane VP4;
+    @FXML private Button changeLanguageBtn;
+    @FXML private Button vietnameseLangBtn;
+    @FXML private Button englishLangBtn;
+    @FXML private Button langBackBtn;
+
+    @FXML private Label noHumanPlayersLabel;
+    @FXML private Label noVirtualPlayersLabel;
+    @FXML private Label noPlayersErrLabel;
+    @FXML private Label emptyPlayerNameLabel;
+    @FXML private Label langSelectLabel;
+    @FXML private Label player1NameLabel;
+    @FXML private Label player2NameLabel;
+    @FXML private Label player3NameLabel;
+    @FXML private Label player4NameLabel;
+
     private MainController mainController;  //Make connection with mainController
     private int noHumanPlayers;             //Number of human players
     private int noVirtualPlayers;            //Number of virtual players
@@ -80,6 +74,34 @@ public class MenuController{
         System.out.println("menucontroller init");
         setNoPlayersChoiceEventHandler();
         setMenuButtonsEventHandler();
+        setBtnBindingText();
+        setLabelBindingText();
+    }
+
+    private void setBtnBindingText(){
+        I18NController.setUpButtonText(newGameBtn, "menu.new_game");
+        I18NController.setUpButtonText(changeLanguageBtn, "menu.change_language");
+        I18NController.setUpButtonText(exitGameBtn, "menu.exit");
+        I18NController.setUpButtonText(backBtn, "menu.back");
+        I18NController.setUpButtonText(nextBtn, "menu.next");
+        I18NController.setUpButtonText(exitErrorBtn, "menu.error_exit_btn");
+        I18NController.setUpButtonText(exitErrorBtn1, "menu.error_exit_btn");
+        I18NController.setUpButtonText(langBackBtn, "menu.back");
+        I18NController.setUpButtonText(backLevelBtn, "menu.back");
+        I18NController.setUpButtonText(nextPlaySceneBtn, "menu.play");
+
+    }
+
+    private void setLabelBindingText(){
+        I18NController.setUpLabelText(noHumanPlayersLabel, "menu.no_human_players");
+        I18NController.setUpLabelText(noVirtualPlayersLabel, "menu.no_virtual_players");
+        I18NController.setUpLabelText(noPlayersErrLabel, "menu.noPlayers_error");
+        I18NController.setUpLabelText(emptyPlayerNameLabel, "menu.empty_player_name");
+        I18NController.setUpLabelText(langSelectLabel, "menu.lang_title");
+        I18NController.setUpLabelText(player1NameLabel, "menu.player_1_name");
+        I18NController.setUpLabelText(player2NameLabel, "menu.player_2_name");
+        I18NController.setUpLabelText(player3NameLabel, "menu.player_3_name");
+        I18NController.setUpLabelText(player4NameLabel, "menu.player_4_name");
     }
 
     //Set event handler for
@@ -99,10 +121,12 @@ public class MenuController{
         setBackBtnEventHandler();
         setNextBtnEventHandler();
         setExitErrorBtnEventHandler();
-        // Recently add these 3 function
-//        setUserSelectionMenuTextField();
         setBackLevelBtnEventHandler();
         setNextPlaySceneBtnEventHandler();
+        setChangeLanguageBtnEventHandler();
+        setEnglishLangBtnEventHandler();
+        setVietnameseLangBtnEventHandler();
+        setLangBackBtnEventHandler();
     }
 
     //Event handler when clicking on the circles to choose the number of human and machine players
@@ -161,8 +185,39 @@ public class MenuController{
         }
     }
 
-    public ArrayList<String> getPlayersNameList() {
-        return playersNameList;
+    //Event handler for the "language" button
+    public void setChangeLanguageBtnEventHandler(){
+        changeLanguageBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            startMenu.setVisible(false);
+            langMenu.setVisible(true);
+        });
+    }
+
+    public void setVietnameseLangBtnEventHandler(){
+        vietnameseLangBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            vietnameseLangBtn.setStyle("-fx-background-color: #c93b14");
+            englishLangBtn.setStyle("-fx-background-color: #1e90ff");
+            I18NController.switchLanguage(I18NController.getLanguageLocale(I18NController.Language.VIETNAMESE));
+        });
+    }
+
+    public void setEnglishLangBtnEventHandler(){
+        englishLangBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            englishLangBtn.setStyle("-fx-background-color: #c93b14");
+            vietnameseLangBtn.setStyle("-fx-background-color: #1e90ff");
+            I18NController.switchLanguage(I18NController.getLanguageLocale(I18NController.Language.ENGLISH));
+        });
+    }
+
+    private void setLangBackBtnEventHandler(){
+        langBackBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            langMenu.setVisible(false);
+            startMenu.setVisible(true);
+        });
     }
 
     //Event handler for the newGameBtn
@@ -221,6 +276,7 @@ public class MenuController{
         });
     }
 
+    //Event handler for "Back" button
     private void setBackLevelBtnEventHandler(){
         backLevelBtn.setOnMouseClicked(event->{
             btnClickSound.play();
@@ -283,5 +339,7 @@ public class MenuController{
         return noVirtualPlayers;
     }
 
-
+    public ArrayList<String> getPlayersNameList() {
+        return playersNameList;
+    }
 }

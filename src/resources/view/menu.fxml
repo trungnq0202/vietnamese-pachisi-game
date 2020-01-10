@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<StackPane fx:id="rootMenu" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
+<StackPane fx:id="rootMenu" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
    <children>
-      <VBox fx:id="startMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" spacing="51.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,0.3);" StackPane.alignment="CENTER">
+      <VBox fx:id="startMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="263.0" spacing="51.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,0.3);" StackPane.alignment="CENTER">
          <children>
-            <Button fx:id="newGameBtn" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="New Game" textFill="WHITE">
+            <Button fx:id="newGameBtn" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" textFill="WHITE">
                <font>
                   <Font name="Consolas" size="18.0" />
                </font></Button>
-            <Button fx:id="exitGameBtn" layoutX="198.0" layoutY="191.0" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="Exit" textFill="WHITE">
+            <Button fx:id="changeLanguageBtn" layoutX="56.0" layoutY="98.0" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="exitGameBtn" layoutX="198.0" layoutY="191.0" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" textFill="WHITE">
                <font>
                   <Font name="Consolas" size="18.0" />
                </font>
@@ -25,7 +35,7 @@
          <children>
             <VBox prefHeight="137.0" prefWidth="562.0" spacing="15.0">
                <children>
-                  <Label prefHeight="40.0" prefWidth="577.0" text="NUMBER OF HUMAN PLAYERS" textAlignment="CENTER" textFill="#fcf940">
+                  <Label fx:id="noHumanPlayersLabel" prefHeight="40.0" prefWidth="577.0" textAlignment="CENTER" textFill="#fcf940">
                      <font>
                         <Font name="System Bold Italic" size="24.0" />
                      </font>
@@ -94,7 +104,7 @@
             </VBox>
             <VBox layoutX="15.0" layoutY="15.0" prefHeight="137.0" prefWidth="562.0" spacing="15.0">
                <children>
-                  <Label prefHeight="40.0" prefWidth="577.0" text="NUMBER OF VIRTUAL PLAYERS" textAlignment="CENTER" textFill="#fcf940">
+                  <Label fx:id="noVirtualPlayersLabel" prefHeight="40.0" prefWidth="577.0" textAlignment="CENTER" textFill="#fcf940">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -163,12 +173,12 @@
             </VBox>
             <HBox alignment="CENTER" spacing="93.0">
                <children>
-                  <Button id="cc" fx:id="backBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="165.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Back to menu" textFill="WHITE">
+                  <Button id="cc" fx:id="backBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="165.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" textFill="WHITE">
                      <font>
                         <Font name="Consolas" size="18.0" />
                      </font>
                   </Button>
-                  <Button id="cc" fx:id="nextBtn" layoutX="197.0" layoutY="10.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Next" textFill="WHITE">
+                  <Button id="cc" fx:id="nextBtn" layoutX="197.0" layoutY="10.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="146.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" textFill="WHITE">
                      <font>
                         <Font name="Consolas" size="18.0" />
                      </font>
@@ -179,7 +189,7 @@
       </VBox>
       <VBox fx:id="startMenuError" alignment="CENTER" fillWidth="false" layoutX="152.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="197.0" prefWidth="367.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,1);" visible="false">
          <children>
-            <Label prefHeight="75.0" prefWidth="327.0" text="There must be at least 2 players!" wrapText="true">
+            <Label fx:id="noPlayersErrLabel" prefHeight="75.0" prefWidth="327.0" text="There must be at least 2 players!" wrapText="true">
                <font>
                   <Font name="Consolas" size="18.0" />
                </font>
@@ -195,7 +205,7 @@
          <children>
             <StackPane fx:id="userPane0" prefHeight="45.0" prefWidth="473.0" visible="false">
                <children>
-                  <Label text="PLAYER 1 NAME:" translateX="-120.0">
+                  <Label fx:id="player1NameLabel" text="PLAYER 1 NAME:" translateX="-120.0">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>
@@ -205,7 +215,7 @@
             </StackPane>
             <StackPane fx:id="userPane1" prefHeight="45.0" prefWidth="473.0" visible="false">
                <children>
-                  <Label text="PLAYER 2 NAME:" translateX="-120.0">
+                  <Label fx:id="player2NameLabel" text="PLAYER 2 NAME:" translateX="-120.0">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>
@@ -215,7 +225,7 @@
             </StackPane>
             <StackPane fx:id="userPane2" prefHeight="45.0" prefWidth="473.0" visible="false">
                <children>
-                  <Label text="PLAYER 3 NAME:" translateX="-120.0">
+                  <Label fx:id="player3NameLabel" text="PLAYER 3 NAME:" translateX="-120.0">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>
@@ -225,7 +235,7 @@
             </StackPane>
             <StackPane fx:id="userPane3" prefHeight="45.0" prefWidth="473.0" visible="false">
                <children>
-                  <Label text="PLAYER 4 NAME:" translateX="-120.0">
+                  <Label fx:id="player4NameLabel" text="PLAYER 4 NAME:" translateX="-120.0">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>
@@ -235,12 +245,12 @@
             </StackPane>
             <HBox alignment="CENTER" spacing="93.0">
                <children>
-                  <Button id="cc" fx:id="backLevelBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="165.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Back to Level" textFill="WHITE">
+                  <Button id="cc" fx:id="backLevelBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="165.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" textFill="WHITE">
                      <font>
                         <Font name="Consolas" size="18.0" />
                      </font>
                   </Button>
-                  <Button id="cc" fx:id="nextPlaySceneBtn" layoutX="197.0" layoutY="10.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Play" textFill="WHITE">
+                  <Button id="cc" fx:id="nextPlaySceneBtn" layoutX="197.0" layoutY="10.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="170.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" textFill="WHITE">
                      <font>
                         <Font name="Consolas" size="18.0" />
                      </font>
@@ -258,12 +268,12 @@
             </StackPane>
             <HBox alignment="CENTER" spacing="93.0">
                <children>
-                  <Button id="cc" fx:id="noHumanBackBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="165.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Back to Level" textFill="WHITE">
+                  <Button fx:id="noHumanBackBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="165.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Back to Level" textFill="WHITE">
                      <font>
                         <Font name="Consolas" size="18.0" />
                      </font>
                   </Button>
-                  <Button id="cc" fx:id="noHumanPlayBtn" layoutX="197.0" layoutY="10.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Play" textFill="WHITE">
+                  <Button id="cc" fx:id="noHumanPlayBtn" layoutX="197.0" layoutY="10.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="142.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Play" textFill="WHITE">
                      <font>
                         <Font name="Consolas" size="18.0" />
                      </font>
@@ -274,12 +284,36 @@
       </VBox>
       <VBox fx:id="emptyPlayerNameError" alignment="CENTER" fillWidth="false" layoutX="68.0" layoutY="112.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="197.0" prefWidth="367.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,1);" visible="false">
          <children>
-            <Label prefHeight="75.0" prefWidth="327.0" text="Player's name cannot be empty!" wrapText="true">
+            <Label fx:id="emptyPlayerNameLabel" prefHeight="75.0" prefWidth="327.0" text="Player's name cannot be empty!" wrapText="true">
                <font>
                   <Font name="Consolas" size="18.0" />
                </font>
             </Label>
             <Button id="cc" fx:id="exitErrorBtn1" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Got it" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="langMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="362.0" spacing="20.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,0.3);" visible="false">
+         <children>
+            <Label fx:id="langSelectLabel" text="Select your language:" textFill="#fcf940">
+               <font>
+                  <Font name="System Bold" size="29.0" />
+               </font>
+            </Label>
+            <Button fx:id="vietnameseLangBtn" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text=" Tiếng Việt " textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="englishLangBtn" layoutX="198.0" layoutY="191.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="146.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-background-color: #c93b14;" styleClass="btn" stylesheets="@../css/main.css" text="English" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="langBackBtn" layoutX="142.0" layoutY="224.0" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="Back" textFill="WHITE">
                <font>
                   <Font name="Consolas" size="18.0" />
                </font>
