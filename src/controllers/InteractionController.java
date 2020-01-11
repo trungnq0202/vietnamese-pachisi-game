@@ -29,7 +29,7 @@ public class InteractionController {
     //create a new client
     public void createClient(){
         client = new Client(ip,port);
-        new Thread (client).start();
+        new Thread(client).run();
     }
 
     //send a message in name of this client

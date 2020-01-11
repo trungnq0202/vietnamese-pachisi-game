@@ -27,9 +27,11 @@ public class Client extends Thread{
 
     private void establishConnectionToServer() throws IOException {
         this.socket = new Socket(HOST_NAME,PORT);
-        this.inputStream = new ObjectInputStream(socket.getInputStream());
         this.outputStream = new ObjectOutputStream(socket.getOutputStream());
+        this.inputStream = new ObjectInputStream(socket.getInputStream());
+
     }
+
 
     @Override
     public void run() {
@@ -40,37 +42,6 @@ public class Client extends Thread{
             System.exit(69);
         }
         startListeningToTheServer();
-        sendMessage();
-        System.out.println("Hi player, you can start chatting now!\n");
-    }
-
-    private void sendMessage()  {
-        new Thread(() -> {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            String message ;
-            while (true) {
-                try {
-                    message = br.readLine();
-                    if (message.equals("stop")) {
-                        disconnect();
-                        break;
-                    }
-                    Message new_message = new Message(message);
-                    outputStream.writeObject(new_message);
-                    outputStream.reset();
-
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }).start();
-    }
-    private void disconnect() {
-        try {
-            this.socket.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     private void startListeningToTheServer() {
@@ -94,9 +65,19 @@ public class Client extends Thread{
         }).start();
     }
 
+    private void disconnect() {
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
     public void sendMessage(Object message){
         try {
-            this.outputStream.writeObject(message);
+            outputStream.writeObject(message);
+            outputStream.reset();
         } catch (IOException e){
             System.out.println("Can't send message from this client" + e);
         }
