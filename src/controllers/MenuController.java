@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class MenuController{
 
     private static MenuController menuController;
+    private static PlayerController playerController;
     private static InteractionController interactionController = InteractionController.getInteractionController();
     public StackPane playerView;
     public Button onlineGameBtn;
@@ -33,7 +34,6 @@ public class MenuController{
     @FXML private Button nextBtn;
     @FXML private Button exitGameBtn;
 
-    //    @FXML private Button newGameBtn;
     @FXML private VBox preGameMenu;
     @FXML public VBox startMenu;
     @FXML private StackPane rootMenu;
@@ -273,7 +273,7 @@ public class MenuController{
         onlineGameBtn.setOnMouseClicked(event -> {
             btnClickSound.play();
             startMenu.setVisible(false);                              //hide start menu
-            PlayerController.onlinePromptMenu.setVisible(true);       //online prompt menu
+            playerView.setVisible(true);
         });
     }
 

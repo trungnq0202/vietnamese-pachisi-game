@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
@@ -16,11 +17,11 @@ import java.util.ArrayList;
 public class PlayerController implements Serializable {
     private static PlayerController playerController;
     // Recently added
-    public static VBox onlinePromptMenu;
+    private GameBoardController gameBoardController;
+    public VBox onlinePromptMenu;
     public Button serverBtn;
     public VBox serverPromptMenu;
     public Button serverBackToMenuBtn;
-    public Button serverPlayBtn;
     public Button onlinePlayerBtn;
     public Button backToMessageMenuBtn;
 
@@ -60,9 +61,9 @@ public class PlayerController implements Serializable {
         setPromptMessageEventHandler();
         setServerPromptMenuEventHandler();
         setOnlinePlayerBtnEventHandler();
-        setServerPlayBtnEventHandler();
         setServerBackToMenuBtnEventHandler();
         setBackToMessageMenuBtnEventHandler();
+        setExitErrorBtnEventHandler();
     }
 
     public static PlayerController getPlayerController(){
@@ -94,8 +95,6 @@ public class PlayerController implements Serializable {
 
             }
         });
-
-
     }
 
     public void setPlayerColor(ArrayList<Player> playersList) {
@@ -137,23 +136,9 @@ public class PlayerController implements Serializable {
     }
 
     public void exchangePlayerControllerInfo(PlayerController playerController){
-        setPlayersList(playerController.getPlayersList());
+        PlayerController.playerController.setPlayersList(playerController.getPlayersList());
     }
 
-    //create server button
-    private void setServerPlayBtnEventHandler(){
-        serverPlayBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            serverPlayBtn.setText("Waiting...");
-            serverPlayBtn.setMouseTransparent(true);
-
-            //create server
-            Server server = new Server();
-            new Thread(server).start();
-            serverConnectionText.setText("[Menu controller] Create server!");            //connection message
-            serverConnectionText.setVisible(true);
-        });
-    }
 
     private void setServerBackToMenuBtnEventHandler(){
         serverBackToMenuBtn.setOnMouseClicked(mouseEvent -> {
@@ -168,7 +153,6 @@ public class PlayerController implements Serializable {
         yesBtn.setOnMouseClicked(mouseEvent -> {
             btnClickSound.play();
             serverPromptMenu.setVisible(false);
-            serverPlayBtn.setText("Ready");
             onlinePromptMenu.setVisible(true);
             serverConnectionText.setText("");
             serverConnectionText.setVisible(false);
@@ -196,13 +180,16 @@ public class PlayerController implements Serializable {
             btnClickSound.play();
             onlinePromptMenu.setVisible(false);
             serverPromptMenu.setVisible(true);
+            Server server = new Server();
+            new Thread(server).start();
+            serverConnectionText.setText("[Menu controller] Create server!");            //connection message
+            serverConnectionText.setVisible(true);
         });
     }
 
     private void setBackToMessageMenuBtnEventHandler(){
         backToMessageMenuBtn.setOnMouseClicked(mouseEvent -> {
             btnClickSound.play();
-//            MenuController.startMenu.setVisible(true);
             onlinePromptMenu.setVisible(false);
         });
     }
@@ -229,6 +216,13 @@ public class PlayerController implements Serializable {
                 connectionMessageText.setVisible(true);
                 onlinePlayBtn.setText("Waiting...");
             }
+        });
+    }
+
+    private void setExitErrorBtnEventHandler() {
+        exitErrorBtn1.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            emptyPlayerNameError.setVisible(false);
         });
     }
 

@@ -41,7 +41,7 @@
                         <Font name="Consolas" size="18.0" />
                      </font>
                   </Button>
-                  <Button id="cc" fx:id="onlinePlayBtn" mnemonicParsing="false" prefHeight="37.0" prefWidth="140.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Ready" textFill="WHITE" translateX="150.0" translateY="20.0">
+                  <Button id="cc" fx:id="onlinePlayBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="125.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Ready" textFill="WHITE" translateX="120.0" translateY="20.0">
                      <font>
                         <Font name="Consolas" size="18.0" />
                      </font>
@@ -98,12 +98,7 @@
                </children></StackPane>
             <StackPane prefHeight="104.0" prefWidth="483.0">
                <children>
-                  <Button id="cc" fx:id="serverBackToMenuBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="125.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Back" textFill="WHITE" translateX="-120.0" translateY="20.0">
-                     <font>
-                        <Font name="Consolas" size="18.0" />
-                     </font>
-                  </Button>
-                  <Button id="cc" fx:id="serverPlayBtn" mnemonicParsing="false" prefHeight="37.0" prefWidth="140.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Ready" textFill="WHITE" translateX="120.0" translateY="20.0">
+                  <Button id="cc" fx:id="serverBackToMenuBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="125.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Back" textFill="WHITE" translateX="5.0" translateY="20.0">
                      <font>
                         <Font name="Consolas" size="18.0" />
                      </font>
