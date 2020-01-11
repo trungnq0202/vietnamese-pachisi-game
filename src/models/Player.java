@@ -1,27 +1,54 @@
 package models;
 
-public class Player {
-    private String playerName;
-    private int score;
-    private int clientNo;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
+import java.util.ArrayList;
 
+//implement interface Serializable so that object can be sent across streams
+//implement interface PropertyChange so that changes made into models may be tracked
+public class Player implements Serializable, PropertyChangeListener {
+    private String playerColor;
+    private int score;
+
+    //register a tracker for this class
+    private PropertyChangeSupport register = new PropertyChangeSupport(this);
+
+    //constructors
     public Player(){
         this.score = 0;
+        register.addPropertyChangeListener(this);
     }
 
+    //getters
     public int getScore() {
         return score;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
+    //getters
+    public String getPlayerColor() {
+        return playerColor;
     }
 
+    //setters
+    public void setPlayerColor(String playerColor) {
+        this.playerColor = playerColor;
+    }
+
+    //add reporter in case score is changed
     public void setScore(int score) {
+        int oldScore = this.score;
         this.score = score;
+        register.firePropertyChange("Change score: ",oldScore,score);
     }
 
-    public String getPlayerName() {
-        return playerName;
+    //in case of changes, do this:
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println(evt.getPropertyName());
+        System.out.println(evt.getOldValue());
+        System.out.println(evt.getNewValue());
     }
+
 }

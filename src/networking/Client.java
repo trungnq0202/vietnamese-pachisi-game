@@ -15,7 +15,7 @@ public class Client extends Thread{
     private Socket socket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
-    private final int PORT = 62341  ;
+    private final int PORT = 62341 ;
     private final String HOST_NAME = "localhost";
     private InteractionController interactionController = InteractionController.getInteractionController();
 
@@ -36,7 +36,6 @@ public class Client extends Thread{
         try {
             establishConnectionToServer();
         } catch (IOException e) {
-            // you probably forgot to turn on the server, doofus!!!
             System.out.println("unable to connect to the server!");
             System.exit(69);
         }
@@ -80,8 +79,10 @@ public class Client extends Thread{
             Object input;
             try {
                 while (true) {
-                    input = inputStream.readObject();
-                    interactionController.processInput(input);
+
+                    if ((input = inputStream.readObject())!= null) {
+                        interactionController.processInput(input);
+                    }
                 }
             } catch (IOException e) {
                 // server probably dissed me, fuck!

@@ -5,10 +5,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class test extends Application {
+public class server_client extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
         Parent root = FXMLLoader.load(getClass().getResource("resources/view/online_player.fxml"));
         primaryStage.setTitle("Co Ca Ngua");
         primaryStage.setScene(new Scene(root, 800, 400));

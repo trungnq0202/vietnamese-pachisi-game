@@ -8,9 +8,10 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Horse extends HBox {
+public class Horse extends HBox implements Serializable {
     private static final String RED_HORSE_IMG_URL = "file:src/resources/images/red_horse.png";
     private static final String GREEN_HORSE_IMG_URL = "file:src/resources/images/green_horse.png";
     private static final String BLUE_HORSE_IMG_URL = "file:src/resources/images/blue_horse.png";

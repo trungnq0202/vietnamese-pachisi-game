@@ -1,5 +1,4 @@
 package controllers;
-import com.sun.media.jfxmediaimpl.platform.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,7 +7,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import models.Player;
 import models.Sound;
 import networking.Server;
@@ -39,6 +37,8 @@ public class MenuController{
     public TextField connectionMessageText;
     public TextField serverConnectionText;
 
+    private static MenuController menuController;
+    private static InteractionController interactionController = InteractionController.getInteractionController();
 
     //Old ones
     @FXML private VBox userSetNameMenu;
@@ -381,6 +381,7 @@ public class MenuController{
     private void setOnlinePlayBtnEventHandler(){
         onlinePlayBtn.setOnMouseClicked(mouseEvent -> {
             btnClickSound.play();
+            //check if text field is empty
             if(onlinePlayerTextField.getText().equals("")){
                 emptyPlayerNameError.setVisible(true);
             }
@@ -388,8 +389,12 @@ public class MenuController{
                 if (onlinePlayerTextField.getText() != null) {
                     //create new player for this session
                     Player player = new Player();
-                    player.setPlayerName(onlinePlayerTextField.getText());
-                    onlinePlayBtn.setMouseTransparent(true);
+                    player.setPlayerColor(onlinePlayerTextField.getText());
+
+                    interactionController.createClient();
+                    interactionController.sendMessageForClient(player);
+                    interactionController.sendMessageForClient("Player " + player.getPlayerColor() + "has connected!");
+
                 }
                 connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!");
                 connectionMessageText.setVisible(true);
@@ -427,5 +432,17 @@ public class MenuController{
         });
     }
 
+    public TextField getConnectionMessageText() {
+        return connectionMessageText;
+    }
 
+    public TextField getServerConnectionText() {
+        return serverConnectionText;
+    }
+
+    public static MenuController getMenuController(){
+        if (menuController == null){
+            menuController = new MenuController();
+        } return menuController;
+    }
 }

@@ -56,7 +56,7 @@ public class ServerActivityController {
 
 
     }
-    public synchronized void sendMessage(Message message){
+    public synchronized void sendMessage(Object message){
         for (ObjectOutputStream stream: serverSocketOutputs){
             try {
                 stream.writeObject(message);
