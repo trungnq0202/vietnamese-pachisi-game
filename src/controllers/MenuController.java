@@ -2,6 +2,7 @@ package controllers;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -19,8 +20,9 @@ public class MenuController{
     public VBox winningMenu;
     public Button playAgainBtn;
     public Button exitMenuBtn;
-    public Text winnerName;
-    public Text winnerScore;
+    public Label winnerName;
+    public Label winnerScore;
+    
     // Recently added
     public VBox onlinePromptMenu;
     public Button serverBtn;

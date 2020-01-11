@@ -13,7 +13,7 @@
 
 <StackPane fx:id="rootMenu" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
    <children>
-      <VBox fx:id="startMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="266.0" prefWidth="268.0" spacing="51.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,0.3);" StackPane.alignment="CENTER">
+      <VBox fx:id="startMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="266.0" prefWidth="268.0" spacing="51.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,0.3);" visible="false" StackPane.alignment="CENTER">
          <children>
             <Button fx:id="onlineGameBtn" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="Play Online" textFill="WHITE">
                <font>
@@ -389,7 +389,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="winningMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="342.0" prefWidth="382.0" spacing="51.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,0.3);" visible="false">
+      <VBox fx:id="winningMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="342.0" prefWidth="382.0" spacing="51.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-border-radius: 2px; -fx-background-color: rgba(124,147,166,0.3);">
          <children>
             <StackPane prefHeight="31.0" prefWidth="372.0">
                <children>
@@ -404,8 +404,8 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                      <children>
-                        <Text fx:id="winnerName" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                        <Text fx:id="winnerScore" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                        <Label fx:id="winnerName" text="winnerName" />
+                        <Label fx:id="winnerScore" text="winnerScore" />
                      </children>
                   </HBox>
                </children>
