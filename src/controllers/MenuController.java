@@ -13,6 +13,14 @@ import models.Sound;
 import java.util.ArrayList;
 
 public class MenuController{
+    // 11-01-2020
+    // added
+    // winningMenu
+    public VBox winningMenu;
+    public Button playAgainBtn;
+    public Button exitMenuBtn;
+    public Text winnerName;
+    public Text winnerScore;
     // Recently added
     public VBox onlinePromptMenu;
     public Button serverBtn;
@@ -34,6 +42,7 @@ public class MenuController{
     public VBox onlinePromptMessage;
     public Button noBtn;
     public Button yesBtn;
+
 
 
     //Old ones
@@ -116,6 +125,9 @@ public class MenuController{
 //        setUserSelectionMenuTextField();
         setBackLevelBtnEventHandler();
         setNextPlaySceneBtnEventHandler();
+
+        // winningMenu - set Play Again Button
+        setPlayAgainBtnEventHandler();
     }
 
     //Event handler when clicking on the circles to choose the number of human and machine players
@@ -189,10 +201,24 @@ public class MenuController{
     }
 
     //Event handler for the exitGameBtn
+    // Event handler for exitMenuBtn in winningMenu
     private void setExitGameBtnEventHandler(){
         exitGameBtn.setOnMouseClicked(event -> {
             btnClickSound.play();
             System.exit(0);         //Exit the program
+        });
+        exitMenuBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            System.exit(0);         //Exit the program
+        });
+    }
+
+    // winningMenu - playAgainBtn
+    private void setPlayAgainBtnEventHandler(){
+        playAgainBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            startMenu.setVisible(true); // startMenu will be visible
+            winningMenu.setVisible(false); // winning will be invisible
         });
     }
 

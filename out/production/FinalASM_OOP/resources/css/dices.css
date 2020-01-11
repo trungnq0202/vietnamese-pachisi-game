@@ -1,0 +1,24 @@
+/*---------style Button--------------*/
+.button{
+    -fx-background-color: transparent;
+}
+/*---------style Button on hover--------------*/
+.button:hover {
+    -fx-scale-y: 1.2;
+    -fx-scale-x: 1.2;
+}
+
+.rightArrow{
+    -fx-shape: "M 400 300 L 400 250 L 400 200 L 450 200 L 500 200 L 550 200 L 600 200 L 600 250 L 600 300 L 550 300 L 500 300 L 450 300 L 400 300 L 400 350 L 400 400 L 150 250 L 400 100 L 400 200 ";
+    -fx-background-color: red;
+}
+
+.leftArrow{
+    -fx-shape: "M 200 300 L 400 300 L 400 100 L 600 350 L 400 600 L 400 400 L 200 400 L 200 300";
+    -fx-background-color: red;
+}
+/*---------style Button on pressed--------------*/
+/*.button:pressed{*/
+/*    -fx-scale-x:0.9;*/
+/*    -fx-scale-y:0.9;*/
+/*}*/
