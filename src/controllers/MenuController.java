@@ -391,6 +391,7 @@ public class MenuController{
                     player.setPlayerName(onlinePlayerTextField.getText());
                     onlinePlayBtn.setMouseTransparent(true);
                 }
+                connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!");
                 connectionMessageText.setVisible(true);
                 onlinePlayBtn.setText("Waiting...");
             }

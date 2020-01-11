@@ -48,7 +48,10 @@
                <children>
                   <Pane prefHeight="200.0" prefWidth="200.0" translateX="450.0">
                      <children>
-                        <TextField fx:id="connectionMessageText" editable="false" layoutX="-23.0" layoutY="-9.0" prefHeight="124.0" prefWidth="441.0" />
+                        <TextField fx:id="connectionMessageText" alignment="TOP_LEFT" editable="false" layoutX="-23.0" layoutY="-9.0" prefHeight="124.0" prefWidth="441.0" promptText="Server system will be displayed here">
+                           <font>
+                              <Font name="Arial Narrow Bold" size="13.0" />
+                           </font></TextField>
                      </children>
                   </Pane>
                </children>
