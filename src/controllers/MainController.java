@@ -35,6 +35,7 @@ public class MainController {
                 for (int i = 1; i <= 24; i ++) add(null);
             }
         };
+        System.out.println(I18NController.getLocale().getDisplayCountry());
     }
 
     @FXML private void initialize(){

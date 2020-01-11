@@ -4,7 +4,6 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -46,7 +45,6 @@ public final class I18NController {
         return Bindings.createStringBinding(() -> get(key, args), locale);
     }
 
-
     public static StringBinding createStringBinding(Callable<String> func) {
         return Bindings.createStringBinding(func, locale);
     }
@@ -77,4 +75,11 @@ public final class I18NController {
         setLocale(locale);
     }
 
+    public static boolean isVietnamese(){
+        return locale.get().getDisplayCountry().equals("Vietnam");
+    }
+
+    public static boolean isEnglish(){
+        return locale.get().getDisplayCountry().equals("United States");
+    }
 }

@@ -181,7 +181,8 @@ public class MenuController{
         }
         //Name of the virtual players
         for (int i = noHumanPlayers; i < noHumanPlayers + noVirtualPlayers ; i++){
-            playersNameList.set(i, "Virtual Player " + (i - noHumanPlayers + 1) );
+            if (I18NController.isEnglish()) playersNameList.set(i, "Virtual Player " + (i - noHumanPlayers + 1));
+            else playersNameList.set(i, "Người chơi ảo " + (i - noHumanPlayers + 1));
         }
     }
 
@@ -320,7 +321,8 @@ public class MenuController{
             StackPane virtualPlayerNamePane = (StackPane)rootMenu.lookup("#userPane" + i);
             virtualPlayerNamePane.setVisible(true);
             TextField virtualPlayerNameTF = (TextField)virtualPlayerNamePane.getChildren().get(1);
-            virtualPlayerNameTF.setText("Virtual Player " + (i - noHumanPlayers + 1));
+            if (I18NController.isEnglish()) virtualPlayerNameTF.setText("Virtual Player " + (i - noHumanPlayers + 1));
+            else virtualPlayerNameTF.setText("Người chơi ảo " + (i - noHumanPlayers + 1));
             virtualPlayerNameTF.setDisable(true);
         }
 

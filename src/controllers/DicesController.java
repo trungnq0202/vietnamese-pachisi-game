@@ -116,9 +116,9 @@ public class DicesController {
         dicePick.setUsable(false); //dice 1 can no longer be chosen for a horse move
         unsetEventHandlerForDices();
         gameBoardController.unhighlightHorsesInsideNest();
-        if (horse.isInHome() ) {
+        if (horse.isInHome()) {
             gameBoardController.unhighlightHorseOutsideNest(false);
-            gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse);
+            gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber());
         }
         else if (horse.isInHomeDoorPosition()) {
             if (otherDice.isUsable()) {
@@ -126,9 +126,9 @@ public class DicesController {
                 horse.setJustEnteredHome(true);
             }
             else gameBoardController.unhighlightHorseOutsideNest(false);
-            gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse);
+            gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber());
         }
-        else gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse);
+        else gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse, dicePick.getRollNumber());
     }
 
     public void unsetEventHandlerForDices(){
@@ -219,7 +219,10 @@ public class DicesController {
                 int i = dice.getRollNumber();
                 dice.setRollImage(i);
                 gameBoardController.setFreeze(false);
-                if (dice == dice2) gameBoardController.processPostDiceRolling();
+                if (dice == dice2) {
+                    gameBoardController.updateDiceNumView();
+                    gameBoardController.processPostDiceRolling();
+                }
             });
             rollAnimation.play();
         }

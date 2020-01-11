@@ -1,5 +1,6 @@
 package resources.view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import models.Horse;
@@ -47,6 +48,7 @@ public class HorseNest extends GridPane {
         this.maxWidth(USE_PREF_SIZE);
         this.maxHeight(USE_PREF_SIZE);
         this.setAlignment(Pos.CENTER);
+        this.setPadding(new Insets(60,0,0,0));
         this.setHgap(60);
         this.setVgap(60);
     }

@@ -1,6 +1,7 @@
 package controllers;
 
 import javafx.animation.*;
+import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,7 +17,6 @@ import java.util.Arrays;
 
 public class GameBoardController {
     @FXML private Button diceArrow;
-    @FXML private HBox dices;
     @FXML private Label PN0;
     @FXML private Label PN1;
     @FXML private Label PN2;
@@ -26,6 +26,20 @@ public class GameBoardController {
     @FXML private StackPane YNSP;
     @FXML private StackPane GNSP;
     @FXML private VBox gameBoard;
+    @FXML private Label statusLabel;
+    @FXML private Label dice1Val;
+    @FXML private Label dice2Val;
+    @FXML private Label dice1Title;
+    @FXML private Label dice2Title;
+    @FXML private Label latestMoveTitle;
+    @FXML private Label BPointsTitle;
+    @FXML private Label RPointsTitle;
+    @FXML private Label YPointsTitle;
+    @FXML private Label GPointsTitle;
+    @FXML private Label TURN0;
+    @FXML private Label TURN1;
+    @FXML private Label TURN2;
+    @FXML private Label TURN3;
 
     private static final String RED_CODE = "#ff0000";
     private static final String GREEN_CODE = "#0b940b";
@@ -38,10 +52,13 @@ public class GameBoardController {
     private static String[] horseIdOfPosition;  //String array indicating which horse(horseId) is occupying which position
     private static ArrayList<Horse> horsesWithValidMoves;
     private static String[] horseIdOfHomePosition;
+    private static int[] scores;
     private Timeline diceArrowAnimation;
     private boolean isRollingDiceTurn;   //Variable indicating that this is the time for the player to roll the dices, no other action can be done
     private boolean isFreeze;
     private int tempPlayerIdTurn;
+
+    //Sound
     private Sound horseMoveSound;
     private Sound horseGoingHomeSound;
     private Sound horseAppearSound;
@@ -51,7 +68,7 @@ public class GameBoardController {
     public GameBoardController(){
 //        System.out.println("gameboardcontroller construct");
         horseIdOfPosition = new String[48];
-        horseIdOfHomePosition = new String[24];
+        horseIdOfHomePosition = new String[25];
         horsesWithValidMoves = new ArrayList<>();
         Arrays.fill(horseIdOfPosition,null);
         Arrays.fill(horseIdOfHomePosition,null);
@@ -60,6 +77,7 @@ public class GameBoardController {
         horseAppearSound = new Sound(Sound.SoundType.HORSE_APPEAR_SFX);
         horseKickedSound = new Sound(Sound.SoundType.HORSE_KICKED_SFX);
         launchSound = new Sound(Sound.SoundType.GAME_LAUNCH_SFX);
+        scores = new int[4];
     }
 
     /**************** DEBUG FUNCTIONS **************/
@@ -93,10 +111,27 @@ public class GameBoardController {
         }));;
         diceArrowAnimation.setCycleCount(Timeline.INDEFINITE);
         dicesController.injectGameBoardController(this);
+        setUpLabelBindingText();
     }
 
     public void injectMainController(MainController mainController){
         this.mainController = mainController;
+    }
+
+    /**************** SETUP BINDING TEXT **************/
+    public void setUpLabelBindingText(){
+        I18NController.setUpLabelText(RPointsTitle, "gameBoard.points_title");
+        I18NController.setUpLabelText(BPointsTitle, "gameBoard.points_title");
+        I18NController.setUpLabelText(YPointsTitle, "gameBoard.points_title");
+        I18NController.setUpLabelText(GPointsTitle, "gameBoard.points_title");
+        I18NController.setUpLabelText(dice1Title, "gameBoard.dice1_title");
+        I18NController.setUpLabelText(dice2Title, "gameBoard.dice2_title");
+        I18NController.setUpLabelText(latestMoveTitle, "gameBoard.latest_move");
+        I18NController.setUpLabelText(TURN0, "gameBoard.your_turn");
+        I18NController.setUpLabelText(TURN1, "gameBoard.your_turn");
+        I18NController.setUpLabelText(TURN2, "gameBoard.your_turn");
+        I18NController.setUpLabelText(TURN3, "gameBoard.your_turn");
+
     }
 
     /**************** Position id calculation and conversion **************/
@@ -163,7 +198,7 @@ public class GameBoardController {
     public int convertPositionToIntegerForm(String position){
         int integerPartOfPos = Integer.parseInt(position.substring(1));
         switch (position.charAt(0)){
-            case 'R' : return integerPartOfPos;
+            case 'R' : return integerPartOfPos ;
             case 'B' : return integerPartOfPos + 11  + 1;
             case 'Y' : return integerPartOfPos + 11 * 2 + 2;
             case 'G' : return integerPartOfPos + 11 * 3 + 3;
@@ -197,6 +232,7 @@ public class GameBoardController {
         highLightDices(true);                     //show dices'arrows so that the player know it's time to roll the dices
         Arrays.fill(horseIdOfPosition, null);           //no position is occupied yet
         Arrays.fill(horseIdOfHomePosition, null);       //no home position is occupied yet
+        Arrays.fill(scores, 0);
         isRollingDiceTurn = true;                           //set rolling dice turn state yo true
         isFreeze = false;                                   //unfreeze rolling dices
         tempPlayerIdTurn = 0;                               //First turn belongs to player "GREEN"
@@ -220,7 +256,7 @@ public class GameBoardController {
     /*************** Horse Animation **************/
 
     //Horse moving animation
-    public void createHorseMovingAnimation(String startPosition, String tempPosition, String endPosition, Horse horse){
+    public void createHorseMovingAnimation(String startPosition, String tempPosition, String endPosition, Horse horse, int steps){
         String nextPosition = calculateNextPosition(1, tempPosition , null);
         int nextPositionInt = convertPositionToIntegerForm(nextPosition);
         //If there is a horse in the end position => get kicked
@@ -233,13 +269,16 @@ public class GameBoardController {
         //If this horse has yet to be moved to its final position
         if (!nextPosition.equals(endPosition)) {
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(400), e -> {
-                createHorseMovingAnimation(startPosition, nextPosition, endPosition, horse);
+                createHorseMovingAnimation(startPosition, nextPosition, endPosition, horse, steps);
             }));
             timeline.setCycleCount(1);
             timeline.play();
         } else {
+            printMoveStatus(steps);
             if (horseIdOfPosition[nextPositionInt] != null) {
                 Horse horseGetKicked = (Horse)gameBoard.lookup("#" + horseIdOfPosition[nextPositionInt]);
+                updateScore(tempPlayerIdTurn, 2);
+                updateScore(getPlayerIdByColor(horseIdOfPosition[nextPositionInt].charAt(0)),-2);
                 createKickedAnimation(horseGetKicked);
             }
             resetFillColorOfPosition(nextPositionNode, horse);
@@ -253,10 +292,13 @@ public class GameBoardController {
     //Horse going outside nest animation
     private void createHorseGoingOutsideNestAnimation(String startPosition, Horse horse){
         int startPositionInt = convertPositionToIntegerForm(startPosition);
+        printMoveOutsideNestStatus();
         if (horseIdOfPosition[startPositionInt] != null) {
             Horse horseGetKicked = (Horse)gameBoard.lookup("#" + horseIdOfPosition[startPositionInt]);
-            horseIdOfPosition[startPositionInt] = null;
+            updateScore(tempPlayerIdTurn, 2);
+            updateScore(getPlayerIdByColor(horseIdOfPosition[startPositionInt].charAt(0)),-2);
             createKickedAnimation(horseGetKicked);
+            horseIdOfPosition[startPositionInt] = null;
         }
         StackPane startPositionNode = (StackPane)gameBoard.lookup("#" + startPosition);
         horseIdOfPosition[startPositionInt] = horse.getId(); //Set the state of next position to be occupied
@@ -266,17 +308,20 @@ public class GameBoardController {
     }
 
     //Horse going inside home animation
-    public void createHorseMovingInsideHomeAnimation(String startPosition, String endPosition, Horse horse){
+    public void createHorseMovingInsideHomeAnimation(String startPosition, String endPosition, Horse horse, int steps){
         if (horse.isInHome()) {
             horseIdOfHomePosition[convertHomePositionToIntegerForm(startPosition)] = null;
+            updateScore(tempPlayerIdTurn, 1);
         } else {
             horse.setInHome(true);
             horseIdOfPosition[convertPositionToIntegerForm(startPosition)] = null;
+            updateScore(tempPlayerIdTurn, steps);
         }
         horseIdOfHomePosition[convertHomePositionToIntegerForm(endPosition)] = horse.getId();
         horse.setTempPosition(endPosition);
         StackPane endPositionNode = (StackPane)gameBoard.lookup("#" + endPosition);
         endPositionNode.getChildren().add(1, horse);
+        printMoveInsideHomeStatus(Integer.parseInt(endPosition.substring(2)));
         horseGoingHomeSound.play();
         resetFillColorOfPosition(endPositionNode, horse);
         resetFillColorOfPosition(endPositionNode, horse);
@@ -289,6 +334,7 @@ public class GameBoardController {
         horse.setInNest(true);
         GridPane nestSP = (GridPane)gameBoard.lookup("#" + horse.getHorseColor() + "N");
         nestSP.add(horse,horse.getColumnIndex(), horse.getRowIndex());
+        printKickStatus(getPlayerIdByColor(horse.getHorseColor()));
         horseKickedSound.play();
     }
 
@@ -407,16 +453,14 @@ public class GameBoardController {
 
     /*************** End Inside Nest Horses control **************/
 
-
     /*************** Outside Nest Horses control **************/
-    public void unhighlightHorseOutsideNest(boolean existHorseJustEnteredHome){
-        for (int i = 0; i < 4; i++){
-            Horse horse = (Horse)gameBoard.lookup("#" + colors[tempPlayerIdTurn] + "H" + i);
+    public void unhighlightHorseOutsideNest(boolean existHorseJustEnteredHome) {
+        for (int i = 0; i < 4; i++) {
+            Horse horse = (Horse) gameBoard.lookup("#" + colors[tempPlayerIdTurn] + "H" + i);
             if (!horse.isInNest()) {
                 horse.hideSideArrow();
                 horse.setOnMouseClicked(null);
-            } else if (horse.isJustEnteredHome()){
-                if (!existHorseJustEnteredHome) horse.setJustEnteredHome(false);
+                if (horse.isJustEnteredHome() && !existHorseJustEnteredHome) horse.setJustEnteredHome(false);
             }
         }
     }
@@ -476,8 +520,9 @@ public class GameBoardController {
         horse.resetListOfPossibleSteps();
         //If temp Horse is already in home and not just entered the home in this turn
         if (horse.isInHome() && !horse.isJustEnteredHome()){
+            System.out.println("cc");
 //            System.out.println("th1");
-            //If dice1 roll number is 1
+            //If dice1 roll number is 1         sou
             if (dice1 != null && (dice1.getRollNumber() == Integer.parseInt(horse.getTempPosition().substring(2)) + 1) && checkInvalidScalingHome(horse)){
                 hasPossibleMove = true;
                 horse.setPossibleStepsListByIndex(0,1);
@@ -650,21 +695,116 @@ public class GameBoardController {
         return horseIdOfPosition[index];
     }
 
+    public void updateDiceNumView(){
+        dice1Val.setText(String.valueOf(dicesController.getDice1().getRollNumber()));
+        dice2Val.setText(String.valueOf(dicesController.getDice2().getRollNumber()));
+    }
+
+    public void updateScore(int playerId, int deltaScore){
+//        System.out.println("Player id: " + playerId);
+//        System.out.println("Delta score: " + deltaScore);
+        for (int i = 0; i < 4; i++) System.out.println(i + " " + scores[i]);
+        scores[playerId] += deltaScore;
+        updateScoreView(playerId);
+    }
+
+    public void updateScoreView(int playerId){
+        Label scoreLabel = (Label)gameBoard.lookup("#" + colors[playerId] + "Points");
+        scoreLabel.setText(String.valueOf(scores[playerId]));
+    }
+
+    public int getPlayerIdByColor(char color){
+        switch (color){
+            case 'R': return 0;
+            case 'B': return 1;
+            case 'Y': return 2;
+            case 'G': return 3;
+        }
+        return 0;
+    }
+
+    //Print description of the latest horse on the status label
+    public void printMoveStatus(int steps){
+        String moveStatus = "";
+        if (I18NController.isEnglish()) {
+            moveStatus += mainController.getPlayersNameList().get(tempPlayerIdTurn);
+            moveStatus += "'s " + I18NController.get("gameBoard.horse") + " ";        //'s horse
+            moveStatus += I18NController.get("gameBoard.moved") + " ";        //moved
+            moveStatus += steps + " " + I18NController.get("gameBoard.space");
+            if (steps > 1) moveStatus += "s";
+        } else {
+            moveStatus += I18NController.get("gameBoard.horse") + " ";        //'s horse
+            moveStatus += mainController.getPlayersNameList().get(tempPlayerIdTurn) + " ";
+            moveStatus += I18NController.get("gameBoard.moved") + " ";        //moved
+            moveStatus += steps + " " + I18NController.get("gameBoard.space");
+        }
+        statusLabel.setText(moveStatus);
+    }
+
+    //Print description of the horse kicking movement on the status label
+    public void printKickStatus(int playerId){
+        String kickStatus = statusLabel.getText();
+        kickStatus += I18NController.get("gameBoard.kicked") + " ";
+        if (I18NController.isEnglish()) kickStatus += mainController.getPlayersNameList().get(playerId) + "'s " + I18NController.get("gameBoard.horse") + " " ;
+        else kickStatus += I18NController.get("gameBoard.horse_2") + " " + mainController.getPlayersNameList().get(playerId) + " " ;
+        kickStatus += I18NController.get("gameBoard.sub_kicked");
+        statusLabel.setText(kickStatus);
+    }
+
+    //Print description of horse moving outside nest on the status label
+    public void printMoveOutsideNestStatus(){
+        String moveOutsideNestStatus = "";
+        if (I18NController.isEnglish()){
+            moveOutsideNestStatus += mainController.getPlayersNameList().get(tempPlayerIdTurn);
+            moveOutsideNestStatus += "'s " + I18NController.get("gameBoard.horse") + " ";        //'s horse
+            moveOutsideNestStatus += I18NController.get("gameBoard.moved") + " ";        //moved
+            moveOutsideNestStatus += I18NController.get("gameBoard.move_outside_nest");
+        } else {
+            moveOutsideNestStatus += I18NController.get("gameBoard.horse") + " ";        //'s horse
+            moveOutsideNestStatus += mainController.getPlayersNameList().get(tempPlayerIdTurn) + " ";
+            moveOutsideNestStatus += I18NController.get("gameBoard.move_outside_nest");
+        }
+        statusLabel.setText(moveOutsideNestStatus);
+    }
+
+    //Print description of horse moving in home on the status label
+    public void printMoveInsideHomeStatus(int homeNum){
+        String moveInsideHomeStatus = "";
+        if (I18NController.isEnglish()){
+            moveInsideHomeStatus += mainController.getPlayersNameList().get(tempPlayerIdTurn);
+            moveInsideHomeStatus += "'s " + I18NController.get("gameBoard.horse") + " ";        //'s horse
+            moveInsideHomeStatus += I18NController.get("gameBoard.moved") + " ";        //moved
+        } else {
+            moveInsideHomeStatus += I18NController.get("gameBoard.horse") + " ";        //'s horse
+            moveInsideHomeStatus += mainController.getPlayersNameList().get(tempPlayerIdTurn) + " ";
+        }
+        moveInsideHomeStatus += I18NController.get("gameBoard.move_inside_home") + " " + homeNum;
+        statusLabel.setText(moveInsideHomeStatus);
+    }
 
 //        private void debug(){
-//        Horse horse = (Horse)gameBoard.lookup("#BH0");
-//        horse.setTempPosition("B0");
-//        horseIdOfPosition[convertPositionToIntegerForm("B0")] = "BH0";
-//        horse.setInNest(false);
-//        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#B0");
-//        nextPositionNode.getChildren().add(1, horse);
-
-//        Horse horse = (Horse)gameBoard.lookup("#RH0");
-//        horse.setTempPosition("HR3");
-//        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR3")] = "RH0";
+////        Horse horse = (Horse)gameBoard.lookup("#BH0");
+////        horse.setTempPosition("B0");
+////        horseIdOfPosition[convertPositionToIntegerForm("B0")] = "BH0";
+////        horse.setInNest(false);
+////        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#B0");
+////        nextPositionNode.getChildren().add(1, horse);
+//
+//        Horse horse = (Horse)gameBoard.lookup("#GH0");
+//        horse.setTempPosition("HG6");
+//        horseIdOfHomePosition[convertHomePositionToIntegerForm("HG6")] = "GH0";
 //        horse.setInNest(false);
 //        horse.setInHome(true);
-//        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#HR3");
+//        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#HG6");
 //        nextPositionNode.getChildren().add(1, horse);
+//
+//        Horse horse1 = (Horse)gameBoard.lookup("#GH1");
+//        horse1.setTempPosition("G0");
+//        horseIdOfPosition[convertPositionToIntegerForm("G0")] = "GH1";
+//        horse1.setInNest(false);
+//        horse1.setInHome(false);
+//        horse1.setJustEnteredHome(false);
+//        StackPane nextPositionNode1 = (StackPane)gameBoard.lookup("#G0");
+//        nextPositionNode1.getChildren().add(1, horse1);
 //    }
 }

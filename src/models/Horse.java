@@ -115,7 +115,7 @@ public class Horse extends HBox {
     }
 
     private void moveSideArrow(){
-        if (sideArrow.getTranslateX() == 0) sideArrow.setTranslateX(-10);
+        if (sideArrow.getTranslateX() == 0) sideArrow.setTranslateX(10);
         else sideArrow.setTranslateX(0);
     }
 
