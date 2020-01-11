@@ -14,31 +14,12 @@ import networking.Server;
 import java.util.ArrayList;
 
 public class MenuController{
-    // Recently added
-    public VBox onlinePromptMenu;
-    public Button serverBtn;
-    public VBox serverPromptMenu;
-    public Button serverBackToMenuBtn;
-    public Button serverPlayBtn;
-    public Button onlinePlayerBtn;
-    public Button backToMessageMenuBtn;
-
-
-    public Button onlineGameBtn;
-    public Button offlineGameBtn;
-    public VBox onlinePlayMenu;
-    public TextField onlinePlayerTextField;
-    public Button backToMainMenuBtn;
-    public Button onlinePlayBtn;
-    public VBox onlinePromptMessage;
-    public Button noBtn;
-    public Button yesBtn;
-
-    public TextField connectionMessageText;
-    public TextField serverConnectionText;
 
     private static MenuController menuController;
     private static InteractionController interactionController = InteractionController.getInteractionController();
+    public StackPane playerView;
+    public Button onlineGameBtn;
+    public Button offlineGameBtn;
 
     //Old ones
     @FXML private VBox userSetNameMenu;
@@ -54,7 +35,7 @@ public class MenuController{
 
     //    @FXML private Button newGameBtn;
     @FXML private VBox preGameMenu;
-    @FXML private VBox startMenu;
+    @FXML public VBox startMenu;
     @FXML private StackPane rootMenu;
     private MainController mainController;  //Make connection with mainController
     private int noHumanPlayers;             //Number of human players
@@ -108,13 +89,6 @@ public class MenuController{
 
         //recently added for online players
         setOnlineGameBtnEventHandler();
-        setOnlinePlayBtnEventHandler();
-        setPromptMessageEventHandler();
-        setServerPromptMenuEventHandler();
-        setOnlinePlayerBtnEventHandler();
-        setServerPlayBtnEventHandler();
-        setServerBackToMenuBtnEventHandler();
-        setBackToMessageMenuBtnEventHandler();
 
         // Recently add these 3 function
 //        setUserSelectionMenuTextField();
@@ -293,151 +267,27 @@ public class MenuController{
         }
     }
 
+    //Event handler for the newGameBtn
+    //recently added
+    private void setOnlineGameBtnEventHandler(){
+        onlineGameBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            startMenu.setVisible(false);                              //hide start menu
+            PlayerController.onlinePromptMenu.setVisible(true);       //online prompt menu
+        });
+    }
+
+    //Recently added
+    private void setOffileGameButtonsEventHandler(){
+        setOfflineGameBtnEventHandler();
+    }
+
     int getNoHumanPlayers() {
         return noHumanPlayers;
     }
 
     int getNoVirtualPlayers() {
         return noVirtualPlayers;
-    }
-
-
-    //recently added
-    private void setOnlineGameBtnEventHandler(){
-        onlineGameBtn.setOnMouseClicked(event -> {
-            btnClickSound.play();
-            startMenu.setVisible(false);             //hide start menu
-            onlinePromptMenu.setVisible(true);       //online prompt menu
-        });
-    }
-
-    //create server button
-    private void setServerPlayBtnEventHandler(){
-        serverPlayBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            serverPlayBtn.setText("Waiting...");
-            serverPlayBtn.setMouseTransparent(true);
-
-            //create server
-            Server server = new Server();
-            new Thread(server).start();
-            serverConnectionText.setText("[Menu controller] Create server!");            //connection message
-            serverConnectionText.setVisible(true);
-        });
-    }
-
-    private void setServerBackToMenuBtnEventHandler(){
-        serverBackToMenuBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            onlinePromptMessage.setVisible(true);
-            setYesBtnServerEventHandler();
-            setNoBtnServerEventHandler();
-        });
-    }
-
-    private void setYesBtnServerEventHandler(){
-        yesBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            serverPromptMenu.setVisible(false);
-            serverPlayBtn.setText("Ready");
-            onlinePromptMenu.setVisible(true);
-            serverConnectionText.setText("");
-            serverConnectionText.setVisible(false);
-            onlinePromptMessage.setVisible(false);
-        });
-    }
-
-    private void setNoBtnServerEventHandler(){
-        noBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            onlinePromptMessage.setVisible(false);
-        });
-    }
-
-    private void setOnlinePlayerBtnEventHandler(){
-        onlinePlayerBtn.setOnMouseClicked(event->{
-            btnClickSound.play();
-            onlinePlayMenu.setVisible(true);
-            onlinePromptMenu.setVisible(false);
-        });
-    }
-
-    private void setServerPromptMenuEventHandler(){
-        serverBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            onlinePromptMenu.setVisible(false);
-            serverPromptMenu.setVisible(true);
-        });
-    }
-
-    private void setBackToMessageMenuBtnEventHandler(){
-        backToMessageMenuBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            startMenu.setVisible(true);
-            onlinePromptMenu.setVisible(false);
-        });
-    }
-
-    private void setOnlinePlayBtnEventHandler(){
-        onlinePlayBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            //check if text field is empty
-            if(onlinePlayerTextField.getText().equals("")){
-                emptyPlayerNameError.setVisible(true);
-            }
-            else {
-                if (onlinePlayerTextField.getText() != null) {
-                    //create new player for this session
-                    Player player = new Player();
-                    player.setPlayerColor(onlinePlayerTextField.getText());
-
-                    interactionController.createClient();
-                    interactionController.sendMessageForClient(player);
-                    interactionController.sendMessageForClient("Player " + player.getPlayerColor() + "has connected!");
-
-                }
-                connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!");
-                connectionMessageText.setVisible(true);
-                onlinePlayBtn.setText("Waiting...");
-            }
-        });
-    }
-
-    private void setYesBtnEventHandler(){
-        yesBtn.setOnMouseClicked(event1 -> {
-            btnClickSound.play();
-            onlinePromptMenu.setVisible(true);
-            onlinePlayMenu.setVisible(false);
-            connectionMessageText.setText("");
-            connectionMessageText.setVisible(false);
-            onlinePlayBtn.setText("Ready");
-            onlinePromptMessage.setVisible(false);
-        });
-    }
-
-    private void setNoBtnEventHandler(){
-        noBtn.setOnMouseClicked(event2->{
-            btnClickSound.play();
-            onlinePromptMessage.setVisible(false);
-
-        });
-    }
-
-    private void setPromptMessageEventHandler() {
-        backToMainMenuBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            onlinePromptMessage.setVisible(true);
-            setYesBtnEventHandler();
-            setNoBtnEventHandler();
-        });
-    }
-
-    public TextField getConnectionMessageText() {
-        return connectionMessageText;
-    }
-
-    public TextField getServerConnectionText() {
-        return serverConnectionText;
     }
 
     public static MenuController getMenuController(){

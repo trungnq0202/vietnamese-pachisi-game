@@ -4,14 +4,42 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import models.Player;
+import models.Sound;
+import networking.Server;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
 public class PlayerController implements Serializable {
     private static PlayerController playerController;
+    // Recently added
+    public static VBox onlinePromptMenu;
+    public Button serverBtn;
+    public VBox serverPromptMenu;
+    public Button serverBackToMenuBtn;
+    public Button serverPlayBtn;
+    public Button onlinePlayerBtn;
+    public Button backToMessageMenuBtn;
+
+    public VBox onlinePlayMenu;
+    public TextField onlinePlayerTextField;
+    public Button backToMainMenuBtn;
+    public Button onlinePlayBtn;
+    public VBox onlinePromptMessage;
+    public Button noBtn;
+    public Button yesBtn;
+
+    public TextField connectionMessageText;
+    public TextField serverConnectionText;
+    public StackPane rootMenu;
+    public VBox emptyPlayerNameError;
+    public Button exitErrorBtn1;
+    public StackPane menuView;
+
+    private Sound btnClickSound = new Sound(Sound.SoundType.BUTTON_CLICK_SFX);
     @FXML private Button createNewPlayerButton;
     @FXML private Button createNewSession;
     @FXML private TextField nameField;
@@ -21,9 +49,20 @@ public class PlayerController implements Serializable {
 
     public void initialize(
     ){
+        setOnlinePlayerButtonsEventHandler();
         System.out.println("player controller init");
-        setCreateNewPlayerButtonOnAction();
-        setCreateNewClientOnAction();
+//        setCreateNewPlayerButtonOnAction();
+//        setCreateNewClientOnAction();
+    }
+
+    private void setOnlinePlayerButtonsEventHandler(){
+        setOnlinePlayBtnEventHandler();
+        setPromptMessageEventHandler();
+        setServerPromptMenuEventHandler();
+        setOnlinePlayerBtnEventHandler();
+        setServerPlayBtnEventHandler();
+        setServerBackToMenuBtnEventHandler();
+        setBackToMessageMenuBtnEventHandler();
     }
 
     public static PlayerController getPlayerController(){
@@ -98,7 +137,136 @@ public class PlayerController implements Serializable {
     }
 
     public void exchangePlayerControllerInfo(PlayerController playerController){
-        PlayerController.playerController.setPlayersList(playerController.getPlayersList());
+        setPlayersList(playerController.getPlayersList());
+    }
+
+    //create server button
+    private void setServerPlayBtnEventHandler(){
+        serverPlayBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            serverPlayBtn.setText("Waiting...");
+            serverPlayBtn.setMouseTransparent(true);
+
+            //create server
+            Server server = new Server();
+            new Thread(server).start();
+            serverConnectionText.setText("[Menu controller] Create server!");            //connection message
+            serverConnectionText.setVisible(true);
+        });
+    }
+
+    private void setServerBackToMenuBtnEventHandler(){
+        serverBackToMenuBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            onlinePromptMessage.setVisible(true);
+            setYesBtnServerEventHandler();
+            setNoBtnServerEventHandler();
+        });
+    }
+
+    private void setYesBtnServerEventHandler(){
+        yesBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            serverPromptMenu.setVisible(false);
+            serverPlayBtn.setText("Ready");
+            onlinePromptMenu.setVisible(true);
+            serverConnectionText.setText("");
+            serverConnectionText.setVisible(false);
+            onlinePromptMessage.setVisible(false);
+        });
+    }
+
+    private void setNoBtnServerEventHandler(){
+        noBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            onlinePromptMessage.setVisible(false);
+        });
+    }
+
+    private void setOnlinePlayerBtnEventHandler(){
+        onlinePlayerBtn.setOnMouseClicked(event->{
+            btnClickSound.play();
+            onlinePlayMenu.setVisible(true);
+            onlinePromptMenu.setVisible(false);
+        });
+    }
+
+    private void setServerPromptMenuEventHandler(){
+        serverBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            onlinePromptMenu.setVisible(false);
+            serverPromptMenu.setVisible(true);
+        });
+    }
+
+    private void setBackToMessageMenuBtnEventHandler(){
+        backToMessageMenuBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+//            MenuController.startMenu.setVisible(true);
+            onlinePromptMenu.setVisible(false);
+        });
+    }
+
+    private void setOnlinePlayBtnEventHandler(){
+        onlinePlayBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            //check if text field is empty
+            if(onlinePlayerTextField.getText().equals("")){
+                emptyPlayerNameError.setVisible(true);
+            }
+            else {
+                if (onlinePlayerTextField.getText() != null) {
+                    //create new player for this session
+                    Player player = new Player();
+                    player.setPlayerColor(onlinePlayerTextField.getText());
+
+                    interactionController.createClient();
+                    interactionController.sendMessageForClient(player);
+                    interactionController.sendMessageForClient("Player " + player.getPlayerColor() + "has connected!");
+
+                }
+                connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!");
+                connectionMessageText.setVisible(true);
+                onlinePlayBtn.setText("Waiting...");
+            }
+        });
+    }
+
+    private void setYesBtnEventHandler(){
+        yesBtn.setOnMouseClicked(event1 -> {
+            btnClickSound.play();
+            onlinePromptMenu.setVisible(true);
+            onlinePlayMenu.setVisible(false);
+            connectionMessageText.setText("");
+            connectionMessageText.setVisible(false);
+            onlinePlayBtn.setText("Ready");
+            onlinePromptMessage.setVisible(false);
+        });
+    }
+
+    private void setNoBtnEventHandler(){
+        noBtn.setOnMouseClicked(event2->{
+            btnClickSound.play();
+            onlinePromptMessage.setVisible(false);
+
+        });
+    }
+
+    private void setPromptMessageEventHandler() {
+        backToMainMenuBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            onlinePromptMessage.setVisible(true);
+            setYesBtnEventHandler();
+            setNoBtnEventHandler();
+        });
+    }
+
+    public TextField getConnectionMessageText() {
+        return connectionMessageText;
+    }
+
+    public TextField getServerConnectionText() {
+        return serverConnectionText;
     }
 
 }
