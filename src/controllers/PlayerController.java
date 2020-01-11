@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class PlayerController implements Serializable {
     private static PlayerController playerController;
+    public StackPane menu;
     // Recently added
     private GameBoardController gameBoardController;
     public VBox onlinePromptMenu;
@@ -52,8 +53,6 @@ public class PlayerController implements Serializable {
     ){
         setOnlinePlayerButtonsEventHandler();
         System.out.println("player controller init");
-//        setCreateNewPlayerButtonOnAction();
-//        setCreateNewClientOnAction();
     }
 
     private void setOnlinePlayerButtonsEventHandler(){
@@ -71,30 +70,6 @@ public class PlayerController implements Serializable {
             playerController = new PlayerController();
         }
         return  playerController;
-    }
-    public void setCreateNewClientOnAction(){
-        createNewSession.setOnMouseClicked(e -> {
-            interactionController.createServer();
-            messageField.setText("System is up");
-        });
-    }
-
-    public void setCreateNewPlayerButtonOnAction(){
-        createNewPlayerButton.setOnMouseClicked( e -> {
-            if (nameField.getText() != null) {
-                //create new player for this session
-                Player player = new Player();
-                player.setPlayerColor(nameField.getText());
-
-                //send these messages to server so that it will distribute
-                interactionController.createClient();
-                interactionController.sendMessageForClient(player);
-                interactionController.sendMessageForClient(String.valueOf("Player " + player.getPlayerColor() + "has connected!"));
-                interactionController.sendMessageForClient(playerController);
-                messageField.setText("Client is up");
-
-            }
-        });
     }
 
     public void setPlayerColor(ArrayList<Player> playersList) {
@@ -182,6 +157,7 @@ public class PlayerController implements Serializable {
             serverPromptMenu.setVisible(true);
             Server server = new Server();
             new Thread(server).start();
+            interactionController.createServer();
             serverConnectionText.setText("[Menu controller] Create server!");            //connection message
             serverConnectionText.setVisible(true);
         });
@@ -191,6 +167,7 @@ public class PlayerController implements Serializable {
         backToMessageMenuBtn.setOnMouseClicked(mouseEvent -> {
             btnClickSound.play();
             onlinePromptMenu.setVisible(false);
+            menu.setVisible(true);
         });
     }
 
@@ -203,14 +180,15 @@ public class PlayerController implements Serializable {
             }
             else {
                 if (onlinePlayerTextField.getText() != null) {
-                    //create new player for this session
                     Player player = new Player();
                     player.setPlayerColor(onlinePlayerTextField.getText());
 
+                    //send these messages to server so that it will distribute
                     interactionController.createClient();
                     interactionController.sendMessageForClient(player);
-                    interactionController.sendMessageForClient("Player " + player.getPlayerColor() + "has connected!");
-
+                    interactionController.sendMessageForClient(String.valueOf("Player " + player.getPlayerColor() + " has connected!"));
+                    interactionController.sendMessageForClient(playerController);
+                    connectionMessageText.setText("Client is up");
                 }
                 connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!");
                 connectionMessageText.setVisible(true);
