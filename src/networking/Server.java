@@ -28,7 +28,6 @@ public class Server extends Thread {
                 // bingo! we got a connection
                 ClientHandler newConnection = new ClientHandler(socket);
                 newConnection.start();
-
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());

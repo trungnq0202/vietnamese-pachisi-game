@@ -48,7 +48,7 @@
                <children>
                   <Pane prefHeight="200.0" prefWidth="200.0" translateX="450.0">
                      <children>
-                        <TextField fx:id="connectionMessageText" editable="false" prefHeight="115.0" prefWidth="418.0" />
+                        <TextField fx:id="connectionMessageText" editable="false" layoutX="-23.0" layoutY="-9.0" prefHeight="124.0" prefWidth="441.0" />
                      </children>
                   </Pane>
                </children>
@@ -98,7 +98,7 @@
                         </StackPane>
                         <StackPane fx:id="HP1" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Circle  fill="#48da40" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+                              <Circle fill="#48da40" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
                                  <font>
                                     <Font name="Consolas" size="31.0" />
@@ -108,7 +108,7 @@
                         </StackPane>
                         <StackPane fx:id="HP2" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Circle  fill="#c93b14" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+                              <Circle fill="#c93b14" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
                                  <font>
                                     <Font name="Consolas" size="31.0" />
@@ -118,7 +118,7 @@
                         </StackPane>
                         <StackPane fx:id="HP3" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Circle  fill="#48da40" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+                              <Circle fill="#48da40" radius="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
                                  <font>
                                     <Font name="Consolas" size="31.0" />
@@ -359,7 +359,10 @@
                <children>
                   <Pane prefHeight="200.0" prefWidth="200.0" translateX="420.0">
                      <children>
-                        <TextField fx:id="serverConnectionText" editable="false" prefHeight="181.0" prefWidth="416.0" translateX="30.0" translateY="60.0" />
+                        <TextField fx:id="serverConnectionText" alignment="TOP_LEFT" editable="false" layoutX="-36.0" layoutY="40.0" prefHeight="205.0" prefWidth="459.0" promptText="System message will be displayed here" translateX="30.0" translateY="60.0">
+                           <font>
+                              <Font name="Arial Narrow Bold" size="13.0" />
+                           </font></TextField>
                      </children>
                   </Pane>
                </children></StackPane>
