@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class InteractionController {
     private static InteractionController interactionController;
-
     private PlayerController playerController = PlayerController.getPlayerController();
     private ServerActivityController serverActivityController = ServerActivityController.getServerActivityController();
     private String ip = "localhost";
@@ -59,7 +58,6 @@ public class InteractionController {
                 playerController.addPlayer(incomingPlayer);
                 incomingPlayer.assignColor(PlayerController.getPlayerController().getPlayersList().indexOf(incomingPlayer));
                 serverActivityController.sendMessage(playerController.getPlayersList());
-                serverActivityController.sendMessage(playerController);
 
             } else System.out.println(message);
 
@@ -70,6 +68,7 @@ public class InteractionController {
             playerController.exchangePlayerControllerInfo((PlayerController) input);
         }
 
+        //if receive an array list (player list), update
         if (input instanceof ArrayList ){
             ArrayList<Player> array = (ArrayList<Player>) input;
             playerController.setPlayersList(array);
@@ -79,6 +78,7 @@ public class InteractionController {
 
 
     }
+    //separate String message, use / in this application
     private String rest(String word) {
         int slashIndex = word.indexOf('/');
         if (slashIndex == -1)

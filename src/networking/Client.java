@@ -24,7 +24,7 @@ public class Client extends Thread{
         this.port = port;
     }
 
-
+    //initialize in/out stream for this client
     private void establishConnectionToServer() throws IOException {
         this.socket = new Socket(HOST_NAME,PORT);
         this.outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -43,6 +43,7 @@ public class Client extends Thread{
         startListeningToTheServer();
     }
 
+    //create a separate active thread to listen to server at all time
     private void startListeningToTheServer() {
         new Thread(() -> {
             Object input;
@@ -54,10 +55,8 @@ public class Client extends Thread{
                     }
                 }
             } catch (IOException e) {
-                // server probably dissed me, fuck!
                 System.out.println(e.getMessage());
             } catch (ClassNotFoundException e) {
-                // shits gone wild, idk what happened
                 System.out.println(e.getMessage());
             }
         }).start();
@@ -71,7 +70,7 @@ public class Client extends Thread{
         }
     }
 
-
+    //send a message for this client
     public void sendMessage(Object message){
         try {
             outputStream.writeObject(message);

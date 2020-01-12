@@ -401,6 +401,7 @@ public class MenuController{
                 if (onlinePlayerTextField.getText() != null) {
 
                     //create new player with given name
+                    //update game connection field
                     Platform.runLater(() -> {
                         connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!" + newLine );
                         connectionMessageText.appendText(String.valueOf("Color taken:" + playerController.getPlayersList() + newLine));
@@ -410,12 +411,12 @@ public class MenuController{
                     onlinePlayBtn.setMouseTransparent(true);
                 }
 
+            //game can't start if players are less than 2 ppl
                 if (playerController.getPlayersList().size() < 2) {
                     onlinePlayBtn.setText("Not enough people");
                 }
-                else{
-                        onlinePlayBtn.setText("Waiting...");
-                    }
+                else onlinePlayBtn.setText("Waiting...");
+
                 connectionMessageText.setVisible(true);
 
         });

@@ -13,11 +13,10 @@ class ClientHandler extends Thread {
     private Socket socket;
     private ObjectInputStream inputStream;
     private InetAddress inetAddress;
-    private String threadName;
     private ServerActivityController serverActivityController;
     private InteractionController interactionController = InteractionController.getInteractionController();
 
-
+    //create a thread which accommodates user
     public ClientHandler(Socket socket) {
         this.socket  = socket;
         this.inetAddress = socket.getInetAddress();
@@ -46,8 +45,4 @@ class ClientHandler extends Thread {
         }
     }
 
-
-    public String getThreadName() {
-        return threadName;
-    }
 }

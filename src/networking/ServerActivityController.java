@@ -22,7 +22,7 @@ public class ServerActivityController {
         this.clientSockets = new ArrayList<>();
         this.serverSocketOutputs = new ArrayList<>();
     }
-
+    //create an unique instance of this class
     public static ServerActivityController getServerActivityController(){
         if (serverActivityController == null){
             serverActivityController = new ServerActivityController();
@@ -30,6 +30,7 @@ public class ServerActivityController {
         return serverActivityController;
     }
 
+    //add socket thus its outputstream into a list
     public void addSocket(Socket client){
         clientSockets.add(client);
         try{
@@ -39,11 +40,17 @@ public class ServerActivityController {
         }
     }
 
+    //setup game for a client
     public void setUpGameForAClient(Socket socket) throws IOException {
         int indexOfClient = clientSockets.indexOf(socket);
         try {
+            //find according outputstream
             messageOutputStream = serverSocketOutputs.get(indexOfClient);
+
+            //this is for nothing
             messageOutputStream.writeObject("Server: Welcome to server");
+
+            //send instance of player controller
             messageOutputStream.writeObject(playerController);
             //TODO: send game board and set up game for this client!
         } catch(IOException e){
@@ -56,7 +63,7 @@ public class ServerActivityController {
         }
     }
 
-
+    //send message to all clients
     public synchronized void sendMessage(Object message){
         for (ObjectOutputStream stream: serverSocketOutputs){
             try {
