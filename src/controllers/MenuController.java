@@ -39,7 +39,6 @@ public class MenuController{
     public TextField serverConnectionText;
 
     private static MenuController menuController;
-
     private InteractionController interactionController = InteractionController.getInteractionController();
     private PlayerController playerController = PlayerController.getPlayerController();
 
@@ -393,17 +392,16 @@ public class MenuController{
             }
             else {
                 if (onlinePlayerTextField.getText() != null) {
-                    //create new player with given name
-                    Player player = new Player(onlinePlayerTextField.getText());
                     //create new client and send message
                     interactionController.createClient();
+                    //create new player with given name
+                    Player player = new Player(onlinePlayerTextField.getText());
+                    playerController.addPlayer(player);
                     interactionController.sendMessageForClient(player);
-                    interactionController.sendMessageForClient("Player " + player.getName() + " has connected!");
+
                     connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!");
-
-
                     }
-                    onlinePlayBtn.setMouseTransparent(true);
+                    //onlinePlayBtn.setMouseTransparent(true);
 
                 }
                 if (playerController.getPlayersList().size() < 2) {

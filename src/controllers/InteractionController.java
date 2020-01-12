@@ -4,12 +4,16 @@ package controllers;
 import models.Player;
 import networking.Client;
 import networking.Server;
+import networking.ServerActivityController;
+
+import java.util.ArrayList;
 
 
 public class InteractionController {
     private static InteractionController interactionController;
 
     private PlayerController playerController = PlayerController.getPlayerController();
+    private ServerActivityController serverActivityController = ServerActivityController.getServerActivityController();
     private String ip = "localhost";
     private int port = 62341;
     private Client client;
@@ -48,6 +52,8 @@ public class InteractionController {
         if (input instanceof Player){
             Player incomingPlayer = (Player) input;
             playerController.addPlayer(incomingPlayer);
+            incomingPlayer.assignColor(playerController.getPlayersList().indexOf(incomingPlayer));
+            serverActivityController.sendMessage(playerController.getPlayersList());
         }
 
         //if receive a String, print to the message field
@@ -60,6 +66,12 @@ public class InteractionController {
         if (input instanceof PlayerController){
             PlayerController playerController = (PlayerController) input;
             this.playerController.exchangePlayerControllerInfo(playerController);
+        }
+
+        if (input instanceof ArrayList ){
+            ArrayList<Player> array = (ArrayList<Player>) input;
+            playerController.setPlayersList(array);
+            System.out.println(playerController.getPlayersList().size());
         }
 
 

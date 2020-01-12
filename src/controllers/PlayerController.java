@@ -31,31 +31,8 @@ public class PlayerController implements Serializable {
     }
 
 
-    public void setColorForPlayerList(ArrayList<Player> playersList) {
-        for (Player player: playersList){
-                assignColor(playersList.indexOf(player));
-        }
 
-    }
 
-    public String assignColor(int orderOfPlayers){
-        String playerColor = "";
-        switch (orderOfPlayers){
-            case 0:
-                playerColor = "Green";
-                break;
-            case 1:
-                playerColor = "Red";
-                break;
-            case 2:
-                playerColor = "Yellow";
-                break;
-            case 3:
-                playerColor = "Blue";
-                break;
-        }
-        return playerColor;
-    }
 
     public ArrayList<Player> getPlayersList(){
         return playersList;
@@ -63,9 +40,10 @@ public class PlayerController implements Serializable {
 
     public void addPlayer(Player player){
         playersList.add(player);
+
     }
 
-    public static void setPlayersList(ArrayList<Player> playersList) {
+    public void setPlayersList(ArrayList<Player> playersList) {
         PlayerController.playersList = playersList;
     }
 

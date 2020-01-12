@@ -26,9 +26,6 @@ class ClientHandler extends Thread {
 
     @Override
     public void run() {
-        Message message;
-        message = new Message("welcome to server!");
-        serverActivityController.sendMessage(message);
         System.out.printf("%s just connected...\n", inetAddress.getHostAddress());
         Object fromClient;
         try {
@@ -37,7 +34,7 @@ class ClientHandler extends Thread {
                 if ((fromClient = inputStream.readObject()) != null)
                 {
                     interactionController.processInput(fromClient);
-                    this.serverActivityController.sendMessage(fromClient);
+                    //this.serverActivityController.sendMessage(fromClient);
                 }
 
             }

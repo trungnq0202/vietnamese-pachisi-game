@@ -58,6 +58,24 @@ public class Player implements Serializable, PropertyChangeListener {
         register.firePropertyChange("Change score: ",oldScore,score);
     }
 
+    public String assignColor( int orderOfPlayers){
+        switch (orderOfPlayers){
+            case 0:
+                playerColor = "Green";
+                break;
+            case 1:
+                playerColor = "Red";
+                break;
+            case 2:
+                playerColor = "Yellow";
+                break;
+            case 3:
+                playerColor = "Blue";
+                break;
+        }
+        return playerColor;
+    }
+
     //in case of changes, do this:
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
