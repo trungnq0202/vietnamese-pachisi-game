@@ -1,5 +1,7 @@
 package networking;
 
+import controllers.PlayerController;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -11,6 +13,7 @@ public class ServerActivityController {
     private ArrayList<Socket> clientSockets;
     private ArrayList<ObjectOutputStream> serverSocketOutputs;
     private ObjectOutputStream messageOutputStream;
+    private PlayerController playerController = PlayerController.getPlayerController();
     private ServerInfo serverInfo = ServerInfo.getServerInfo();
 
 
@@ -41,6 +44,7 @@ public class ServerActivityController {
         try {
             messageOutputStream = serverSocketOutputs.get(indexOfClient);
             messageOutputStream.writeObject("Server: Welcome to server");
+            messageOutputStream.writeObject(playerController);
             //TODO: send game board and set up game for this client!
         } catch(IOException e){
             System.out.println("Unable to send to client!" );

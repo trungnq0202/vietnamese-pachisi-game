@@ -9,6 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import models.Sound;
+import networking.Client;
 
 
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public class MenuController{
     private static MenuController menuController;
     private InteractionController interactionController = InteractionController.getInteractionController();
     private PlayerController playerController = PlayerController.getPlayerController();
+    String newLine = System.getProperty("line.separator");
+
 
     //Old ones
     @FXML private VBox userSetNameMenu;
@@ -322,7 +325,7 @@ public class MenuController{
 
             //create server
             interactionController.createServer();
-            serverConnectionText.setText("[Menu controller] Create server!");            //connection message
+            serverConnectionText.setText("[Menu controller] Create server!");
             serverConnectionText.setVisible(true);
         });
     }
@@ -360,6 +363,12 @@ public class MenuController{
             btnClickSound.play();
             onlinePlayMenu.setVisible(true);
             onlinePromptMenu.setVisible(false);
+
+            //create new client and send message
+            interactionController.createClient();
+            //publish this event
+            interactionController.sendMessageForClient("create/" + onlinePlayerTextField.getText());
+
         });
     }
 
@@ -368,6 +377,7 @@ public class MenuController{
             btnClickSound.play();
             onlinePromptMenu.setVisible(false);
             serverPromptMenu.setVisible(true);
+
         });
     }
 
@@ -382,7 +392,6 @@ public class MenuController{
     //create event handler for online play button
     private void setOnlinePlayBtnEventHandler(){
         onlinePlayBtn.setOnMouseClicked(mouseEvent -> {
-
             btnClickSound.play();
             //check if text field is empty -> show error
             if(onlinePlayerTextField.getText().equals("")){
@@ -390,21 +399,19 @@ public class MenuController{
             }
             else {
                 if (onlinePlayerTextField.getText() != null) {
-                    //create new client and send message
-                    interactionController.createClient();
+
                     //create new player with given name
-                    interactionController.sendMessageForClient(String.valueOf("create/" + onlinePlayerTextField.getText()));
-
                     Platform.runLater(() -> {
-                        connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!");
+                        connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!" + newLine );
+                        connectionMessageText.appendText(String.valueOf("Color taken:" + playerController.getPlayersList() + newLine));
+                        connectionMessageText.appendText("There is: " + String.valueOf(playerController.getPlayersList().size() + " people in the game."));
                     });
-
                     }
                     onlinePlayBtn.setMouseTransparent(true);
-
                 }
+
                 if (playerController.getPlayersList().size() < 2) {
-                    onlinePlayBtn.setText("aaaa");
+                    onlinePlayBtn.setText("Not enough people");
                 }
                 else{
                         onlinePlayBtn.setText("Waiting...");

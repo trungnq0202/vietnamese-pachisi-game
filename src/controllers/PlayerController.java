@@ -13,19 +13,13 @@ import java.util.ArrayList;
 public class PlayerController implements Serializable {
     private static PlayerController playerController;
     private static ArrayList<Player> playersList = new ArrayList<>();
-    private MainController mainController;
 
 
-
-    void injectMainController(MainController mainController){
-        this.mainController = mainController;
-    }
-    public PlayerController(){
+    private PlayerController(){
     }
 
     public static PlayerController getPlayerController() {
         if (playerController == null){
-
             playerController = new PlayerController();
         } return playerController;
     }

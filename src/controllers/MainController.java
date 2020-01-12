@@ -9,6 +9,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import models.Horse;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainController {
@@ -47,7 +48,7 @@ public class MainController {
     private void injectMainControllerInNestedControllers(){
         menuController.injectMainController(this);
         gameBoardController.injectMainController(this);
-        playerController.injectMainController(this);
+
     }
 
     //Set loop background video when using menu

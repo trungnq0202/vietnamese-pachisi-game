@@ -14,6 +14,7 @@ public class Player implements Serializable, PropertyChangeListener {
     private String name;
     private boolean isServer;
 
+
     //register a tracker for this class
     private PropertyChangeSupport register = new PropertyChangeSupport(this);
 
@@ -85,6 +86,6 @@ public class Player implements Serializable, PropertyChangeListener {
     }
 
     public String toString(){
-        return this.getPlayerColor();
+        return  this.getPlayerColor();
     }
 }

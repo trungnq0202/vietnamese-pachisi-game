@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class InteractionController {
     private static InteractionController interactionController;
+
     private PlayerController playerController = PlayerController.getPlayerController();
     private ServerActivityController serverActivityController = ServerActivityController.getServerActivityController();
     private String ip = "localhost";
@@ -38,6 +39,7 @@ public class InteractionController {
         client = new Client(ip,port);
         //new Thread(client).start();
         client.run();
+
     }
 
     //send a message in name of this client
@@ -55,8 +57,9 @@ public class InteractionController {
             if (message.contains("create")){
                 Player incomingPlayer = new Player(rest(message));
                 playerController.addPlayer(incomingPlayer);
-                incomingPlayer.assignColor(playerController.getPlayersList().indexOf(incomingPlayer));
+                incomingPlayer.assignColor(PlayerController.getPlayerController().getPlayersList().indexOf(incomingPlayer));
                 serverActivityController.sendMessage(playerController.getPlayersList());
+                serverActivityController.sendMessage(playerController);
 
             } else System.out.println(message);
 
@@ -64,8 +67,7 @@ public class InteractionController {
 
         // if receive a controller, update player list
         if (input instanceof PlayerController){
-            PlayerController playerController = (PlayerController) input;
-            this.playerController.exchangePlayerControllerInfo(playerController);
+            playerController.exchangePlayerControllerInfo((PlayerController) input);
         }
 
         if (input instanceof ArrayList ){
@@ -73,6 +75,7 @@ public class InteractionController {
             playerController.setPlayersList(array);
             System.out.println(playerController.getPlayersList());
         }
+
 
 
     }
