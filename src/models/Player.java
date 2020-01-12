@@ -11,14 +11,29 @@ import java.util.ArrayList;
 public class Player implements Serializable, PropertyChangeListener {
     private String playerColor;
     private int score;
+    private String name;
+    private boolean isServer;
 
     //register a tracker for this class
     private PropertyChangeSupport register = new PropertyChangeSupport(this);
 
     //constructors
-    public Player(){
+    public Player(String name){
+        this.name = name;
         this.score = 0;
         register.addPropertyChangeListener(this);
+    }
+
+    public boolean isServer() {
+        return isServer;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     //getters

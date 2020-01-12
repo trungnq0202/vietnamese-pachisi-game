@@ -51,8 +51,6 @@ class ClientHandler extends Thread {
     }
 
 
-
-
     public String getThreadName() {
         return threadName;
     }

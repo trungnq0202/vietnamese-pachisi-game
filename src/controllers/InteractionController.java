@@ -3,22 +3,26 @@ package controllers;
 
 import models.Player;
 import networking.Client;
-import networking.Message;
 import networking.Server;
+
 
 public class InteractionController {
     private static InteractionController interactionController;
-    private MenuController menuController = MenuController.getMenuController();
+
     private PlayerController playerController = PlayerController.getPlayerController();
     private String ip = "localhost";
     private int port = 62341;
     private Client client;
 
+    private InteractionController(){
+    }
+
     //return an unique instance of interaction controller
     public static InteractionController getInteractionController(){
         if (interactionController == null){
             interactionController = new InteractionController();
-        } return interactionController;
+        }
+         return interactionController;
     }
     //create a new server
     public void createServer(){
@@ -40,14 +44,6 @@ public class InteractionController {
     //process object input for input stream
     public void processInput(Object input){
 
-        if (input instanceof Message){
-            Message incomingMessage = (Message)input;
-            System.out.println("I received a message");
-            System.out.printf("[%s] %s said \"%s\"\n", incomingMessage.getTime(),
-                    incomingMessage.getSenderName(),
-                    incomingMessage.getContent());
-        }
-
         // if receive a player, add this player into list
         if (input instanceof Player){
             Player incomingPlayer = (Player) input;
@@ -58,9 +54,6 @@ public class InteractionController {
         if (input instanceof String){
             String message = (String) input;
             System.out.println(message);
-            //TODO: ADD THIS!
-           /* menuController.getConnectionMessageText().setText(message);
-            menuController.getServerConnectionText().setText(message);*/
         }
 
         // if receive a controller, update player list
@@ -68,6 +61,7 @@ public class InteractionController {
             PlayerController playerController = (PlayerController) input;
             this.playerController.exchangePlayerControllerInfo(playerController);
         }
+
 
     }
 

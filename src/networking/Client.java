@@ -95,5 +95,8 @@ public class Client extends Thread{
         return ip;
     }
 
+    public ObjectInputStream getInputStream() {
+        return inputStream;
+    }
 }
 

@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import models.Player;
 import models.Sound;
+import networking.Client;
 import networking.Server;
 
 import java.util.ArrayList;
@@ -38,7 +39,9 @@ public class MenuController{
     public TextField serverConnectionText;
 
     private static MenuController menuController;
-    private static InteractionController interactionController = InteractionController.getInteractionController();
+
+    private InteractionController interactionController = InteractionController.getInteractionController();
+    private PlayerController playerController = PlayerController.getPlayerController();
 
     //Old ones
     @FXML private VBox userSetNameMenu;
@@ -312,6 +315,7 @@ public class MenuController{
     }
 
     //create server button
+    //TODO: ADD PLAYER
     private void setServerPlayBtnEventHandler(){
         serverPlayBtn.setOnMouseClicked(mouseEvent -> {
             btnClickSound.play();
@@ -378,28 +382,38 @@ public class MenuController{
         });
     }
 
+    //create event handler for online play button
     private void setOnlinePlayBtnEventHandler(){
         onlinePlayBtn.setOnMouseClicked(mouseEvent -> {
+
             btnClickSound.play();
-            //check if text field is empty
+            //check if text field is empty -> show error
             if(onlinePlayerTextField.getText().equals("")){
                 emptyPlayerNameError.setVisible(true);
             }
             else {
                 if (onlinePlayerTextField.getText() != null) {
-                    //create new player for this session
-                    Player player = new Player();
-                    player.setPlayerColor(onlinePlayerTextField.getText());
-
+                    //create new player with given name
+                    Player player = new Player(onlinePlayerTextField.getText());
+                    //create new client and send message
                     interactionController.createClient();
                     interactionController.sendMessageForClient(player);
-                    interactionController.sendMessageForClient("Player " + player.getPlayerColor() + "has connected!");
+                    interactionController.sendMessageForClient("Player " + player.getName() + " has connected!");
+                    connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!");
+
+
+                    }
+                    onlinePlayBtn.setMouseTransparent(true);
 
                 }
-                connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!");
+                if (playerController.getPlayersList().size() < 2) {
+                    onlinePlayBtn.setText("aaaa");
+                }
+                else{
+                        onlinePlayBtn.setText("Waiting...");
+                    }
                 connectionMessageText.setVisible(true);
-                onlinePlayBtn.setText("Waiting...");
-            }
+
         });
     }
 

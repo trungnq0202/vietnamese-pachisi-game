@@ -30,7 +30,9 @@ public class ServerInfo {
     public void addClient(String clientId) {
         clientList.add(clientId);
     }
+
     public List<String> getClientList() {
         return clientList;
     }
+
 }

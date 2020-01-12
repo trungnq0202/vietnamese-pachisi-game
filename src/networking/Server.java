@@ -31,7 +31,7 @@ public class Server extends Thread{
                 serverActivityController.addSocket(socket);
                 serverActivityController.setUpGameForAClient(socket);
                 serverInfo.addClient(String.valueOf(socket.getInetAddress()));
-
+                System.out.println(serverInfo.getClientList());
                 // bingo! we got a connection
                 ClientHandler newConnection = new ClientHandler(socket);
                 newConnection.start();

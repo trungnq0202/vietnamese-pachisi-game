@@ -51,11 +51,9 @@ public class ServerActivityController {
         } finally{
             System.out.println("Game set up completed!");
         }
-
-
-
-
     }
+
+
     public synchronized void sendMessage(Object message){
         for (ObjectOutputStream stream: serverSocketOutputs){
             try {
