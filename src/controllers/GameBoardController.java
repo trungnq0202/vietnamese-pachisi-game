@@ -85,31 +85,7 @@ public class GameBoardController {
         isHorseGoingOutsideNest = false;
     }
 
-    /**************** DEBUG FUNCTIONS **************/
-    private void printHorseIdOfPosition(){
-        for (int i = 0; i < 48; i++){
-            System.out.println(i + ": " + horseIdOfPosition[i]);
-        }
-    }
-
-    public void displayHorseIdOfPosition(){
-        for (int i = 0; i < 48; i++){
-            if (horseIdOfPosition[i] != null)
-                System.out.println(i + ": " + horseIdOfPosition[i]);
-        }
-    }
-
-    public void displayHorseIdOfHomePosition(){
-        for (int i = 0; i < 24; i++){
-            if (horseIdOfHomePosition[i] != null)
-                System.out.println(i + ": " + horseIdOfHomePosition[i]);
-        }
-    }
-
-    /**************** END DEBUG FUNCTIONS **************/
-
     @FXML private void initialize(){
-//        System.out.println("gameboardcontroller init");
         diceArrowAnimation = new Timeline(new KeyFrame(Duration.millis(100), e -> {
             if (diceArrow.getTranslateY() == 0) diceArrow.setTranslateY(-10);
             else diceArrow.setTranslateY(0);
@@ -400,7 +376,6 @@ public class GameBoardController {
     }
 
     private void activateEventHandlerForHorseOutsideNest(Horse horse){
-//        horse.displayListOfPossibleSteps();
         horse.setOnMouseClicked(event -> {
             horse.pauseArrowAnimation();
             //Shutdown other horses, which are also outside nest
@@ -499,20 +474,11 @@ public class GameBoardController {
         horsesWithValidMovesList.clear();               //reset the list
         Dice dice1 = dicesController.getDice1();
         Dice dice2 = dicesController.getDice2();
-
         //Consider every outside-nest horses belonging to the temporary player
         for (int i = 0; i < 4; i++){
             Horse tempHorse = (Horse)gameBoard.lookup("#" + colors[tempPlayerIdTurn] + "H" + i); //Get the horse object according to id
-
-            //Debugging
-//            System.out.println(tempHorse.getId());
-//            System.out.println(tempHorse.isInNest());
-//            System.out.println(dice1.isUsable());
-//            System.out.println(dice2.isUsable());
-
             //If this horse is outside the nest
             if (!tempHorse.isInNest()) {
-//                tempHorse.resetListOfPossibleSteps();       //Reset possible the list of steps can be made
                 //If the horse is not moved by the player yet
                 if (dice1.isUsable()) checkPossibleMoveWithDice(dice1, null, tempHorse);
                 if (dice2.isUsable()) checkPossibleMoveWithDice(null, dice2, tempHorse);
@@ -523,16 +489,10 @@ public class GameBoardController {
 
     //Check that whether or not, with dice 1, dice 2 or both, the horse will be able to move
     private void checkPossibleMoveWithDice(Dice dice1, Dice dice2, Horse horse){
-//        System.out.println("//////// checkPossibleMoveWithDice //////");
-//        displayHorseIdOfPosition();
-//        System.out.println("is in home :" + horse.isInHome());
-//        System.out.println(horse);
-//        System.out.println("is in home door pos : " + horse.isInHomeDoorPosition());
         boolean hasPossibleMove = false;
         horse.resetListOfPossibleSteps();
         //If temp Horse is already in home and not just entered the home in this turn
         if (horse.isInHome() && !horse.isJustEnteredHome()){
-//            System.out.println("th1");
             //If dice1 roll number is 1         sou
             if (dice1 != null && (dice1.getRollNumber() == Integer.parseInt(horse.getTempPosition().substring(2)) + 1) && checkInvalidScalingHome(horse)){
                 hasPossibleMove = true;
@@ -547,13 +507,11 @@ public class GameBoardController {
 
             //If tempHorse is at home door position
         } else if (horse.isInHomeDoorPosition() || horse.isJustEnteredHome()){
-//            System.out.println("th2");
             if (dice1 != null && checkEnterHomeBlocked(dice1.getRollNumber(), horse)) {hasPossibleMove = true; horse.setPossibleStepsListByIndex(0,dice1.getRollNumber());}
             if (dice2 != null && checkEnterHomeBlocked(dice2.getRollNumber(), horse)) {hasPossibleMove = true; horse.setPossibleStepsListByIndex(1,dice2.getRollNumber()); }
 
             //If tempHorse is simply outside of nest , not in home and not at home door position
         } else {
-//            System.out.println("th3");
             if (dice1 != null && checkBlocked(dice1.getRollNumber(), horse) && checkOverstepHomeDoorPosition(dice1.getRollNumber(), horse))
             { hasPossibleMove = true; horse.setPossibleStepsListByIndex(0,dice1.getRollNumber()); }
 
@@ -567,23 +525,15 @@ public class GameBoardController {
     //Check if the next move of the horse is blocked by other horses
     private boolean checkBlocked(int steps, Horse horse){
         String tempPosition = horse.getTempPosition();
-//        System.out.println("CHECKBLOCKED");
         //Check if there is no horse between start pos to end pos
         for (int tempStep = 1; tempStep < steps; tempStep++){
             String nextPosition = calculateNextPosition(tempStep, tempPosition, null);
-//            System.out.println("next position - checkblocked:" + nextPosition);
             int nextPositionInInt = convertPositionToIntegerForm(nextPosition);
-//            System.out.println("next position int - checkblocked:" + nextPositionInInt);
-//            System.out.println("horseIdOfPosition[nextPositionInInt] = " + horseIdOfPosition[nextPositionInInt] );
             if (horseIdOfPosition[nextPositionInInt] != null) return false;
         }
 
         int endPositionInt = convertPositionToIntegerForm(calculateNextPosition(steps,tempPosition, null));
-//        System.out.println(calculateNextPosition(steps,tempPosition, null));
-//        System.out.println("end position int - checkblocked:" + endPositionInt);
-//        System.out.println("horseIdOfPosition[endPositionInt] = " + horseIdOfPosition[endPositionInt] );
         //Check if there is a horse at the last pos, and that horse must not be the same type as the one being considered, or else it would be considered blocked
-//        System.out.println(horseIdOfPosition[endPositionInt] == null || horseIdOfPosition[endPositionInt].charAt(0) != colors[tempPlayerIdTurn]);
         return horseIdOfPosition[endPositionInt] == null || horseIdOfPosition[endPositionInt].charAt(0) != colors[tempPlayerIdTurn];
     }
 
@@ -604,11 +554,7 @@ public class GameBoardController {
 
     //Check if the home position the horse will move to is being blocked (this case is for those horses that are standing at the home door position)
     private boolean checkEnterHomeBlocked(int steps, Horse horse){
-//        System.out.println("checkEnterHomeBlocked");
         String nextHomePosition;
-//        = calculateNextHomePosition(steps, horse);
-//        if (nextHomePosition != null) return horseIdOfHomePosition[convertHomePositionToIntegerForm(nextHomePosition)] == null;
-//        else return false;
         for (int tempStep = 1; tempStep <= steps; tempStep++){
             nextHomePosition = calculateNextHomePosition(tempStep, horse);
             if (nextHomePosition == null || horseIdOfHomePosition[convertHomePositionToIntegerForm(nextHomePosition)] != null) return false;
