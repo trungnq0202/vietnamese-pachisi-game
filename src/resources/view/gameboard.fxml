@@ -54,7 +54,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="statusLabel" alignment="CENTER" prefHeight="55.0" prefWidth="462.0" text="Green" wrapText="true">
+                  <Label fx:id="statusLabel" alignment="CENTER" prefHeight="55.0" prefWidth="462.0" wrapText="true">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -87,7 +87,7 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="100.0">
+                                          <HBox fx:id="BPHB" alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="100.0" visible="false">
                                              <children>
                                                 <Label fx:id="BPoints" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="43.0" text="0">
                                                    <font>
@@ -273,7 +273,7 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="100.0">
+                                          <HBox fx:id="YPHB" alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="100.0" visible="false">
                                              <children>
                                                 <Label fx:id="YPoints" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="37.0" text="0">
                                                    <font>
@@ -484,7 +484,7 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="100.0">
+                                          <HBox fx:id="RPHB" alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="100.0" visible="false">
                                              <children>
                                                 <Label fx:id="RPoints" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="39.0" text="0">
                                                    <font>
@@ -667,7 +667,7 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="100.0">
+                                          <HBox fx:id="GPHB" alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="100.0" visible="false">
                                              <children>
                                                 <Label fx:id="GPoints" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="37.0" text="0">
                                                    <font>

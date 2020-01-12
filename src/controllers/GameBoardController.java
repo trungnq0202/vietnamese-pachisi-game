@@ -14,8 +14,10 @@ import models.Sound;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class GameBoardController {
+    @FXML private HBox dices;
     @FXML private Button diceArrow;
     @FXML private Label PN0;
     @FXML private Label PN1;
@@ -50,13 +52,15 @@ public class GameBoardController {
     @FXML private DicesController dicesController;
     private static final char[] colors = {'R','B','Y','G'}; //Color of each player according to the order players' id
     private static String[] horseIdOfPosition;  //String array indicating which horse(horseId) is occupying which position
-    private static ArrayList<Horse> horsesWithValidMoves;
+    private static ArrayList<Horse> horsesWithValidMovesList;
     private static String[] horseIdOfHomePosition;
     private static int[] scores;
     private Timeline diceArrowAnimation;
     private boolean isRollingDiceTurn;   //Variable indicating that this is the time for the player to roll the dices, no other action can be done
     private boolean isFreeze;
     private int tempPlayerIdTurn;
+    private boolean isHorseGoingOutsideNest;
+    private BotController botController;
 
     //Sound
     private Sound horseMoveSound;
@@ -69,7 +73,7 @@ public class GameBoardController {
 //        System.out.println("gameboardcontroller construct");
         horseIdOfPosition = new String[48];
         horseIdOfHomePosition = new String[25];
-        horsesWithValidMoves = new ArrayList<>();
+        horsesWithValidMovesList = new ArrayList<>();
         Arrays.fill(horseIdOfPosition,null);
         Arrays.fill(horseIdOfHomePosition,null);
         horseMoveSound = new Sound(Sound.SoundType.HORSE_MOVE_SFX);
@@ -78,6 +82,7 @@ public class GameBoardController {
         horseKickedSound = new Sound(Sound.SoundType.HORSE_KICKED_SFX);
         launchSound = new Sound(Sound.SoundType.GAME_LAUNCH_SFX);
         scores = new int[4];
+        isHorseGoingOutsideNest = false;
     }
 
     /**************** DEBUG FUNCTIONS **************/
@@ -112,6 +117,7 @@ public class GameBoardController {
         diceArrowAnimation.setCycleCount(Timeline.INDEFINITE);
         dicesController.injectGameBoardController(this);
         setUpLabelBindingText();
+        botController = new BotController(dicesController.getDice1(), dicesController.getDice2() , this);
     }
 
     public void injectMainController(MainController mainController){
@@ -211,10 +217,12 @@ public class GameBoardController {
     /****************  Game Initialization **************/
     //Create all horse nests at the start of the game
     private void createHorseNests(){
-        RNSP.getChildren().add(3,new HorseNest(colors[0]));
-        BNSP.getChildren().add(3,new HorseNest(colors[1]));
-        YNSP.getChildren().add(3,new HorseNest(colors[2]));
-        GNSP.getChildren().add(3,new HorseNest(colors[3]));
+        for (int i = 0; i < mainController.getTotalNumberOfPlayers(); i++) {
+            StackPane nestStackPane = (StackPane)gameBoard.lookup("#" + colors[i] + "NSP");
+            HBox pointHBox = (HBox)gameBoard.lookup("#" + colors[i] + "PHB");
+            nestStackPane.getChildren().add(3, new HorseNest(colors[i]));
+            pointHBox.setVisible(true);
+        }
     }
 
     private void updatePlayersNameView(){
@@ -236,7 +244,9 @@ public class GameBoardController {
         isRollingDiceTurn = true;                           //set rolling dice turn state yo true
         isFreeze = false;                                   //unfreeze rolling dices
         tempPlayerIdTurn = 0;                               //First turn belongs to player "GREEN"
+        isHorseGoingOutsideNest = false;
         gameBoard.lookup("#TURN0").setVisible(true);
+        if (checkBotPlayerTurn()) botController.autoRollDice();
 //        debug();
     }
 
@@ -392,7 +402,7 @@ public class GameBoardController {
             horse.pauseArrowAnimation();
 //            System.out.println(horse.getTempPosition());
             //Shutdown other horses, which are also outside nest
-            for (Horse subHorse : horsesWithValidMoves) if (subHorse != horse) deactivateShowPossibleMovesForHorseOutsideNest(subHorse);
+            for (Horse subHorse : horsesWithValidMovesList) if (subHorse != horse) deactivateShowPossibleMovesForHorseOutsideNest(subHorse);
             if (dicesController.getDice1().isUsable()) dicesController.setEventHandlerForDice1Pick(this, horse);
             if (dicesController.getDice2().isUsable()) dicesController.setEventHandlerForDice2Pick(this, horse);
         });
@@ -421,12 +431,13 @@ public class GameBoardController {
         //Check double
         if (dicesController.getDice1().getRollNumber() != dicesController.getDice2().getRollNumber()) {
             gameBoard.lookup("#TURN" + tempPlayerIdTurn).setVisible(false);
-            if (tempPlayerIdTurn == 3) tempPlayerIdTurn = 0; else tempPlayerIdTurn++;
+            if (tempPlayerIdTurn == (mainController.getTotalNumberOfPlayers() - 1)) tempPlayerIdTurn = 0; else tempPlayerIdTurn++;
             gameBoard.lookup("#TURN" + tempPlayerIdTurn).setVisible(true);
         }
         isRollingDiceTurn = true;
         highLightDices(true);
         dicesController.setEventHandlerForDiceRoll();
+        if (checkBotPlayerTurn()) botController.autoRollDice();
     }
 
     /*************** Inside Nest Horses control **************/
@@ -466,7 +477,7 @@ public class GameBoardController {
     }
 
     public void highlightHorseOutsideNest(){
-        for (Horse horse:horsesWithValidMoves) {
+        for (Horse horse:horsesWithValidMovesList) {
             horse.showSideArrow();
             activateEventHandlerForHorseOutsideNest(horse);
         }
@@ -484,7 +495,7 @@ public class GameBoardController {
 
     /*************** Check possible moves and display **************/
     private void getHorsesWithValidMoves(){
-        horsesWithValidMoves.clear();               //reset the list
+        horsesWithValidMovesList.clear();               //reset the list
         Dice dice1 = dicesController.getDice1();
         Dice dice2 = dicesController.getDice2();
 
@@ -550,7 +561,7 @@ public class GameBoardController {
             { hasPossibleMove = true; horse.setPossibleStepsListByIndex(1,dice2.getRollNumber());}
         }
 
-        if (hasPossibleMove && !horsesWithValidMoves.contains(horse)) horsesWithValidMoves.add(horse);
+        if (hasPossibleMove && !horsesWithValidMovesList.contains(horse)) horsesWithValidMovesList.add(horse);
     }
 
     //Check if the next move of the horse is blocked by other horses
@@ -615,8 +626,13 @@ public class GameBoardController {
     /*************** End Check possible moves and display **************/
     public void showPossibleHorsesMoves(){
         getHorsesWithValidMoves();
-        if ( horsesWithValidMoves.size() != 0 ){
+        if ( horsesWithValidMovesList.size() != 0 ){
             highlightHorseOutsideNest();
+            if (checkBotPlayerTurn()) {
+                System.out.println("showPossibleHorsesMove: isHorseGoingOutsideNest: " + isHorseGoingOutsideNest);
+                if (isHorseGoingOutsideNest) botController.autoPickRandomHorseGoingOutsideNest();
+                else botController.autoPickMostReasonableHorse();
+            }
         } else {
             unhighlightHorseOutsideNest(false);
             if (!dicesController.getDice1().isUsable() || !dicesController.getDice2().isUsable()
@@ -625,22 +641,22 @@ public class GameBoardController {
                 unhighlightHorsesInsideNest();
                 updatePlayerTurn();
             }
-
         }
     }
 
     //process after rolling dices
     public void processPostDiceRolling(){
-        boolean isHorseGoingOutsideNest = false;
+        isHorseGoingOutsideNest = false;
         highLightDices(false);  //Unhighlight the dices
         isRollingDiceTurn = false; //Do not allow the players to roll dice until they've finished their horses moves
 
         //If the 1 dices contains a 6 and the start position is not occupied by this player's horse
-        if ((dicesController.getDice1().getRollNumber() == 6 || dicesController.getDice2().getRollNumber() == 6)){
+        if (existHorseInsideNest() && (dicesController.getDice1().getRollNumber() == 6 || dicesController.getDice2().getRollNumber() == 6)){
             String horseIdAtStartPosition = horseIdOfPosition[1 + 11 * tempPlayerIdTurn + tempPlayerIdTurn];
             if ( horseIdAtStartPosition == null || horseIdAtStartPosition.charAt(0) != colors[tempPlayerIdTurn] ){
                 highLightHorsesInsideNest(); //Highlight horses to notify the player that he/she can get a new horse out of the nest
                 isHorseGoingOutsideNest = true;
+                System.out.println("processPostDiceRolling: isHorseGoingOutsideNest: " + isHorseGoingOutsideNest);
             }
         }
 
@@ -648,7 +664,7 @@ public class GameBoardController {
         setDicesUsable();                       //Reset the 2 dices to usable states
         if (checkAvailableOutsideNestHorse())  showPossibleHorsesMoves(); //Show all possible moves of each horses for the players to pick
         else if (!isHorseGoingOutsideNest) updatePlayerTurn();
-
+        else botController.autoPickRandomHorseGoingOutsideNest();
     }
 
     //Highlight the dices in order to notify the players that it is their turn to roll
@@ -695,15 +711,14 @@ public class GameBoardController {
         return horseIdOfPosition[index];
     }
 
+    /*************** Update and display score **************/
+
     public void updateDiceNumView(){
         dice1Val.setText(String.valueOf(dicesController.getDice1().getRollNumber()));
         dice2Val.setText(String.valueOf(dicesController.getDice2().getRollNumber()));
     }
 
     public void updateScore(int playerId, int deltaScore){
-//        System.out.println("Player id: " + playerId);
-//        System.out.println("Delta score: " + deltaScore);
-        for (int i = 0; i < 4; i++) System.out.println(i + " " + scores[i]);
         scores[playerId] += deltaScore;
         updateScoreView(playerId);
     }
@@ -712,6 +727,8 @@ public class GameBoardController {
         Label scoreLabel = (Label)gameBoard.lookup("#" + colors[playerId] + "Points");
         scoreLabel.setText(String.valueOf(scores[playerId]));
     }
+
+    /*************** End Update and display score **************/
 
     public int getPlayerIdByColor(char color){
         switch (color){
@@ -723,6 +740,7 @@ public class GameBoardController {
         return 0;
     }
 
+    /*************** Update and display latest move status **************/
     //Print description of the latest horse on the status label
     public void printMoveStatus(int steps){
         String moveStatus = "";
@@ -782,7 +800,46 @@ public class GameBoardController {
         statusLabel.setText(moveInsideHomeStatus);
     }
 
-//        private void debug(){
+    /*************** End Update and display latest move status **************/
+
+    public boolean checkBotPlayerTurn(){
+        return tempPlayerIdTurn > (mainController.getNoHumanPlayers() - 1);
+    }
+
+    public Horse getRandomHorseInsideNest(){
+        for (int i = 0; i < 4; i++){
+            Horse horse = (Horse)gameBoard.lookup("#" + colors[tempPlayerIdTurn] + "H" + i);
+            if (horse.isInNest()) return horse;
+        }
+        return null;
+    }
+
+    public boolean existHorseInsideNest(){
+        for (int i = 0; i < 4; i++){
+            Horse horse = (Horse)gameBoard.lookup("#" + colors[tempPlayerIdTurn] + "H" + i);
+            if (horse.isInNest()) return true;
+        }
+        return false;
+    }
+
+    /*************** Getter and Setter **************/
+    public static ArrayList<Horse> getHorsesWithValidMovesList() {
+        return horsesWithValidMovesList;
+    }
+//
+    public boolean isHorseGoingOutsideNest() {
+        return isHorseGoingOutsideNest;
+    }
+
+    public static String[] getHorseIdOfPosition() {
+        return horseIdOfPosition;
+    }
+
+    public int getTempPlayerIdTurn() {
+        return tempPlayerIdTurn;
+    }
+
+    //        private void debug(){
 ////        Horse horse = (Horse)gameBoard.lookup("#BH0");
 ////        horse.setTempPosition("B0");
 ////        horseIdOfPosition[convertPositionToIntegerForm("B0")] = "BH0";

@@ -81,6 +81,10 @@ public class MainController {
         return menuController.getNoVirtualPlayers();
     }
 
+    public int getTotalNumberOfPlayers(){
+        return menuController.getNoHumanPlayers() + menuController.getNoVirtualPlayers();
+    }
+
     public ArrayList<Horse> getHorseHomes() {
         return horseHomes;
     }

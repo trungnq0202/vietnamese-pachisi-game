@@ -35,9 +35,9 @@ public class Horse extends HBox {
         this.tempPosition = null;
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
-        listOfPossibleSteps = new ArrayList<>(3){
+        listOfPossibleSteps = new ArrayList<>(2){
             {
-                add(0); add(0); add(0);
+                add(0); add(0);
             }
         };
         setProperties();

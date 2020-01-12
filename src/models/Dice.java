@@ -1,8 +1,11 @@
 package models;
 
+import javafx.event.EventType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+
 import java.util.Random;
 
 public class Dice extends Button {
@@ -59,5 +62,6 @@ public class Dice extends Button {
     public void setUsable(boolean usable) {
         isUsable = usable;
     }
+
 }
 
