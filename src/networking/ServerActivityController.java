@@ -40,8 +40,7 @@ public class ServerActivityController {
         int indexOfClient = clientSockets.indexOf(socket);
         try {
             messageOutputStream = serverSocketOutputs.get(indexOfClient);
-            List<String> clientList = serverInfo.getClientList();
-            messageOutputStream.writeObject(clientList);
+            messageOutputStream.writeObject("Server: Welcome to server");
             //TODO: send game board and set up game for this client!
         } catch(IOException e){
             System.out.println("Unable to send to client!" );

@@ -1,4 +1,5 @@
 package controllers;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,10 +8,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
-import models.Player;
 import models.Sound;
-import networking.Client;
-import networking.Server;
+
 
 import java.util.ArrayList;
 
@@ -322,8 +321,7 @@ public class MenuController{
             serverPlayBtn.setMouseTransparent(true);
 
             //create server
-            Server server = new Server();
-            new Thread(server).start();
+            interactionController.createServer();
             serverConnectionText.setText("[Menu controller] Create server!");            //connection message
             serverConnectionText.setVisible(true);
         });
@@ -395,13 +393,14 @@ public class MenuController{
                     //create new client and send message
                     interactionController.createClient();
                     //create new player with given name
-                    Player player = new Player(onlinePlayerTextField.getText());
-                    playerController.addPlayer(player);
-                    interactionController.sendMessageForClient(player);
+                    interactionController.sendMessageForClient(String.valueOf("create/" + onlinePlayerTextField.getText()));
 
-                    connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!");
+                    Platform.runLater(() -> {
+                        connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!");
+                    });
+
                     }
-                    //onlinePlayBtn.setMouseTransparent(true);
+                    onlinePlayBtn.setMouseTransparent(true);
 
                 }
                 if (playerController.getPlayersList().size() < 2) {

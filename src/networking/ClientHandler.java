@@ -34,9 +34,8 @@ class ClientHandler extends Thread {
                 if ((fromClient = inputStream.readObject()) != null)
                 {
                     interactionController.processInput(fromClient);
-                    //this.serverActivityController.sendMessage(fromClient);
+                    //serverActivityController.sendMessage(fromClient);
                 }
-
             }
         } catch (IOException e) {
             // client probably disconnected

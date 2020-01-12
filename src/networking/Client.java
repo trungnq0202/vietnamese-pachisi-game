@@ -29,7 +29,6 @@ public class Client extends Thread{
         this.socket = new Socket(HOST_NAME,PORT);
         this.outputStream = new ObjectOutputStream(socket.getOutputStream());
         this.inputStream = new ObjectInputStream(socket.getInputStream());
-
     }
 
 
@@ -45,7 +44,6 @@ public class Client extends Thread{
     }
 
     private void startListeningToTheServer() {
-
         new Thread(() -> {
             Object input;
             try {

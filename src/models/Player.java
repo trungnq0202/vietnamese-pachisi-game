@@ -84,4 +84,7 @@ public class Player implements Serializable, PropertyChangeListener {
         System.out.println(evt.getNewValue());
     }
 
+    public String toString(){
+        return this.getPlayerColor();
+    }
 }

@@ -19,6 +19,7 @@ public class MainController {
     @FXML private MediaView backgroundVideo;
     @FXML private MenuController menuController;
     @FXML private GameBoardController gameBoardController;
+    private PlayerController playerController = PlayerController.getPlayerController();
     private static final String VIDEO_URL = "../resources/videos/loopbackgroundvideo.mp4";
 
     //Variables for sound controller
@@ -46,6 +47,7 @@ public class MainController {
     private void injectMainControllerInNestedControllers(){
         menuController.injectMainController(this);
         gameBoardController.injectMainController(this);
+        playerController.injectMainController(this);
     }
 
     //Set loop background video when using menu

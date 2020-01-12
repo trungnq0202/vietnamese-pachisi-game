@@ -13,26 +13,22 @@ import java.util.ArrayList;
 public class PlayerController implements Serializable {
     private static PlayerController playerController;
     private static ArrayList<Player> playersList = new ArrayList<>();
-
-    @FXML private Button createNewPlayerButton;
-    @FXML private Button createNewSession;
-    @FXML private TextField nameField;
-    @FXML private TextArea messageField;
+    private MainController mainController;
 
 
 
+    void injectMainController(MainController mainController){
+        this.mainController = mainController;
+    }
     public PlayerController(){
     }
 
     public static PlayerController getPlayerController() {
         if (playerController == null){
+
             playerController = new PlayerController();
         } return playerController;
     }
-
-
-
-
 
     public ArrayList<Player> getPlayersList(){
         return playersList;
@@ -44,7 +40,7 @@ public class PlayerController implements Serializable {
     }
 
     public void setPlayersList(ArrayList<Player> playersList) {
-        PlayerController.playersList = playersList;
+        this.playersList = playersList;
     }
 
     public void exchangePlayerControllerInfo(PlayerController playerController){

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class InteractionController {
     private static InteractionController interactionController;
-
     private PlayerController playerController = PlayerController.getPlayerController();
     private ServerActivityController serverActivityController = ServerActivityController.getServerActivityController();
     private String ip = "localhost";
@@ -37,7 +36,8 @@ public class InteractionController {
     //create a new client
     public void createClient(){
         client = new Client(ip,port);
-        new Thread(client).run();
+        //new Thread(client).start();
+        client.run();
     }
 
     //send a message in name of this client
@@ -48,18 +48,18 @@ public class InteractionController {
     //process object input for input stream
     public void processInput(Object input){
 
-        // if receive a player, add this player into list
-        if (input instanceof Player){
-            Player incomingPlayer = (Player) input;
-            playerController.addPlayer(incomingPlayer);
-            incomingPlayer.assignColor(playerController.getPlayersList().indexOf(incomingPlayer));
-            serverActivityController.sendMessage(playerController.getPlayersList());
-        }
-
-        //if receive a String, print to the message field
+        //if receive a String, see what it commands
         if (input instanceof String){
             String message = (String) input;
-            System.out.println(message);
+            // if this message contains create, create new player with input name
+            if (message.contains("create")){
+                Player incomingPlayer = new Player(rest(message));
+                playerController.addPlayer(incomingPlayer);
+                incomingPlayer.assignColor(playerController.getPlayersList().indexOf(incomingPlayer));
+                serverActivityController.sendMessage(playerController.getPlayersList());
+
+            } else System.out.println(message);
+
         }
 
         // if receive a controller, update player list
@@ -71,11 +71,16 @@ public class InteractionController {
         if (input instanceof ArrayList ){
             ArrayList<Player> array = (ArrayList<Player>) input;
             playerController.setPlayersList(array);
-            System.out.println(playerController.getPlayersList().size());
+            System.out.println(playerController.getPlayersList());
         }
 
 
     }
-
+    private String rest(String word) {
+        int slashIndex = word.indexOf('/');
+        if (slashIndex == -1)
+            return word;
+        return word.substring(slashIndex + 1);
+    }
 
 }
