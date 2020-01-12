@@ -24,17 +24,11 @@ public class MainController {
     //Variables for sound controller
     private boolean isSoundEnabled;
 
-    //Variables for game playing process
-    private ArrayList<Horse> horseHomes;
+
 
     public MainController(){
         System.out.println("maincontroller construct");
         isSoundEnabled = true;
-        horseHomes = new ArrayList<>(){
-            {
-                for (int i = 1; i <= 24; i ++) add(null);
-            }
-        };
         System.out.println(I18NController.getLocale().getDisplayCountry());
     }
 
@@ -85,8 +79,6 @@ public class MainController {
         return menuController.getNoHumanPlayers() + menuController.getNoVirtualPlayers();
     }
 
-    public ArrayList<Horse> getHorseHomes() {
-        return horseHomes;
-    }
+
 
 }

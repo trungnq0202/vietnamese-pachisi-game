@@ -119,6 +119,7 @@ public class DicesController {
         if (horse.isInHome()) {
             gameBoardController.unhighlightHorseOutsideNest(false);
             gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber());
+            gameBoardController.setHorseGoingOutsideNest(false);
         }
         else if (horse.isInHomeDoorPosition()) {
             if (otherDice.isUsable()) {
@@ -127,8 +128,12 @@ public class DicesController {
             }
             else gameBoardController.unhighlightHorseOutsideNest(false);
             gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber());
+            gameBoardController.setHorseGoingOutsideNest(false);
         }
-        else gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse, dicePick.getRollNumber());
+        else {
+            gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse, dicePick.getRollNumber());
+            gameBoardController.setHorseGoingOutsideNest(false);
+        }
     }
 
     public void unsetEventHandlerForDices(){

@@ -32,7 +32,6 @@ public class BotController {
 
     public void autoPickRandomHorseGoingOutsideNest(){
         Horse pickHorse =  gameBoardController.getRandomHorseInsideNest();
-        System.out.println(pickHorse);
         hoverThenClick(pickHorse);
     }
 
@@ -62,15 +61,17 @@ public class BotController {
     }
 
     private void hoverThenClick(Node node){
-        Event.fireEvent(node, new MouseEvent(MouseEvent.MOUSE_ENTERED, 0,0,0,0, MouseButton.PRIMARY, 1, true, true, true, true,
-                true, true, true, true, true, true, null));
+        Event.fireEvent(node, new MouseEvent(MouseEvent.MOUSE_ENTERED, 0,0,0,0, null, 0, false, false, false, false,
+                false, false, false, false, false, false, null));
 
         SequentialTransition sequentialTransition =  new SequentialTransition(
-                new PauseTransition(Duration.millis(1000))
+                new PauseTransition(Duration.millis(1500))
         );
         sequentialTransition.setOnFinished(actionEvent -> {
-            Event.fireEvent(node, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,0,0,0, MouseButton.PRIMARY, 1, true, true, true, true,
-                    true, true, true, true, true, true, null));
+            Event.fireEvent(node, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,0,0,0, MouseButton.PRIMARY, 1, false, false, false, false,
+                    true, false, false, false, false, false, null));
+            Event.fireEvent(node, new MouseEvent(MouseEvent.MOUSE_EXITED, 0,0,0,0, MouseButton.PRIMARY, 0, false, false, false, false,
+                    false, false, false, false, false, false, null));
         });
         sequentialTransition.play();
     }
@@ -89,12 +90,11 @@ public class BotController {
             }
         } else if (horse.isInHomeDoorPosition()) return horse.getPossibleStepsListByIndex(dicePick);
             else {
-                int nextPositionIntegerForm = gameBoardController.convertPositionToIntegerForm(horse.getTempPosition());
+                int nextPositionIntegerForm = gameBoardController.convertPositionToIntegerForm(gameBoardController.calculateNextPosition(horse.getPossibleStepsListByIndex(dicePick), horse.getTempPosition(), null));
                 if (GameBoardController.getHorseIdOfPositionByIndex(nextPositionIntegerForm) != null) return 2;
         }
             return 0;
     }
-
 
     private int calculateProspectiveDistanceFromHomeDoorPos(Horse horse, int dicePick){
         String startPos = horse.getTempPosition();
@@ -104,7 +104,7 @@ public class BotController {
         String homeDoorPos = "" + horse.getHorseColor() + 0;
         while (!nextPosAfterProspectiveOne.equals(homeDoorPos)){
             stepsCountToHomeDoorPos++;
-            nextPosAfterProspectiveOne = gameBoardController.calculateNextPosition(1, nextPos, null);
+            nextPosAfterProspectiveOne = gameBoardController.calculateNextPosition(1, nextPosAfterProspectiveOne, null);
         }
         return stepsCountToHomeDoorPos;
     }
@@ -128,7 +128,6 @@ public class BotController {
             }
         }
     }
-
 
     private void analyzeProspectiveScore(Horse horse){
         if (horse.getPossibleStepsListByIndex(0) != 0) {
