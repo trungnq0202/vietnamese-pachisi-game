@@ -13,7 +13,7 @@
 
 <StackPane fx:id="rootMenu" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
    <children>
-      <VBox fx:id="startMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="263.0" spacing="51.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-background-color: rgba(124,147,166,0.3);" visible="false" StackPane.alignment="CENTER">
+      <VBox fx:id="startMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="263.0" spacing="51.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-background-color: rgba(124,147,166,0.3);" StackPane.alignment="CENTER">
          <children>
             <Button fx:id="newGameBtn" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" textFill="WHITE">
                <font>
@@ -296,7 +296,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="langMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="362.0" spacing="20.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-background-color: rgba(124,147,166,0.3);" visible="false">
+      <VBox fx:id="E" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="362.0" spacing="20.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-background-color: rgba(124,147,166,0.3);" visible="false">
          <children>
             <Label fx:id="langSelectLabel" text="Select your language:" textFill="#fcf940">
                <font>
@@ -320,23 +320,62 @@
             </Button>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-background-color: rgba(124,147,166,0.3);">
+      <VBox fx:id="endGameMenu" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="483.0" spacing="3.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-background-color: rgba(124,147,166);" visible="false">
          <children>
-            <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="221.0" text="Game Has Ended" textFill="#fcf940">
+            <Label fx:id="EGTitleLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="221.0" text="Game Has Ended" textFill="#fcf940">
                <font>
                   <Font name="System Bold" size="27.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="473.0" spacing="50.0">
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="473.0" spacing="100.0">
                <children>
-                  <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="112.0" text="Label" />
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="92.0" text="Label" />
+                  <Label fx:id="EGPlayersTitleLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="112.0" text="Players" />
+                  <Label fx:id="EGPointsTitleLabel" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" text="Points" />
                </children>
             </HBox>
-            <HBox layoutX="15.0" layoutY="199.0" prefHeight="40.0" prefWidth="473.0" />
-            <HBox layoutX="15.0" layoutY="219.0" prefHeight="40.0" prefWidth="473.0" />
-            <HBox layoutX="15.0" layoutY="239.0" prefHeight="40.0" prefWidth="473.0" />
-            <HBox layoutX="15.0" layoutY="180.0" prefHeight="40.0" prefWidth="473.0" />
+            <HBox alignment="CENTER" layoutX="15.0" layoutY="60.0" prefHeight="40.0" prefWidth="473.0" spacing="100.0">
+               <children>
+                  <Label fx:id="EGPN0" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="112.0" text="player 1" />
+                  <Label fx:id="EGP1P0" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" text="0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="15.0" layoutY="60.0" prefHeight="40.0" prefWidth="473.0" spacing="100.0">
+               <children>
+                  <Label fx:id="EGPN1" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="112.0" text="player 2" />
+                  <Label fx:id="EGP1P1" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" text="0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="15.0" layoutY="60.0" prefHeight="40.0" prefWidth="473.0" spacing="100.0">
+               <children>
+                  <Label fx:id="EGPN2" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="112.0" text="player 3" />
+                  <Label fx:id="EGP1P2" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" text="0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="15.0" layoutY="60.0" prefHeight="40.0" prefWidth="473.0" spacing="100.0">
+               <children>
+                  <Label fx:id="EGPN3" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="112.0" text="player 4" />
+                  <Label fx:id="EGP1P3" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" text="0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="15.0" layoutY="235.0" prefHeight="40.0" prefWidth="473.0" spacing="40.0">
+               <children>
+                  <Label fx:id="EGFirstFinishLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="231.0" text="First player to finish the game:" />
+                  <Label fx:id="finishPN" alignment="CENTER" prefHeight="17.0" prefWidth="175.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="15.0" layoutY="278.0" prefHeight="40.0" prefWidth="473.0" spacing="40.0">
+               <children>
+                  <Label fx:id="EGMostPointsLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="231.0" text="Player who has most points:" />
+                  <Label fx:id="highestPointsPN" alignment="CENTER" prefHeight="17.0" prefWidth="177.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="15.0" layoutY="321.0" prefHeight="40.0" prefWidth="473.0" spacing="67.0">
+               <children>
+                  <Button fx:id="EGPlayAgainBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="119.0" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="Play Again" textFill="WHITE" />
+                  <Button fx:id="EGNewGameBtn" layoutX="217.0" layoutY="17.0" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="New Game" textFill="WHITE" />
+                  <Button fx:id="EGQuitBtn" layoutX="267.0" layoutY="17.0" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="Quit" textFill="WHITE" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

@@ -67,6 +67,10 @@ public class MainController {
         }
     }
 
+    public void displayEndGameMenu(int firstFinishId){
+        menuController.displayEndGameMenu(firstFinishId);
+    }
+
     public int getNoHumanPlayers() {
         return menuController.getNoHumanPlayers();
     }
@@ -79,6 +83,8 @@ public class MainController {
         return menuController.getNoHumanPlayers() + menuController.getNoVirtualPlayers();
     }
 
-
+    public int[] getScoreList(){
+        return gameBoardController.getScores();
+    }
 
 }

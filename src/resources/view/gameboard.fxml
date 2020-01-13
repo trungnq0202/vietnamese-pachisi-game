@@ -82,11 +82,7 @@
                                     <Circle fill="#b5e5fc" radius="156.0" stroke="#1183ee" strokeType="INSIDE" strokeWidth="3.0" />
                                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="100.0">
                                        <children>
-                                          <Label fx:id="PN1" alignment="BOTTOM_CENTER" prefHeight="45.0" prefWidth="100.0" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
+                                          <Label fx:id="PN1" alignment="BOTTOM_CENTER" prefHeight="45.0" prefWidth="100.0" textAlignment="CENTER" />
                                           <HBox fx:id="BPHB" alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="100.0" visible="false">
                                              <children>
                                                 <Label fx:id="BPoints" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="43.0" text="0">
@@ -268,11 +264,7 @@
                                     <Circle fill="#ebebb7" radius="156.0" stroke="#ddd31e" strokeType="INSIDE" strokeWidth="3.0" />
                                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="100.0">
                                        <children>
-                                          <Label fx:id="PN2" alignment="BOTTOM_CENTER" prefHeight="43.0" prefWidth="99.0" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
+                                          <Label fx:id="PN2" alignment="BOTTOM_CENTER" prefHeight="43.0" prefWidth="99.0" textAlignment="CENTER" />
                                           <HBox fx:id="YPHB" alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="100.0" visible="false">
                                              <children>
                                                 <Label fx:id="YPoints" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="37.0" text="0">
@@ -479,11 +471,7 @@
                                     <Circle fill="#ffb0b0" radius="156.0" stroke="RED" strokeType="INSIDE" strokeWidth="3.0" />
                                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="100.0">
                                        <children>
-                                          <Label fx:id="PN0" alignment="BOTTOM_CENTER" prefHeight="45.0" prefWidth="100.0" wrapText="true">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
+                                          <Label fx:id="PN0" alignment="BOTTOM_CENTER" prefHeight="45.0" prefWidth="100.0" wrapText="true" />
                                           <HBox fx:id="RPHB" alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="100.0" visible="false">
                                              <children>
                                                 <Label fx:id="RPoints" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="39.0" text="0">
@@ -662,11 +650,7 @@
                                     <Circle fill="#d4ffc4" radius="156.0" stroke="#0b940b" strokeType="INSIDE" strokeWidth="3.0" />
                                           <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="100.0">
                                        <children>
-                                          <Label fx:id="PN3" alignment="BOTTOM_CENTER" prefHeight="45.0" prefWidth="100.0">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
+                                          <Label fx:id="PN3" alignment="BOTTOM_CENTER" prefHeight="45.0" prefWidth="100.0" />
                                           <HBox fx:id="GPHB" alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="100.0" visible="false">
                                              <children>
                                                 <Label fx:id="GPoints" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="37.0" text="0">

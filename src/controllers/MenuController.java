@@ -19,6 +19,7 @@ public class MenuController{
     @FXML private VBox preGameMenu;
     @FXML private VBox startMenu;
     @FXML private VBox langMenu;
+    @FXML private VBox endGameMenu;
     @FXML private StackPane rootMenu;
 
     @FXML private Button exitErrorBtn1;
@@ -33,6 +34,9 @@ public class MenuController{
     @FXML private Button vietnameseLangBtn;
     @FXML private Button englishLangBtn;
     @FXML private Button langBackBtn;
+    @FXML private Button EGPlayAgainBtn;
+    @FXML private Button EGNewGameBtn;
+    @FXML private Button EGQuitBtn;
 
     @FXML private Label noHumanPlayersLabel;
     @FXML private Label noVirtualPlayersLabel;
@@ -43,6 +47,21 @@ public class MenuController{
     @FXML private Label player2NameLabel;
     @FXML private Label player3NameLabel;
     @FXML private Label player4NameLabel;
+    @FXML private Label EGTitleLabel;
+    @FXML private Label EGPlayersTitleLabel;
+    @FXML private Label EGPointsTitleLabel;
+    @FXML private Label EGFirstFinishLabel;
+    @FXML private Label EGMostPointsLabel;
+    @FXML private Label EGPN0;
+    @FXML private Label EGPN1;
+    @FXML private Label EGPN2;
+    @FXML private Label EGPN3;
+    @FXML private Label EGP1P0;
+    @FXML private Label EGP1P1;
+    @FXML private Label EGP1P2;
+    @FXML private Label EGP1P3;
+    @FXML private Label finishPN;
+    @FXML private Label highestPointsPN;
 
     private MainController mainController;  //Make connection with mainController
     private int noHumanPlayers;             //Number of human players
@@ -89,7 +108,9 @@ public class MenuController{
         I18NController.setUpButtonText(langBackBtn, "menu.back");
         I18NController.setUpButtonText(backLevelBtn, "menu.back");
         I18NController.setUpButtonText(nextPlaySceneBtn, "menu.play");
-
+        I18NController.setUpButtonText(EGPlayAgainBtn, "menu.end_game_play_again");
+        I18NController.setUpButtonText(EGNewGameBtn, "menu.new_game");
+        I18NController.setUpButtonText(EGQuitBtn, "menu.exit");
     }
 
     private void setLabelBindingText(){
@@ -102,6 +123,11 @@ public class MenuController{
         I18NController.setUpLabelText(player2NameLabel, "menu.player_2_name");
         I18NController.setUpLabelText(player3NameLabel, "menu.player_3_name");
         I18NController.setUpLabelText(player4NameLabel, "menu.player_4_name");
+        I18NController.setUpLabelText(EGTitleLabel, "menu.end_game_title");
+        I18NController.setUpLabelText(EGPlayersTitleLabel, "menu.end_game_players_title");
+        I18NController.setUpLabelText(EGPointsTitleLabel, "menu.end_game_points_title");
+        I18NController.setUpLabelText(EGFirstFinishLabel, "menu.first_player_finish");
+        I18NController.setUpLabelText(EGMostPointsLabel, "menu.player_has_highest_score");
     }
 
     //Set event handler for
@@ -303,9 +329,52 @@ public class MenuController{
             }else {
                 setPlayersNameList();
                 userSetNameMenu.setVisible(false);
+                rootMenu.setVisible(false);
                 mainController.displayGameBoard(true);
+
             }
         });
+    }
+
+    //EndgameMenu
+    public void displayEndGameMenu(int firstFinishId){
+        rootMenu.setVisible(true);
+        endGameMenu.setVisible(true);
+        displayPlayersName();
+        displayPlayersPoints();
+        displayFirstPlayerToFinishGame(firstFinishId);
+        displayFirstPlayerToFinishGame(firstFinishId);
+        displayPlayerWithMostPoints();
+    }
+
+    private void displayPlayersName(){
+        EGPN0.setText(playersNameList.get(0));
+        EGPN1.setText(playersNameList.get(1));
+        EGPN2.setText(playersNameList.get(2));
+        EGPN3.setText(playersNameList.get(3));
+    }
+
+    private void displayPlayersPoints(){
+        EGP1P0.setText(String.valueOf(mainController.getScoreList()[0]));
+        EGP1P1.setText(String.valueOf(mainController.getScoreList()[1]));
+        EGP1P2.setText(String.valueOf(mainController.getScoreList()[2]));
+        EGP1P3.setText(String.valueOf(mainController.getScoreList()[3]));
+    }
+
+    private void displayFirstPlayerToFinishGame(int firstFinishId){
+        finishPN.setText(playersNameList.get(firstFinishId));
+    }
+
+    private void displayPlayerWithMostPoints(){
+        int max = mainController.getScoreList()[0];
+        int winnerId = 0;
+        for (int i = 1; i < 4; i++){
+            if (mainController.getScoreList()[i] > max){
+                winnerId = i;
+                max = mainController.getScoreList()[i];
+            }
+        }
+        highestPointsPN.setText(playersNameList.get(winnerId));
     }
 
     // Set Name Menu added
@@ -344,4 +413,6 @@ public class MenuController{
     public ArrayList<String> getPlayersNameList() {
         return playersNameList;
     }
+
+
 }
