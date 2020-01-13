@@ -7,12 +7,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import models.Sound;
 
-public final class SoundController {
+public class SoundController {
     private static final String SOUND_ON_IMG_URL = "file:src/resources/images/sound_on.jpg";
     private static final String SOUND_OFF_IMG_URL = "file:src/resources/images/sound_off.jpg";
 
-    //Sound enabled Button in fxml
-    @FXML private static Button soundEnabledBtn;
     //Variable checking if the sound of the system is on, sound is ON by default
     private static boolean isEnabledSound = true;
     //Image object for loading "sound on" image from resources
@@ -20,9 +18,9 @@ public final class SoundController {
     //Image object for loading "sound off" image from resources
     private static Image soundOffImg = new Image(SOUND_OFF_IMG_URL);
     //Background object for setting "sound on" image as soundEnabledBtn background image
-    private static Background bgSoundOnImg = generateSoundButtonBackground(soundOnImg);
+    public static Background bgSoundOnImg = generateSoundButtonBackground(soundOnImg);
     //Background object for setting "sound off" image as soundEnabledBtn background image
-    private static Background bgSoundOffImg = generateSoundButtonBackground(soundOffImg);
+    public static Background bgSoundOffImg = generateSoundButtonBackground(soundOffImg);
     //Sound object for playing background music
     private static Sound backgroundMusic = new Sound(Sound.SoundType.BACKGROUND_MUSIC);
     //Button sound object, for making sound when pressing the sound enabled button
@@ -34,39 +32,27 @@ public final class SoundController {
     private static Sound horseKickedSound = new Sound(Sound.SoundType.HORSE_KICKED_SFX);
     private static Sound gameLaunchSound = new Sound(Sound.SoundType.GAME_LAUNCH_SFX);
 
-    public static void initialize() {
-        //Set On Mouse Click event handler for the sound enabled button
-        setSoundEnableBtnEventHandler();
-    }
-
     private static Background generateSoundButtonBackground(Image img) {
         return new Background(new BackgroundImage(img,
                                                 BackgroundRepeat.NO_REPEAT,
                                                 BackgroundRepeat.NO_REPEAT,
                                                 BackgroundPosition.CENTER,
-                                                new BackgroundSize(soundEnabledBtn.getWidth(),
-                                                soundEnabledBtn.getHeight(),
+                                                new BackgroundSize(100, 100,
                                                 true, true, true, false)));
     }
 
-    private static void setSoundEnableBtnEventHandler() {
-        soundEnabledBtn.setOnMouseClicked((MouseEvent e) -> {
-            //If the system's sound is enabled
-            if (isEnabledSound) {
-                isEnabledSound = false;                         //Set the system's sound to mute state
-                muteSound();                                    //Stop playing background music
-                soundEnabledBtn.setBackground(bgSoundOffImg);   //Set "sound off" background image for soundEnabledBtn
-            } else { //If the system's sound is being muted
-                buttonClickedSound.play();                                //Make "button sound" when clicked
-                isEnabledSound = true;                          //Set the system's sound to on state
-                unmuteSound();                                  //Resume playing background music
-                soundEnabledBtn.setBackground(bgSoundOnImg);    //Set "sound on" background image for soundEnabledBtn
-            }
-        });
+    public static boolean isSoundEnabled() {
+        return isEnabledSound;
     }
 
-    private static boolean isSoundEnabled() {
-        return isEnabledSound;
+    public static void toggleSound() {
+        if (isSoundEnabled()) {
+            isEnabledSound = false;
+            muteSound();
+        } else {
+            isEnabledSound = true;
+            unmuteSound();
+        }
     }
 
     private static void muteSound() {
@@ -79,6 +65,7 @@ public final class SoundController {
         horseKickedSound.stop();
         gameLaunchSound.stop();
     }
+
     private static void unmuteSound() {
         backgroundMusic.play();
     }

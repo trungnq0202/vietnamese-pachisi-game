@@ -10,11 +10,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="gameBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" stylesheets="@../css/gameboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameBoardController">
+<VBox fx:id="gameBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" stylesheets="@../css/gameboard.css" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameBoardController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="1400.0" style="-fx-background-color: rgb(224,224,224);">
          <children>
-            <HBox prefHeight="54.0" prefWidth="458.0" />
+            <HBox alignment="CENTER" prefHeight="54.0" prefWidth="458.0">
+               <children>
+                  <Button fx:id="soundBtn" mnemonicParsing="false" prefHeight="49.0" prefWidth="49.0" />
+               </children></HBox>
             <HBox prefHeight="54.0" prefWidth="374.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">

@@ -4,6 +4,7 @@ import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 import models.Dice;
@@ -16,6 +17,7 @@ import java.util.Random;
 
 public class GameBoardController {
     @FXML private HBox dices;
+    @FXML private Button soundBtn;
     @FXML private Button diceArrow;
     @FXML private Label PN0;
     @FXML private Label PN1;
@@ -80,6 +82,8 @@ public class GameBoardController {
         dicesController.injectGameBoardController(this);
         setUpLabelBindingText();
         botController = new BotController(dicesController.getDice1(), dicesController.getDice2() , this);
+        setSoundEnableBtnEventHandler();
+        this.soundBtn.setBackground(SoundController.bgSoundOnImg);
     }
 
     public void injectMainController(MainController mainController){
@@ -350,6 +354,21 @@ public class GameBoardController {
     }
 
     /*************** End Horse Animation **************/
+
+    /*************** Event handlers for buttons *********************/
+    public void setSoundEnableBtnEventHandler() {
+        this.soundBtn.setOnMouseClicked((MouseEvent e) -> {
+            //If the system's sound is enabled
+            if (SoundController.isSoundEnabled()) {
+                SoundController.toggleSound();                  //Set the system's sound to mute state
+                this.soundBtn.setBackground(SoundController.bgSoundOffImg);   //Set "sound off" background image for soundEnabledBtn
+            } else { //If the system's sound is being muted
+                SoundController.playButtonClickSound();         //Make "button sound" when clicked
+                SoundController.toggleSound();                          //Set the system's sound to on state
+                this.soundBtn.setBackground(SoundController.bgSoundOnImg);    //Set "sound on" background image for soundEnabledBtn
+            }
+        });
+    }
 
     /*************** Event Handlers for horse OnClick event **************/
     private void activateEventHandlerForHorseGoingOutOfNest(Horse horse){
