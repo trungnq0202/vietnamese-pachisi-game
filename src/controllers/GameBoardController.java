@@ -8,7 +8,7 @@ import javafx.scene.layout.*;
 import javafx.util.Duration;
 import models.Dice;
 import models.Horse;
-import resources.view.HorseNest;
+import models.HorseNest;
 import models.Sound;
 
 import java.util.ArrayList;
