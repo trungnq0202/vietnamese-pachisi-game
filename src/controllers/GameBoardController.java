@@ -191,6 +191,22 @@ public class GameBoardController {
     /**************** End Position id calculation and conversion **************/
 
     /****************  Game Initialization **************/
+    private void clearHorseNestsAndScore(){
+        for (int i = 0; i < mainController.getTotalNumberOfPlayers(); i++) {
+            StackPane nestStackPane = (StackPane)gameBoard.lookup("#" + colors[i] + "NSP");
+            if (nestStackPane.getChildren().size() > 3){
+                GridPane nestSP = (GridPane)nestStackPane.getChildren().get(3);
+                for (int j = 0; j < 4; j++){
+                    Horse horse = (Horse)gameBoard.lookup(colors[i] + "H" + j);
+                    if (!horse.isInNest()) nestSP.add(horse,horse.getColumnIndex(), horse.getRowIndex());
+                }
+                nestStackPane.getChildren().remove(3);
+                Label pointsLabel = (Label)gameBoard.lookup("#" + colors[i] + "Points");
+                pointsLabel.setText("0");
+            }
+        }
+    }
+
     //Create all horse nests at the start of the game
     private void createHorseNests(){
         for (int i = 0; i < mainController.getTotalNumberOfPlayers(); i++) {
@@ -211,6 +227,7 @@ public class GameBoardController {
 
     //initialize game process
     public void startGame(){
+        clearHorseNestsAndScore();
         createHorseNests();                                 //Create all horse nest
         updatePlayersNameView();                            //Update players'name
         highLightDices(true);                     //show dices'arrows so that the player know it's time to roll the dices
@@ -770,18 +787,6 @@ public class GameBoardController {
         return horsesWithValidMovesList;
     }
 //
-    public boolean isHorseGoingOutsideNest() {
-        return isHorseGoingOutsideNest;
-    }
-
-    public static String[] getHorseIdOfPosition() {
-        return horseIdOfPosition;
-    }
-
-    public int getTempPlayerIdTurn() {
-        return tempPlayerIdTurn;
-    }
-
     public void setHorseGoingOutsideNest(boolean horseGoingOutsideNest) {
         isHorseGoingOutsideNest = horseGoingOutsideNest;
     }
