@@ -18,6 +18,7 @@ import java.util.Random;
 public class GameBoardController {
     @FXML private HBox dices;
     @FXML private Button soundBtn;
+    @FXML private Button stopBtn;
     @FXML private Button diceArrow;
     @FXML private Label PN0;
     @FXML private Label PN1;
@@ -82,7 +83,7 @@ public class GameBoardController {
         dicesController.injectGameBoardController(this);
         setUpLabelBindingText();
         botController = new BotController(dicesController.getDice1(), dicesController.getDice2() , this);
-        setSoundEnableBtnEventHandler();
+        setSoundBtnEventHandler();
         this.soundBtn.setBackground(SoundController.bgSoundOnImg);
     }
 
@@ -356,7 +357,7 @@ public class GameBoardController {
     /*************** End Horse Animation **************/
 
     /*************** Event handlers for buttons *********************/
-    public void setSoundEnableBtnEventHandler() {
+    public void setSoundBtnEventHandler() {
         this.soundBtn.setOnMouseClicked((MouseEvent e) -> {
             //If the system's sound is enabled
             if (SoundController.isSoundEnabled()) {
@@ -367,6 +368,12 @@ public class GameBoardController {
                 SoundController.toggleSound();                          //Set the system's sound to on state
                 this.soundBtn.setBackground(SoundController.bgSoundOnImg);    //Set "sound on" background image for soundEnabledBtn
             }
+        });
+    }
+
+    public void setBtnEventHandler() {
+        this.stopBtn.setOnMouseClicked((MouseEvent e) -> {
+            // TODO: SG implement
         });
     }
 

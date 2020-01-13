@@ -54,6 +54,9 @@ public class MenuController{
     @FXML private Button EGPlayAgainBtn;
     @FXML private Button EGNewGameBtn;
     @FXML private Button EGQuitBtn;
+    @FXML private Button SGPlayAgainBtn;
+    @FXML private Button SGNewGameBtn;
+    @FXML private Button SGQuitBtn;
 
     @FXML private Label noHumanPlayersLabel;
     @FXML private Label noVirtualPlayersLabel;
@@ -65,6 +68,7 @@ public class MenuController{
     @FXML private Label player3NameLabel;
     @FXML private Label player4NameLabel;
     @FXML private Label EGTitleLabel;
+    @FXML private Label SGTitleLabel;
     @FXML private Label EGPlayersTitleLabel;
     @FXML private Label EGPointsTitleLabel;
     @FXML private Label EGFirstFinishLabel;
@@ -128,6 +132,10 @@ public class MenuController{
         I18NController.setUpButtonText(EGPlayAgainBtn, "menu.end_game_play_again");
         I18NController.setUpButtonText(EGNewGameBtn, "menu.new_game");
         I18NController.setUpButtonText(EGQuitBtn, "menu.exit");
+        I18NController.setUpButtonText(SGPlayAgainBtn, "menu.end_game_play_again");
+        I18NController.setUpButtonText(SGNewGameBtn, "menu.new_game");
+        I18NController.setUpButtonText(SGQuitBtn, "menu.exit");
+
     }
 
     private void setLabelBindingText(){
@@ -141,6 +149,7 @@ public class MenuController{
         I18NController.setUpLabelText(player3NameLabel, "menu.player_3_name");
         I18NController.setUpLabelText(player4NameLabel, "menu.player_4_name");
         I18NController.setUpLabelText(EGTitleLabel, "menu.end_game_title");
+        I18NController.setUpLabelText(SGTitleLabel, "menu.stop_game_title");
         I18NController.setUpLabelText(EGPlayersTitleLabel, "menu.end_game_players_title");
         I18NController.setUpLabelText(EGPointsTitleLabel, "menu.end_game_points_title");
         I18NController.setUpLabelText(EGFirstFinishLabel, "menu.first_player_finish");
@@ -181,6 +190,9 @@ public class MenuController{
         setEGPlayAgainBtnEventHandler();
         setEGNewGameBtn();
         setEGQuitBtn();
+        setSGPlayAgainBtnEventHandler();
+        setSGNewGameBtn();
+        setSGQuitBtn();
     }
 
     //Event handler when clicking on the circles to choose the number of human and machine players
@@ -360,6 +372,13 @@ public class MenuController{
         });
     }
 
+    //Event handler for "Play Again" button at end game
+    private void setSGPlayAgainBtnEventHandler(){
+        SGPlayAgainBtn.setOnMouseClicked(mouseEvent -> {
+            // TODO: SG implement this
+        });
+    }
+
     //Event handler for "New Game" button at end game
     private void setEGNewGameBtn(){
         EGNewGameBtn.setOnMouseClicked(e -> {
@@ -370,11 +389,25 @@ public class MenuController{
         });
     }
 
+    //Event handler for "New Game" button at stop game
+    private void setSGNewGameBtn(){
+        SGNewGameBtn.setOnMouseClicked(e -> {
+            // TODO: SG implement this
+        });
+    }
+
     //Event handler for "Exit" button at end game
     private void setEGQuitBtn(){
         EGQuitBtn.setOnMouseClicked(e -> {
             SoundController.playButtonClickSound();
             System.exit(0);         //Exit the program
+        });
+    }
+
+    //Event handler for "Exit" button at stop game
+    private void setSGQuitBtn(){
+        SGQuitBtn.setOnMouseClicked(e -> {
+            // TODO: SG implement this
         });
     }
 
