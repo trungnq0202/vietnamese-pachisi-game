@@ -22,7 +22,6 @@ public class MenuController{
     @FXML private Button offlineGameBtn;
     @FXML private VBox onlinePlayMenu;
     @FXML private TextField onlinePlayerTextField;
-    @FXML private Button backToMainMenuBtn;
     @FXML private Button onlinePlayBtn;
 
     private static MenuController menuController;
@@ -57,6 +56,8 @@ public class MenuController{
     @FXML private Button SGPlayAgainBtn;
     @FXML private Button SGNewGameBtn;
     @FXML private Button SGQuitBtn;
+    @FXML private Button BackToMainOnlinePlayBtn;
+
 
     @FXML private Label noHumanPlayersLabel;
     @FXML private Label noVirtualPlayersLabel;
@@ -83,8 +84,19 @@ public class MenuController{
     @FXML private Label EGP1P3;
     @FXML private Label finishPN;
     @FXML private Label highestPointsPN;
+    @FXML private Label onlinePlayerNameLabel;
+    @FXML private Label cantConnectToServerLabel;
+    private static final String red = " -fx-background-color: " +
+            "linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%)," +
+            "#9d4024," +
+            "#d86e3a," +
+            "radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);";
+    private static final String blue = "   -fx-background-color: " +
+            "linear-gradient(from 0% 93% to 0% 100%, #380da3 0%, #2f2b90 100%)," +
+            "#0b169d, #5b50ff," +
+            "radial-gradient(center 50% 50%, radius 100%, #5b50ff, #3b4ec5);";
 
-    //    @FXML private Button newGameBtn;
+
     private MainController mainController;  //Make connection with mainController
     private int noHumanPlayers;             //Number of human players
     private int noVirtualPlayers;            //Number of virtual players
@@ -135,7 +147,10 @@ public class MenuController{
         I18NController.setUpButtonText(SGPlayAgainBtn, "menu.end_game_play_again");
         I18NController.setUpButtonText(SGNewGameBtn, "menu.new_game");
         I18NController.setUpButtonText(SGQuitBtn, "menu.exit");
-
+        I18NController.setUpButtonText(onlineGameBtn,"menu.play_online");
+        I18NController.setUpButtonText(cantConnectToServerBtn,"menu.server_error_btn");
+        I18NController.setUpButtonText(onlinePlayBtn,"menu.online_player_play_btn");
+        I18NController.setUpButtonText(BackToMainOnlinePlayBtn,"menu.online_player_back_btn");
     }
 
     private void setLabelBindingText(){
@@ -154,6 +169,8 @@ public class MenuController{
         I18NController.setUpLabelText(EGPointsTitleLabel, "menu.end_game_points_title");
         I18NController.setUpLabelText(EGFirstFinishLabel, "menu.first_player_finish");
         I18NController.setUpLabelText(EGMostPointsLabel, "menu.player_has_highest_score");
+        I18NController.setUpLabelText(onlinePlayerNameLabel,"menu.online_player_name");
+        I18NController.setUpLabelText(cantConnectToServerLabel,"menu.server_error_label");
     }
 
     //Set event handler for
@@ -270,8 +287,8 @@ public class MenuController{
     public void setVietnameseLangBtnEventHandler(){
         vietnameseLangBtn.setOnMouseClicked(event -> {
             SoundController.playButtonClickSound();
-            vietnameseLangBtn.setStyle("-fx-background-color: #c93b14");
-            englishLangBtn.setStyle("-fx-background-color: #1e90ff");
+            vietnameseLangBtn.setStyle(red);
+            englishLangBtn.setStyle(blue);
             I18NController.switchLanguage(I18NController.getLanguageLocale(I18NController.Language.VIETNAMESE));
         });
     }
@@ -279,8 +296,8 @@ public class MenuController{
     public void setEnglishLangBtnEventHandler(){
         englishLangBtn.setOnMouseClicked(event -> {
             SoundController.playButtonClickSound();
-            englishLangBtn.setStyle("-fx-background-color: #c93b14");
-            vietnameseLangBtn.setStyle("-fx-background-color: #1e90ff");
+            englishLangBtn.setStyle(red);
+            vietnameseLangBtn.setStyle(blue);
             I18NController.switchLanguage(I18NController.getLanguageLocale(I18NController.Language.ENGLISH));
         });
     }
@@ -548,7 +565,7 @@ public class MenuController{
                     Platform.runLater(() -> {
                         this.clientController.ready(onlinePlayerTextField.getText());
                         onlinePlayBtn.setMouseTransparent(true);
-                        onlinePlayBtn.setText("Waiting...");
+                        I18NController.setUpButtonText(onlinePlayBtn,"menu.online_waiting_player");
                         onlinePlayerTextField.setDisable(true);
                     });
                 }
@@ -557,14 +574,14 @@ public class MenuController{
     }
 
     private void setBackToMainMenuBtnEventHandler() {
-        backToMainMenuBtn.setOnMouseClicked(mouseEvent -> {
+        BackToMainOnlinePlayBtn.setOnMouseClicked(mouseEvent -> {
             SoundController.playButtonClickSound();
             this.clientController.disconnect();
             this.clientController = null;
             this.onlinePlayMenu.setVisible(false);
             this.startMenu.setVisible(true);
             onlinePlayBtn.setMouseTransparent(false);
-            onlinePlayBtn.setText("Ready");
+            I18NController.setUpButtonText(onlinePlayBtn,"menu.online_player_play_btn");
             onlinePlayerTextField.setDisable(false);
         });
     }
