@@ -87,4 +87,8 @@ public class MainController {
         return gameBoardController.getScores();
     }
 
+    public void restartGame(){
+        gameBoardController.startGame();
+    }
+
 }

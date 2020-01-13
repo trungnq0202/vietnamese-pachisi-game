@@ -153,6 +153,9 @@ public class MenuController{
         setEnglishLangBtnEventHandler();
         setVietnameseLangBtnEventHandler();
         setLangBackBtnEventHandler();
+        setEGPlayAgainBtnEventHandler();
+        setEGNewGameBtn();
+        setEGQuitBtn();
     }
 
     //Event handler when clicking on the circles to choose the number of human and machine players
@@ -312,6 +315,33 @@ public class MenuController{
         });
     }
 
+    //Event handler for "Play Again" button at end game
+    private void setEGPlayAgainBtnEventHandler(){
+        EGPlayAgainBtn.setOnMouseClicked(mouseEvent -> {
+            endGameMenu.setVisible(false);
+            rootMenu.setVisible(false);
+            mainController.restartGame();
+        });
+    }
+
+    //Event handler for "New Game" button at end game
+    private void setEGNewGameBtn(){
+        EGNewGameBtn.setOnMouseClicked(e -> {
+            endGameMenu.setVisible(false);
+            rootMenu.setVisible(true);
+            preGameMenu.setVisible(true);
+            mainController.displayGameBoard(false);
+        });
+    }
+
+    //Event handler for "Exit" button at end game
+    private void setEGQuitBtn(){
+        EGQuitBtn.setOnMouseClicked(e -> {
+            btnClickSound.play();
+            System.exit(0);         //Exit the program
+        });
+    }
+
     //Check if the user input nothing for the players'name
     private boolean validatePlayersNameInput(){
         for (int i = 0; i < noHumanPlayers; i++ ){
@@ -413,6 +443,7 @@ public class MenuController{
     public ArrayList<String> getPlayersNameList() {
         return playersNameList;
     }
+
 
 
 }

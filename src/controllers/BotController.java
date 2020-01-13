@@ -61,6 +61,7 @@ public class BotController {
     }
 
     private void hoverThenClick(Node node){
+        System.out.println("cc");
         Event.fireEvent(node, new MouseEvent(MouseEvent.MOUSE_ENTERED, 0,0,0,0, null, 0, false, false, false, false,
                 false, false, false, false, false, false, null));
 

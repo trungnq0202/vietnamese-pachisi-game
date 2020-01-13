@@ -197,7 +197,7 @@ public class GameBoardController {
             if (nestStackPane.getChildren().size() > 3){
                 GridPane nestSP = (GridPane)nestStackPane.getChildren().get(3);
                 for (int j = 0; j < 4; j++){
-                    Horse horse = (Horse)gameBoard.lookup(colors[i] + "H" + j);
+                    Horse horse = (Horse)gameBoard.lookup("#" + colors[i] + "H" + j);
                     if (!horse.isInNest()) nestSP.add(horse,horse.getColumnIndex(), horse.getRowIndex());
                 }
                 nestStackPane.getChildren().remove(3);
@@ -239,6 +239,7 @@ public class GameBoardController {
         tempPlayerIdTurn = 0;                               //First turn belongs to player "GREEN"
         isHorseGoingOutsideNest = false;
         gameBoard.lookup("#TURN0").setVisible(true);
+        dicesController.setEventHandlerForDiceRoll();
         if (checkBotPlayerTurn()) botController.autoRollDice();
         debug();
     }

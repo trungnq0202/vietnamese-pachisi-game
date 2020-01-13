@@ -199,6 +199,8 @@ public class DicesController {
 
     //create rolling effect
     public void rollWithAnimation(Dice dice) {
+        System.out.println(gameBoardController.isFreeze());
+        System.out.println(gameBoardController.isRollingDiceTurn());
         if (gameBoardController.isFreeze() || !gameBoardController.isRollingDiceTurn()) return;
         if (dice == dice2) gameBoardController.setFreeze(true);
         rollSound.play();

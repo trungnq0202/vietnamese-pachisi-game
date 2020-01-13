@@ -296,7 +296,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="E" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="362.0" spacing="20.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-background-color: rgba(124,147,166,0.3);" visible="false">
+      <VBox fx:id="langMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="362.0" spacing="20.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-background-color: rgba(124,147,166,0.3);" visible="false">
          <children>
             <Label fx:id="langSelectLabel" text="Select your language:" textFill="#fcf940">
                <font>
