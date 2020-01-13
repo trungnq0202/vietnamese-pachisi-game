@@ -38,9 +38,6 @@ public class Sound {
         }
         if (soundType == SoundType.BACKGROUND_MUSIC || soundType == SoundType.DICE_ROLL_SFX) {
             this.sound.setCycleCount(MediaPlayer.INDEFINITE);
-            // sound.setVolume(0.1); // FIXME: why set the volume down?
-            // sound.play(); //play the music immediately after being loaded
-            // FIXME: why play when loaded?
         }
     }
 

@@ -21,15 +21,9 @@ public class MainController {
     @FXML private GameBoardController gameBoardController;
     private static final String VIDEO_URL = "../resources/videos/loopbackgroundvideo.mp4";
 
-    //Variables for sound controller
-    private boolean isSoundEnabled;
-
-
-
     public MainController(){
         System.out.println("maincontroller construct");
         System.out.println(this);
-        isSoundEnabled = true;
         System.out.println(I18NController.getLocale().getDisplayCountry());
     }
 

@@ -1,7 +1,6 @@
 package controllers;
 
 import javafx.animation.*;
-import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,7 +9,6 @@ import javafx.util.Duration;
 import models.Dice;
 import models.Horse;
 import models.HorseNest;
-import models.Sound;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,13 +60,6 @@ public class GameBoardController {
     private boolean isHorseGoingOutsideNest;
     private BotController botController;
 
-    //Sound
-    private Sound horseMoveSound;
-    private Sound horseGoingHomeSound;
-    private Sound horseAppearSound;
-    private Sound horseKickedSound;
-    private Sound launchSound;
-
     public GameBoardController(){
 //        System.out.println("gameboardcontroller construct");
         horseIdOfPosition = new String[48];
@@ -76,11 +67,6 @@ public class GameBoardController {
         horsesWithValidMovesList = new ArrayList<>();
         Arrays.fill(horseIdOfPosition,null);
         Arrays.fill(horseIdOfHomePosition,null);
-        horseMoveSound = new Sound(Sound.SoundType.HORSE_MOVE_SFX);
-        horseGoingHomeSound = new Sound(Sound.SoundType.HORSE_JUMP_SFX);
-        horseAppearSound = new Sound(Sound.SoundType.HORSE_APPEAR_SFX);
-        horseKickedSound = new Sound(Sound.SoundType.HORSE_KICKED_SFX);
-        launchSound = new Sound(Sound.SoundType.GAME_LAUNCH_SFX);
         scores = new int[4];
         isHorseGoingOutsideNest = false;
     }
@@ -247,8 +233,9 @@ public class GameBoardController {
     //Show the game board
     public void showGameBoard(boolean isDisplayed){
         if (isDisplayed) {
-            launchSound.play();
+            SoundController.playGameLaunchSound();
             gameBoard.setVisible(true);
+            SoundController.playBackgroundSound();
             startGame();
         } else {
             gameBoard.setVisible(false);
@@ -268,7 +255,7 @@ public class GameBoardController {
         //Moving animation
         StackPane nextPositionNode = (StackPane)gameBoard.lookup("#" + nextPosition);
         nextPositionNode.getChildren().add(1, horse);
-        horseMoveSound.play();
+        SoundController.playHorseMoveSound();
 
         //If this horse has yet to be moved to its final position
         if (!nextPosition.equals(endPosition)) {
@@ -309,7 +296,7 @@ public class GameBoardController {
         horse.setTempPosition(startPosition);
         startPositionNode.getChildren().add(1, horse);
         resetFillColorOfPosition(startPositionNode, horse);
-        horseAppearSound.play();
+        SoundController.playHorseAppearSound();
     }
 
     //Horse going inside home animation
@@ -327,7 +314,7 @@ public class GameBoardController {
         StackPane endPositionNode = (StackPane)gameBoard.lookup("#" + endPosition);
         endPositionNode.getChildren().add(1, horse);
         printMoveInsideHomeStatus(Integer.parseInt(endPosition.substring(2)));
-        horseGoingHomeSound.play();
+        SoundController.playHorseJumpSound();
         resetFillColorOfPosition(endPositionNode, horse);
         int firstFinishId = checkEndGame();
         if (firstFinishId != -1) {
@@ -344,7 +331,7 @@ public class GameBoardController {
         GridPane nestSP = (GridPane)gameBoard.lookup("#" + horse.getHorseColor() + "N");
         nestSP.add(horse,horse.getColumnIndex(), horse.getRowIndex());
         printKickStatus(getPlayerIdByColor(horse.getHorseColor()));
-        horseKickedSound.play();
+        SoundController.playHorseKickedSound();
     }
 
     public void resetFillColorOfPosition(StackPane endPositionNodeSP, Horse horse){

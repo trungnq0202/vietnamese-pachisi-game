@@ -15,7 +15,6 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import models.Dice;
 import models.Horse;
-import models.Sound;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,6 @@ public class DicesController {
 
     private static List<Image> images = new ArrayList<>(); //array of animation for rolling dices
     @FXML private HBox dices; //HBox to store 2 dices
-    private Sound rollSound;
 
     //method to load images into array images
     static{
@@ -43,7 +41,6 @@ public class DicesController {
 
     public DicesController(){
         System.out.println("DicesController construct");
-        rollSound = new Sound(Sound.SoundType.DICE_ROLL_SFX);
     }
 
     //populate HBox with 2 dices
@@ -203,7 +200,7 @@ public class DicesController {
         System.out.println(gameBoardController.isRollingDiceTurn());
         if (gameBoardController.isFreeze() || !gameBoardController.isRollingDiceTurn()) return;
         if (dice == dice2) gameBoardController.setFreeze(true);
-        rollSound.play();
+        SoundController.playDiceRollSound();
         //If the dice rolling is temporarily allowed
             ImageView imageView = new ImageView();
             Transition rollAnimation = new Transition() {
@@ -221,7 +218,7 @@ public class DicesController {
                 }
             };
             rollAnimation.setOnFinished(event -> { //after finishing the rolling animation, actual roll
-                rollSound.stop();
+                SoundController.stopDiceRollSound();
                 dice.roll();
                 int i = dice.getRollNumber();
                 dice.setRollImage(i);
