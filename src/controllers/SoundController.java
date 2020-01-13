@@ -2,14 +2,10 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import models.Player;
 import models.Sound;
-import networking.Client;
 
 public class SoundController {
     private static final String SOUND_ON_IMG_URL = "file:src/resources/images/sound_on.jpg";

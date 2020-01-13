@@ -13,15 +13,10 @@ public class ClientController {
     private Socket socket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
-    private GameBoardController gameBoardController;
+    private MenuController menuController = MenuController.getMenuController();
+    private boolean listening = false;
 
-    public ClientController(String name) {
-        this.name = name;
-    }
-
-    public void injectGameBoardController(GameBoardController gameBoardController) {
-        this.gameBoardController = gameBoardController;
-    }
+    public ClientController() { }
 
     private void establishConnectionToServer() throws IOException {
         this.socket = new Socket(Server.HOST, Server.PORT);
@@ -41,9 +36,14 @@ public class ClientController {
         startListeningToTheServer();
     }
 
-    public void ready() throws IOException {
+    public void ready(String name) {
+        this.name = name;
         Message readyMessage = new Message("ready", this.name);
-        sendToServer(readyMessage);
+        try {
+            sendToServer(readyMessage);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void move(Move move) throws IOException {
@@ -53,11 +53,13 @@ public class ClientController {
 
     public void sendToServer(Message message) throws IOException {
         this.outputStream.writeObject(message);
+        this.outputStream.flush();
         this.outputStream.reset();
     }
 
-    private void disconnect() {
+    public void disconnect() {
         try {
+            this.stopListeningToServer();
             this.socket.close();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -65,26 +67,30 @@ public class ClientController {
     }
 
     private void startListeningToTheServer() {
+        this.listening = true;
         new Thread(() -> {
             try {
-                while (true) {
+                while (this.listening) {
                     // listening to the server
                     Message message = (Message) this.inputStream.readObject();
                     handleMessage(message);
                 }
             } catch (IOException e) {
-                // server probably closed
-                e.printStackTrace();
+                // server probably closed or client disconnected
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }).start();
     }
 
+    private void stopListeningToServer() {
+        this.listening = false;
+    }
+
     private void handleMessage(Message message) {
         switch (message.getAction()) {
             case "startGame": {
-                // this.gameBoardController.startOnlineGame((MatchInformation) message.getData());
+                this.menuController.startOnlineGame((MatchInformation) message.getData());
                 System.out.println("Game started...");
                 break;
             }

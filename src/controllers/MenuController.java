@@ -8,41 +8,24 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import models.MatchInformation;
+import models.Player;
 import models.Sound;
-import networking.Client;
 
 
 import java.util.ArrayList;
 
 public class MenuController{
     // Recently added
-    public VBox onlinePromptMenu;
-    public Button serverBtn;
-    public VBox serverPromptMenu;
-    public Button serverBackToMenuBtn;
-    public Button serverPlayBtn;
-    public Button onlinePlayerBtn;
-    public Button backToMessageMenuBtn;
-
-
     public Button onlineGameBtn;
     public Button offlineGameBtn;
     public VBox onlinePlayMenu;
     public TextField onlinePlayerTextField;
     public Button backToMainMenuBtn;
     public Button onlinePlayBtn;
-    public VBox onlinePromptMessage;
-    public Button noBtn;
-    public Button yesBtn;
-
-    public TextField connectionMessageText;
-    public TextField serverConnectionText;
 
     private static MenuController menuController;
-    private InteractionController interactionController = InteractionController.getInteractionController();
-    private PlayerController playerController = PlayerController.getPlayerController();
-    String newLine = System.getProperty("line.separator");
-
+    private ClientController clientController;
 
     //Old ones
     @FXML private VBox userSetNameMenu;
@@ -113,12 +96,7 @@ public class MenuController{
         //recently added for online players
         setOnlineGameBtnEventHandler();
         setOnlinePlayBtnEventHandler();
-        setPromptMessageEventHandler();
-        setServerPromptMenuEventHandler();
-        setOnlinePlayerBtnEventHandler();
-        setServerPlayBtnEventHandler();
-        setServerBackToMenuBtnEventHandler();
-        setBackToMessageMenuBtnEventHandler();
+        setBackToMainMenuBtnEventHandler();
 
         // Recently add these 3 function
 //        setUserSelectionMenuTextField();
@@ -162,7 +140,6 @@ public class MenuController{
         tempCircle.setStyle("-fx-fill: " + colorCode);  //Fill color in the circle
     }
 
-
     private void resetPlayersNameList() {
         playersNameList.set(0," ");
         playersNameList.set(1," ");
@@ -180,6 +157,13 @@ public class MenuController{
         //Name of the virtual players
         for (int i = noHumanPlayers; i < noHumanPlayers + noVirtualPlayers ; i++){
             playersNameList.set(i, "Virtual Player " + (i - noHumanPlayers + 1) );
+        }
+    }
+
+    private void setOnlinePlayersNameList(ArrayList<Player> players) {
+        for (int i = 0; i < players.size(); i++) {
+            TextField tempPlayerNameTF = (TextField) rootMenu.lookup("#TF" + i);
+            this.playersNameList.set(i, players.get(i).getName());
         }
     }
 
@@ -273,6 +257,12 @@ public class MenuController{
         });
     }
 
+    public void startOnlineGame(MatchInformation matchInformation) {
+        setOnlinePlayersNameList(matchInformation.getPlayers());
+        userSetNameMenu.setVisible(false);
+        mainController.displayGameBoard(true);
+    }
+
     // Set Name Menu added
     private void createSetPlayerNameMenu() {
         //Show text field for inputting human players' name
@@ -310,82 +300,10 @@ public class MenuController{
     private void setOnlineGameBtnEventHandler(){
         onlineGameBtn.setOnMouseClicked(event -> {
             btnClickSound.play();
-            startMenu.setVisible(false);             //hide start menu
-            onlinePromptMenu.setVisible(true);       //online prompt menu
-        });
-    }
-
-    //create server button
-    //TODO: ADD PLAYER
-    private void setServerPlayBtnEventHandler(){
-        serverPlayBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            serverPlayBtn.setText("Waiting...");
-            serverPlayBtn.setMouseTransparent(true);
-
-            //create server
-            interactionController.createServer();
-            serverConnectionText.setText("[Menu controller] Create server!");
-            serverConnectionText.setVisible(true);
-        });
-    }
-
-    private void setServerBackToMenuBtnEventHandler(){
-        serverBackToMenuBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            onlinePromptMessage.setVisible(true);
-            setYesBtnServerEventHandler();
-            setNoBtnServerEventHandler();
-        });
-    }
-
-    private void setYesBtnServerEventHandler(){
-        yesBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            serverPromptMenu.setVisible(false);
-            serverPlayBtn.setText("Ready");
-            onlinePromptMenu.setVisible(true);
-            serverConnectionText.setText("");
-            serverConnectionText.setVisible(false);
-            onlinePromptMessage.setVisible(false);
-        });
-    }
-
-    private void setNoBtnServerEventHandler(){
-        noBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            onlinePromptMessage.setVisible(false);
-        });
-    }
-
-    private void setOnlinePlayerBtnEventHandler(){
-        onlinePlayerBtn.setOnMouseClicked(event->{
-            btnClickSound.play();
-            onlinePlayMenu.setVisible(true);
-            onlinePromptMenu.setVisible(false);
-
-            //create new client and send message
-            interactionController.createClient();
-            //publish this event
-            interactionController.sendMessageForClient("create/" + onlinePlayerTextField.getText());
-
-        });
-    }
-
-    private void setServerPromptMenuEventHandler(){
-        serverBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            onlinePromptMenu.setVisible(false);
-            serverPromptMenu.setVisible(true);
-
-        });
-    }
-
-    private void setBackToMessageMenuBtnEventHandler(){
-        backToMessageMenuBtn.setOnMouseClicked(mouseEvent -> {
-            btnClickSound.play();
-            startMenu.setVisible(true);
-            onlinePromptMenu.setVisible(false);
+            startMenu.setVisible(false);           //hide start menu
+            onlinePlayMenu.setVisible(true);       //online play menu
+            this.clientController = new ClientController();
+            this.clientController.start();
         });
     }
 
@@ -403,60 +321,27 @@ public class MenuController{
                     //create new player with given name
                     //update game connection field
                     Platform.runLater(() -> {
-                        connectionMessageText.setText("Player " + onlinePlayerTextField.getText() + " is created!" + newLine );
-                        connectionMessageText.appendText(String.valueOf("Color taken:" + playerController.getPlayersList() + newLine));
-                        connectionMessageText.appendText("There is: " + String.valueOf(playerController.getPlayersList().size() + " people in the game."));
+                        this.clientController.ready(onlinePlayerTextField.getText());
+                        onlinePlayBtn.setMouseTransparent(true);
+                        onlinePlayBtn.setText("Waiting...");
+                        onlinePlayerTextField.setDisable(true);
                     });
-                    }
-                    onlinePlayBtn.setMouseTransparent(true);
                 }
-
-            //game can't start if players are less than 2 ppl
-                if (playerController.getPlayersList().size() < 2) {
-                    onlinePlayBtn.setText("Not enough people");
-                }
-                else onlinePlayBtn.setText("Waiting...");
-
-                connectionMessageText.setVisible(true);
-
+            }
         });
     }
 
-    private void setYesBtnEventHandler(){
-        yesBtn.setOnMouseClicked(event1 -> {
-            btnClickSound.play();
-            onlinePromptMenu.setVisible(true);
-            onlinePlayMenu.setVisible(false);
-            connectionMessageText.setText("");
-            connectionMessageText.setVisible(false);
-            onlinePlayBtn.setText("Ready");
-            onlinePromptMessage.setVisible(false);
-        });
-    }
-
-    private void setNoBtnEventHandler(){
-        noBtn.setOnMouseClicked(event2->{
-            btnClickSound.play();
-            onlinePromptMessage.setVisible(false);
-
-        });
-    }
-
-    private void setPromptMessageEventHandler() {
+    private void setBackToMainMenuBtnEventHandler() {
         backToMainMenuBtn.setOnMouseClicked(mouseEvent -> {
             btnClickSound.play();
-            onlinePromptMessage.setVisible(true);
-            setYesBtnEventHandler();
-            setNoBtnEventHandler();
+            this.clientController.disconnect();
+            this.clientController = null;
+            this.onlinePlayMenu.setVisible(false);
+            this.startMenu.setVisible(true);
+            onlinePlayBtn.setMouseTransparent(false);
+            onlinePlayBtn.setText("Ready");
+            onlinePlayerTextField.setDisable(false);
         });
-    }
-
-    public TextField getConnectionMessageText() {
-        return connectionMessageText;
-    }
-
-    public TextField getServerConnectionText() {
-        return serverConnectionText;
     }
 
     public static MenuController getMenuController(){

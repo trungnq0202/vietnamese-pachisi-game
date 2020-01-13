@@ -36,11 +36,16 @@ public class Connection implements Runnable {
             }
         } catch (IOException e) {
             // client probably disconnected
+            removeThisConnectionFromPool();
             System.out.printf("%s disconnected.\n", this.inetAddress.getHostAddress());
         } catch (ClassNotFoundException e) {
             // shits gone wild, idk what happened
             e.printStackTrace();
         }
+    }
+
+    private void removeThisConnectionFromPool() {
+        this.server.removeConnection(this);
     }
 
     private void handleMessage(Message message) {
@@ -84,6 +89,7 @@ public class Connection implements Runnable {
     public void send(Object object) {
         try {
             this.outputStream.writeObject(object);
+            this.outputStream.flush();
             this.outputStream.reset();
         } catch (IOException e) {
             System.out.println(e.getMessage());

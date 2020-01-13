@@ -9,7 +9,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import models.Horse;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainController {
@@ -20,7 +19,6 @@ public class MainController {
     @FXML private MediaView backgroundVideo;
     @FXML private MenuController menuController;
     @FXML private GameBoardController gameBoardController;
-    private PlayerController playerController = PlayerController.getPlayerController();
     private static final String VIDEO_URL = "../resources/videos/loopbackgroundvideo.mp4";
 
     //Variables for sound controller
