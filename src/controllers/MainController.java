@@ -8,7 +8,10 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import models.Horse;
+import models.Message;
+import models.Move;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainController {
@@ -19,12 +22,12 @@ public class MainController {
     @FXML private MediaView backgroundVideo;
     @FXML private MenuController menuController;
     @FXML private GameBoardController gameBoardController;
+    private ClientController clientController;
     private static final String VIDEO_URL = "../resources/videos/loopbackgroundvideo.mp4";
 
     //Variables for sound controller
     private boolean isSoundEnabled;
-
-
+    private String playerName;
 
     public MainController(){
         System.out.println("maincontroller construct");
@@ -44,6 +47,10 @@ public class MainController {
         gameBoardController.injectMainController(this);
     }
 
+    public void injectClientController(ClientController clientController){
+        this.clientController = clientController;
+    }
+
     //Set loop background video when using menu
     private void setBackgroundVideo(){
         MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource(VIDEO_URL).toExternalForm()));
@@ -57,8 +64,9 @@ public class MainController {
     }
 
     //Displaying game board, hide background video
-    public void displayGameBoard(boolean isDisplayed){
+    public void displayGameBoard(boolean isDisplayed, boolean isOnline){
         if (isDisplayed) {
+            gameBoardController.setOnlineGame(isOnline);
             gameBoardController.showGameBoard(true);
             backgroundVideo.setVisible(false);
         }
@@ -92,6 +100,20 @@ public class MainController {
         gameBoardController.startGame();
     }
 
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
 
+    public String getPlayerName() {
+        return playerName;
+    }
 
+    public void sendMessageToServer(Move move) throws IOException {
+        Message message = new Message("move",move);
+        clientController.sendToServer(message);
+    }
+
+    public GameBoardController getGameBoardController() {
+        return gameBoardController;
+    }
 }

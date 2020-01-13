@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,8 +16,10 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import models.Dice;
 import models.Horse;
+import models.Move;
 import models.Sound;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +101,13 @@ public class DicesController {
         dicePick.setOnMouseExited(event -> onMouseExitedDiceEventHandler(endPositionNodeSP, horse));
 
         //When click, execute animation, check possible moves for all other horse again
-        dicePick.setOnMouseClicked(event -> onMouseClickedDiceEventHandler(endPosition, horse, dicePick, otherDice));
+        dicePick.setOnMouseClicked(event -> {
+            try {
+                onMouseClickedDiceEventHandler(endPosition, horse, dicePick, otherDice);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void onMouseEnteredDiceEventHandler(String endPosition, StackPane endPositionNodeSP , Horse horse){
@@ -112,7 +121,7 @@ public class DicesController {
         gameBoardController.resetFillColorOfPosition(endPositionNodeSP, horse);
     }
 
-    private void onMouseClickedDiceEventHandler(String endPosition, Horse horse, Dice dicePick, Dice otherDice){
+    private void onMouseClickedDiceEventHandler(String endPosition, Horse horse, Dice dicePick, Dice otherDice) throws IOException {
         dicePick.setUsable(false); //dice 1 can no longer be chosen for a horse move
         unsetEventHandlerForDices();
         gameBoardController.unhighlightHorsesInsideNest();
@@ -227,12 +236,35 @@ public class DicesController {
                 dice.setRollImage(i);
                 gameBoardController.setFreeze(false);
                 if (dice == dice2) {
+                    //If this is an online game, send all dices value to other players
+                    if (gameBoardController.isOnlineGame()){
+                        Move move = new Move(true, dice1.getRollNumber(), dice2.getRollNumber());
+                        try {
+                            gameBoardController.sendMessageToServer(move);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     gameBoardController.updateDiceNumView();
-                    gameBoardController.processPostDiceRolling();
+                    try {
+                        gameBoardController.processPostDiceRolling();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             rollAnimation.play();
         }
+
+    public void setDicesFromMoveMessage(Move move){
+        Platform.runLater(() -> {
+            dice1.setRollImage(move.getDice1());
+            dice1.setRollNumber(move.getDice1());
+            dice2.setRollImage(move.getDice2());
+            dice2.setRollNumber(move.getDice2());
+            gameBoardController.updateDiceNumView();
+        });
+    }
 
     //add event handler for each dice, clicking one dice will result in 2 dices being rolled
     public void setEventHandlerForDiceRoll(){

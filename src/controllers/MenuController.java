@@ -93,7 +93,6 @@ public class MenuController{
     private static final int MAX_NO_PLAYERS = 4;
 
     public MenuController(){
-        System.out.println("menucontroller construct");
         playersNameList = new ArrayList<>() {
             {
                 for (int i = 0; i < 4; i++) add(" ");
@@ -105,12 +104,10 @@ public class MenuController{
     }
 
     public void injectMainController(MainController mainController){
-        System.out.println("menu" + mainController);
         this.mainController = mainController;
     }
 
     @FXML public void initialize(){
-        System.out.println("menucontroller init");
         setNoPlayersChoiceEventHandler();
         setMenuButtonsEventHandler();
         setBtnBindingText();
@@ -369,7 +366,7 @@ public class MenuController{
             endGameMenu.setVisible(false);
             rootMenu.setVisible(true);
             preGameMenu.setVisible(true);
-            mainController.displayGameBoard(false);
+            mainController.displayGameBoard(false, false);
         });
     }
 
@@ -399,7 +396,7 @@ public class MenuController{
                 setPlayersNameList();
                 userSetNameMenu.setVisible(false);
                 rootMenu.setVisible(false);
-                mainController.displayGameBoard(true);
+                mainController.displayGameBoard(true, false);
             }
         });
     }
@@ -447,8 +444,11 @@ public class MenuController{
 
     public void startOnlineGame(MatchInformation matchInformation) {
         setOnlinePlayersNameList(matchInformation.getPlayers());
-        System.out.println(mainController);
-        this.mainController.displayGameBoard(true);
+        Platform.runLater(() -> {
+            onlinePlayMenu.setVisible(false);
+            rootMenu.setVisible(false);
+            this.mainController.displayGameBoard(true, true);
+        });
     }
 
     // Set Name Menu added
@@ -492,6 +492,9 @@ public class MenuController{
             try {
                 this.clientController = new ClientController();
                 this.clientController.injectMenuController(this);
+                this.clientController.injectMainController(mainController);
+                mainController.injectClientController(clientController);
+                this.clientController.injectGameBoardController(mainController.getGameBoardController());
                 clientController.start();
             } catch (IOException e) {
                 cantConnectToServerError.setVisible(true);
@@ -517,6 +520,7 @@ public class MenuController{
                     //update game connection field
                     Platform.runLater(() -> {
                         this.clientController.ready(onlinePlayerTextField.getText());
+                        mainController.setPlayerName(onlinePlayerTextField.getText());
                         onlinePlayBtn.setMouseTransparent(true);
                         onlinePlayBtn.setText("Waiting...");
                         onlinePlayerTextField.setDisable(true);

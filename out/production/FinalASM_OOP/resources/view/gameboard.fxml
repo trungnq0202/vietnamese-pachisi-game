@@ -10,6 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
+
 <VBox fx:id="gameBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" stylesheets="@../css/gameboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameBoardController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="1400.0" style="-fx-background-color: rgb(224,224,224);">
@@ -477,11 +478,13 @@
                                                 <Label fx:id="RPoints" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="39.0" text="0">
                                                    <font>
                                                       <Font size="22.0" />
-                                                   </font></Label>
+                                                   </font>
+                                                </Label>
                                                 <Label fx:id="RPointsTitle" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="61.0" text="Points">
                                                    <font>
                                                       <Font size="16.0" />
-                                                   </font></Label>
+                                                   </font>
+                                                </Label>
                                              </children>
                                           </HBox>
                                        </children>
@@ -656,11 +659,13 @@
                                                 <Label fx:id="GPoints" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="37.0" text="0">
                                                    <font>
                                                       <Font size="22.0" />
-                                                   </font></Label>
+                                                   </font>
+                                                </Label>
                                                 <Label fx:id="GPointsTitle" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="63.0" text="Points">
                                                    <font>
                                                       <Font size="16.0" />
-                                                   </font></Label>
+                                                   </font>
+                                                </Label>
                                              </children>
                                           </HBox>
                                        </children>

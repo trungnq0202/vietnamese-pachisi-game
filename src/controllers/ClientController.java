@@ -15,6 +15,8 @@ public class ClientController {
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private MenuController menuController;
+    private MainController mainController;
+    private GameBoardController gameBoardController;
     private boolean listening = false;
 
     public ClientController() {
@@ -23,6 +25,14 @@ public class ClientController {
 
     public void injectMenuController(MenuController menuController){
         this.menuController = menuController;
+    }
+
+    public void injectMainController(MainController mainController){
+        this.mainController = mainController;
+    }
+
+    public void injectGameBoardController(GameBoardController gameBoardController){
+        this.gameBoardController = gameBoardController;
     }
 
     private void establishConnectionToServer() throws IOException {
@@ -45,6 +55,8 @@ public class ClientController {
             System.out.println(e.getMessage());
         }
     }
+
+
 
     public void move(Move move) throws IOException {
         Message moveMessage = new Message("move", move);
@@ -100,7 +112,7 @@ public class ClientController {
             }
             case "move": {
                 // TODO: implement this, @Trung
-                // this.gameBoardController.executeMove((Move) message.getData());
+                 this.gameBoardController.executeMove((Move) message.getData());
             }
         }
     }
