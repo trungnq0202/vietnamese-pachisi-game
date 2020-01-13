@@ -127,7 +127,8 @@ public class DicesController {
         gameBoardController.unhighlightHorsesInsideNest();
         if (horse.isInHome()) {
             gameBoardController.unhighlightHorseOutsideNest(false);
-            gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber());
+            if (gameBoardController.isOnlineGame()) gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber(), true,gameBoardController.getTempPlayerIdTurn());
+            else gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber(), false,gameBoardController.getTempPlayerIdTurn());
             gameBoardController.setHorseGoingOutsideNest(false);
         }
         else if (horse.isInHomeDoorPosition()) {
@@ -136,11 +137,13 @@ public class DicesController {
                 horse.setJustEnteredHome(true);
             }
             else gameBoardController.unhighlightHorseOutsideNest(false);
-            gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber());
+            if (gameBoardController.isOnlineGame()) gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber(), true,gameBoardController.getTempPlayerIdTurn());
+            else gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber(), false,gameBoardController.getTempPlayerIdTurn());
             gameBoardController.setHorseGoingOutsideNest(false);
         }
         else {
-            gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse, dicePick.getRollNumber());
+            if (gameBoardController.isOnlineGame()) gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse, dicePick.getRollNumber(), true, gameBoardController.getTempPlayerIdTurn());
+            else gameBoardController.createHorseMovingAnimation(horse.getTempPosition(), horse.getTempPosition(), endPosition, horse, dicePick.getRollNumber(), false, gameBoardController.getTempPlayerIdTurn());
             gameBoardController.setHorseGoingOutsideNest(false);
         }
     }
@@ -208,8 +211,6 @@ public class DicesController {
 
     //create rolling effect
     public void rollWithAnimation(Dice dice) {
-        System.out.println(gameBoardController.isFreeze());
-        System.out.println(gameBoardController.isRollingDiceTurn());
         if (gameBoardController.isFreeze() || !gameBoardController.isRollingDiceTurn()) return;
         if (dice == dice2) gameBoardController.setFreeze(true);
         rollSound.play();
@@ -238,7 +239,7 @@ public class DicesController {
                 if (dice == dice2) {
                     //If this is an online game, send all dices value to other players
                     if (gameBoardController.isOnlineGame()){
-                        Move move = new Move(true, dice1.getRollNumber(), dice2.getRollNumber());
+                        Move move = new Move(Move.type.DICESVALUE, dice1.getRollNumber(), dice2.getRollNumber());
                         try {
                             gameBoardController.sendMessageToServer(move);
                         } catch (IOException e) {

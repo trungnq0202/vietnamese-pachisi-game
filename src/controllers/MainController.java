@@ -28,6 +28,7 @@ public class MainController {
     //Variables for sound controller
     private boolean isSoundEnabled;
     private String playerName;
+    private int noOnlinePlayers;
 
     public MainController(){
         System.out.println("maincontroller construct");
@@ -115,5 +116,13 @@ public class MainController {
 
     public GameBoardController getGameBoardController() {
         return gameBoardController;
+    }
+
+    public void setNoOnlinePlayers(int noOnlinePlayers) {
+        this.noOnlinePlayers = noOnlinePlayers;
+    }
+
+    public int getNoOnlinePlayers() {
+        return noOnlinePlayers;
     }
 }

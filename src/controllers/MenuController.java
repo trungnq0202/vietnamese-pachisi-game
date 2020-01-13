@@ -243,6 +243,7 @@ public class MenuController{
     private void setOnlinePlayersNameList(ArrayList<Player> players) {
         for (int i = 0; i < players.size(); i++) {
             this.playersNameList.set(i, players.get(i).getName());
+            mainController.setNoOnlinePlayers(players.size());
         }
     }
 

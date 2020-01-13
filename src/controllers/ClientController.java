@@ -56,8 +56,6 @@ public class ClientController {
         }
     }
 
-
-
     public void move(Move move) throws IOException {
         Message moveMessage = new Message("move", move);
         sendToServer(moveMessage);
