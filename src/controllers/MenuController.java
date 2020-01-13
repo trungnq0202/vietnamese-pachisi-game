@@ -1,4 +1,5 @@
 package controllers;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,11 +9,27 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import models.MatchInformation;
+import models.Player;
 import models.Sound;
 
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MenuController{
+    // Recently added
+    @FXML private Button onlineGameBtn;
+    @FXML private Button offlineGameBtn;
+    @FXML private VBox onlinePlayMenu;
+    @FXML private TextField onlinePlayerTextField;
+    @FXML private Button backToMainMenuBtn;
+    @FXML private Button onlinePlayBtn;
+
+    private static MenuController menuController;
+    private ClientController clientController;
+
+    //Old ones
     @FXML private VBox userSetNameMenu;
     @FXML private VBox emptyPlayerNameError;
     @FXML private VBox startMenuError;
@@ -26,10 +43,11 @@ public class MenuController{
     @FXML private Button backLevelBtn;
     @FXML private Button nextPlaySceneBtn;
     @FXML private Button exitErrorBtn;
+    @FXML private VBox cantConnectToServerError;
+    @FXML private Button cantConnectToServerBtn;
     @FXML private Button backBtn;
     @FXML private Button nextBtn;
     @FXML private Button exitGameBtn;
-    @FXML private Button newGameBtn;
     @FXML private Button changeLanguageBtn;
     @FXML private Button vietnameseLangBtn;
     @FXML private Button englishLangBtn;
@@ -63,6 +81,7 @@ public class MenuController{
     @FXML private Label finishPN;
     @FXML private Label highestPointsPN;
 
+    //    @FXML private Button newGameBtn;
     private MainController mainController;  //Make connection with mainController
     private int noHumanPlayers;             //Number of human players
     private int noVirtualPlayers;            //Number of virtual players
@@ -86,6 +105,7 @@ public class MenuController{
     }
 
     public void injectMainController(MainController mainController){
+        System.out.println("menu" + mainController);
         this.mainController = mainController;
     }
 
@@ -98,7 +118,7 @@ public class MenuController{
     }
 
     private void setBtnBindingText(){
-        I18NController.setUpButtonText(newGameBtn, "menu.new_game");
+        I18NController.setUpButtonText(offlineGameBtn, "menu.play_offline");
         I18NController.setUpButtonText(changeLanguageBtn, "menu.change_language");
         I18NController.setUpButtonText(exitGameBtn, "menu.exit");
         I18NController.setUpButtonText(backBtn, "menu.back");
@@ -142,11 +162,19 @@ public class MenuController{
 
     //Set event handler for all menu buttons
     private void setMenuButtonsEventHandler(){
-        setNewGameBtnEventHandler();
+        setOfflineGameBtnEventHandler();
         setExitGameBtnEventHandler();
         setBackBtnEventHandler();
         setNextBtnEventHandler();
         setExitErrorBtnEventHandler();
+
+        //recently added for online players
+        setOnlineGameBtnEventHandler();
+        setOnlinePlayBtnEventHandler();
+        setBackToMainMenuBtnEventHandler();
+
+        // Recently add these 3 function
+//        setUserSelectionMenuTextField();
         setBackLevelBtnEventHandler();
         setNextPlaySceneBtnEventHandler();
         setChangeLanguageBtnEventHandler();
@@ -215,6 +243,12 @@ public class MenuController{
         }
     }
 
+    private void setOnlinePlayersNameList(ArrayList<Player> players) {
+        for (int i = 0; i < players.size(); i++) {
+            this.playersNameList.set(i, players.get(i).getName());
+        }
+    }
+
     //Event handler for the "language" button
     public void setChangeLanguageBtnEventHandler(){
         changeLanguageBtn.setOnMouseClicked(event -> {
@@ -251,8 +285,8 @@ public class MenuController{
     }
 
     //Event handler for the newGameBtn
-    private void setNewGameBtnEventHandler(){
-        newGameBtn.setOnMouseClicked(event -> {
+    private void setOfflineGameBtnEventHandler(){
+        offlineGameBtn.setOnMouseClicked(event -> {
             btnClickSound.play();
             startMenu.setVisible(false);     //hide start menu
             preGameMenu.setVisible(true);    //show pregame menu
@@ -303,6 +337,11 @@ public class MenuController{
         exitErrorBtn1.setOnMouseClicked(event -> {
             btnClickSound.play();
             emptyPlayerNameError.setVisible(false);
+        });
+
+        cantConnectToServerBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            cantConnectToServerError.setVisible(false);
         });
     }
 
@@ -361,7 +400,6 @@ public class MenuController{
                 userSetNameMenu.setVisible(false);
                 rootMenu.setVisible(false);
                 mainController.displayGameBoard(true);
-
             }
         });
     }
@@ -407,6 +445,12 @@ public class MenuController{
         highestPointsPN.setText(playersNameList.get(winnerId));
     }
 
+    public void startOnlineGame(MatchInformation matchInformation) {
+        setOnlinePlayersNameList(matchInformation.getPlayers());
+        System.out.println(mainController);
+        this.mainController.displayGameBoard(true);
+    }
+
     // Set Name Menu added
     private void createSetPlayerNameMenu() {
         //Show text field for inputting human players' name
@@ -440,10 +484,68 @@ public class MenuController{
         return noVirtualPlayers;
     }
 
+
+    //recently added
+    private void setOnlineGameBtnEventHandler(){
+        onlineGameBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            try {
+                this.clientController = new ClientController();
+                this.clientController.injectMenuController(this);
+                clientController.start();
+            } catch (IOException e) {
+                cantConnectToServerError.setVisible(true);
+                return;
+            }
+            startMenu.setVisible(false);           //hide start menu
+            onlinePlayMenu.setVisible(true);       //online play menu
+        });
+    }
+
+    //create event handler for online play button
+    private void setOnlinePlayBtnEventHandler(){
+        onlinePlayBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            //check if text field is empty -> show error
+            if(onlinePlayerTextField.getText().equals("")){
+                emptyPlayerNameError.setVisible(true);
+            }
+            else {
+                if (onlinePlayerTextField.getText() != null) {
+
+                    //create new player with given name
+                    //update game connection field
+                    Platform.runLater(() -> {
+                        this.clientController.ready(onlinePlayerTextField.getText());
+                        onlinePlayBtn.setMouseTransparent(true);
+                        onlinePlayBtn.setText("Waiting...");
+                        onlinePlayerTextField.setDisable(true);
+                    });
+                }
+            }
+        });
+    }
+
+    private void setBackToMainMenuBtnEventHandler() {
+        backToMainMenuBtn.setOnMouseClicked(mouseEvent -> {
+            btnClickSound.play();
+            this.clientController.disconnect();
+            this.clientController = null;
+            this.onlinePlayMenu.setVisible(false);
+            this.startMenu.setVisible(true);
+            onlinePlayBtn.setMouseTransparent(false);
+            onlinePlayBtn.setText("Ready");
+            onlinePlayerTextField.setDisable(false);
+        });
+    }
+
+    public static MenuController getMenuController(){
+        if (menuController == null){
+            menuController = new MenuController();
+        } return menuController;
+    }
+
     public ArrayList<String> getPlayersNameList() {
         return playersNameList;
     }
-
-
-
 }

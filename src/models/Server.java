@@ -4,13 +4,17 @@ import java.util.ArrayList;
 
 public class Server {
     public static final String HOST = "localhost";
-    public static final int PORT = 9999;
+    public static final int PORT = 10000;
     private ArrayList<Connection> connectionPool = new ArrayList<>();
 
     public Server() { }
 
     public void addConnection(Connection connection) {
         this.connectionPool.add(connection);
+    }
+
+    public void deleteConnection(Connection connection) {
+        this.connectionPool.remove(connection);
     }
 
     public ArrayList<Connection> getConnectionPool() {
@@ -20,6 +24,5 @@ public class Server {
     public int countConnections() {
         return this.connectionPool.size();
     }
-
 }
 

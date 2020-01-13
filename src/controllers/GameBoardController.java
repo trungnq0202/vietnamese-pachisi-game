@@ -9,7 +9,7 @@ import javafx.scene.layout.*;
 import javafx.util.Duration;
 import models.Dice;
 import models.Horse;
-import resources.view.HorseNest;
+import models.HorseNest;
 import models.Sound;
 
 import java.util.ArrayList;
@@ -241,7 +241,7 @@ public class GameBoardController {
         gameBoard.lookup("#TURN0").setVisible(true);
         dicesController.setEventHandlerForDiceRoll();
         if (checkBotPlayerTurn()) botController.autoRollDice();
-        debug();
+//        debug();
     }
 
     //Show the game board

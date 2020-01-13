@@ -61,13 +61,14 @@ public class BotController {
     }
 
     private void hoverThenClick(Node node){
-        System.out.println("cc");
+
         Event.fireEvent(node, new MouseEvent(MouseEvent.MOUSE_ENTERED, 0,0,0,0, null, 0, false, false, false, false,
                 false, false, false, false, false, false, null));
 
         SequentialTransition sequentialTransition =  new SequentialTransition(
-                new PauseTransition(Duration.millis(1500))
+                new PauseTransition(Duration.millis(500))
         );
+
         sequentialTransition.setOnFinished(actionEvent -> {
             Event.fireEvent(node, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,0,0,0, MouseButton.PRIMARY, 1, false, false, false, false,
                     true, false, false, false, false, false, null));

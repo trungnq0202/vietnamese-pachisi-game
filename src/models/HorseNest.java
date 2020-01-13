@@ -1,4 +1,4 @@
-package resources.view;
+package models;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

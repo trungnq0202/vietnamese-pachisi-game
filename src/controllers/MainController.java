@@ -28,6 +28,7 @@ public class MainController {
 
     public MainController(){
         System.out.println("maincontroller construct");
+        System.out.println(this);
         isSoundEnabled = true;
         System.out.println(I18NController.getLocale().getDisplayCountry());
     }
@@ -90,5 +91,7 @@ public class MainController {
     public void restartGame(){
         gameBoardController.startGame();
     }
+
+
 
 }

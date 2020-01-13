@@ -1,27 +1,28 @@
 package controllers;
 
+import models.MatchInformation;
 import models.Message;
 import models.Move;
 import models.Server;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ClientController {
     private String name;
     private Socket socket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
-    private GameBoardController gameBoardController;
+    private MenuController menuController;
+    private boolean listening = false;
 
-    public ClientController(String name) {
-        this.name = name;
+    public ClientController() {
+
     }
 
-    public void injectGameBoardController(GameBoardController gameBoardController) {
-        this.gameBoardController = gameBoardController;
+    public void injectMenuController(MenuController menuController){
+        this.menuController = menuController;
     }
 
     private void establishConnectionToServer() throws IOException {
@@ -30,21 +31,19 @@ public class ClientController {
         this.outputStream = new ObjectOutputStream(socket.getOutputStream());
     }
 
-    public void start() {
-        try {
-            establishConnectionToServer();
-        } catch (IOException e) {
-            // you probably forgot to turn on the server!!!
-            e.printStackTrace();
-            System.exit(1);
-        }
-
+    public void start() throws IOException {
+        establishConnectionToServer();
         startListeningToTheServer();
     }
 
-    public void ready() throws IOException {
+    public void ready(String name) {
+        this.name = name;
         Message readyMessage = new Message("ready", this.name);
-        sendToServer(readyMessage);
+        try {
+            sendToServer(readyMessage);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void move(Move move) throws IOException {
@@ -54,11 +53,13 @@ public class ClientController {
 
     public void sendToServer(Message message) throws IOException {
         this.outputStream.writeObject(message);
+        this.outputStream.flush();
         this.outputStream.reset();
     }
 
-    private void disconnect() {
+    public void disconnect() {
         try {
+            this.stopListeningToServer();
             this.socket.close();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -66,26 +67,34 @@ public class ClientController {
     }
 
     private void startListeningToTheServer() {
+        this.listening = true;
         new Thread(() -> {
             try {
-                while (true) {
+                while (this.listening) {
                     // listening to the server
                     Message message = (Message) this.inputStream.readObject();
                     handleMessage(message);
                 }
+            } catch (SocketException e) {
+                // client disconnected
+                System.out.println("lost connection");
             } catch (IOException e) {
                 // server probably closed
-                e.printStackTrace();
+                System.out.println("io exception");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }).start();
     }
 
+    private void stopListeningToServer() {
+        this.listening = false;
+    }
+
     private void handleMessage(Message message) {
         switch (message.getAction()) {
             case "startGame": {
-                // this.gameBoardController.startOnlineGame((MatchInformation) message.getData());
+                this.menuController.startOnlineGame((MatchInformation) message.getData());
                 System.out.println("Game started...");
                 break;
             }

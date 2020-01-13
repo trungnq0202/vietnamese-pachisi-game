@@ -14,15 +14,15 @@ public class ServerController {
     private static final String[] COLORS = {"R", "B", "Y", "G"};
     private Server server = new Server();
     private boolean listening = true;
+
     public ServerController() { }
 
     public void startListening() {
-        this.listening = true;
         try {
             ServerSocket serverSocket = new ServerSocket(Server.PORT);
             System.out.println("server started");
-
-            while (this.listening) {
+            while (true) {
+                if (this.listening == false) continue;
                 // waiting for a client to connect
                 if (this.server.countConnections() < CONNECTIONS_COUNT_LIMIT) {
                     // only allow maximum 4 connections at a time
@@ -35,18 +35,18 @@ public class ServerController {
                     new Thread(newConnection).start();
                 }
             }
-            serverSocket.close();
-            System.out.println("server stop listening");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
-        //run this after server stops listening for incoming clients
-        System.out.println("All players have connected!");
+        System.out.println("server stopped");
     }
 
     public void stopListening() {
         this.listening = false;
+    }
+
+    public void removeConnection(Connection connection) {
+        this.server.deleteConnection(connection);
     }
 
     // broadcast to all the clients in connectionPool except the sender
@@ -74,8 +74,9 @@ public class ServerController {
 
     public void startGame() {
         MatchInformation match = constructNewMatchInformation();
-        Message startGameMessage = new Message(null, "startGame", match);
+        Message startGameMessage = new Message("startGame", match);
         System.out.println("Players are ready, starting game...");
+        stopListening();
         // broadcast to everyone
         broadcast(startGameMessage, null);
     }

@@ -17,8 +17,10 @@
     -fx-shape: "M 200 300 L 400 300 L 400 100 L 600 350 L 400 600 L 400 400 L 200 400 L 200 300";
     -fx-background-color: red;
 }
-/*---------style Button on pressed--------------*/
-/*.button:pressed{*/
-/*    -fx-scale-x:0.9;*/
-/*    -fx-scale-y:0.9;*/
-/*}*/
+/*
+---------style Button on pressed--------------
+.button:pressed{
+    -fx-scale-x:0.9;
+    -fx-scale-y:0.9;
+}
+*/
