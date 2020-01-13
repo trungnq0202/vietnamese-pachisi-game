@@ -88,8 +88,7 @@ public class MenuController{
     @FXML private Label cantConnectToServerLabel;
     private static final String red = " -fx-background-color: " +
             "linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%)," +
-            "#9d4024," +
-            "#d86e3a," +
+            "#9d4024,#d86e3a," +
             "radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);";
     private static final String blue = "   -fx-background-color: " +
             "linear-gradient(from 0% 93% to 0% 100%, #380da3 0%, #2f2b90 100%)," +
