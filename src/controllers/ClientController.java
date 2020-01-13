@@ -7,6 +7,7 @@ import models.Server;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ClientController {
     private String name;
@@ -24,15 +25,8 @@ public class ClientController {
         this.outputStream = new ObjectOutputStream(socket.getOutputStream());
     }
 
-    public void start() {
-        try {
-            establishConnectionToServer();
-        } catch (IOException e) {
-            // you probably forgot to turn on the server!!!
-            e.printStackTrace();
-            System.exit(1);
-        }
-
+    public void start() throws IOException {
+        establishConnectionToServer();
         startListeningToTheServer();
     }
 
@@ -75,8 +69,12 @@ public class ClientController {
                     Message message = (Message) this.inputStream.readObject();
                     handleMessage(message);
                 }
+            } catch (SocketException e) {
+                // client disconnected
+                System.out.println("lost connection");
             } catch (IOException e) {
-                // server probably closed or client disconnected
+                // server probably closed
+                System.out.println("io exception");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

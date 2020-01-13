@@ -46,7 +46,6 @@ public class MainController {
     private void injectMainControllerInNestedControllers(){
         menuController.injectMainController(this);
         gameBoardController.injectMainController(this);
-
     }
 
     //Set loop background video when using menu

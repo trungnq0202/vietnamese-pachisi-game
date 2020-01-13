@@ -13,6 +13,7 @@ import models.Player;
 import models.Sound;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MenuController{
@@ -34,6 +35,8 @@ public class MenuController{
     @FXML private Button exitErrorBtn1;
     @FXML private VBox emptyPlayerNameError;
     @FXML private Button exitErrorBtn;
+    @FXML private VBox cantConnectToServerError;
+    @FXML private Button cantConnectToServerBtn;
     @FXML private VBox startMenuError;
     @FXML private Button backBtn;
     @FXML private Button nextBtn;
@@ -162,7 +165,6 @@ public class MenuController{
 
     private void setOnlinePlayersNameList(ArrayList<Player> players) {
         for (int i = 0; i < players.size(); i++) {
-            TextField tempPlayerNameTF = (TextField) rootMenu.lookup("#TF" + i);
             this.playersNameList.set(i, players.get(i).getName());
         }
     }
@@ -225,6 +227,11 @@ public class MenuController{
             btnClickSound.play();
             emptyPlayerNameError.setVisible(false);
         });
+
+        cantConnectToServerBtn.setOnMouseClicked(event -> {
+            btnClickSound.play();
+            cantConnectToServerError.setVisible(false);
+        });
     }
 
     private void setBackLevelBtnEventHandler(){
@@ -259,8 +266,8 @@ public class MenuController{
 
     public void startOnlineGame(MatchInformation matchInformation) {
         setOnlinePlayersNameList(matchInformation.getPlayers());
-        userSetNameMenu.setVisible(false);
-        mainController.displayGameBoard(true);
+        System.out.println(mainController);
+        this.mainController.displayGameBoard(true);
     }
 
     // Set Name Menu added
@@ -300,10 +307,15 @@ public class MenuController{
     private void setOnlineGameBtnEventHandler(){
         onlineGameBtn.setOnMouseClicked(event -> {
             btnClickSound.play();
+            try {
+                this.clientController = new ClientController();
+                clientController.start();
+            } catch (IOException e) {
+                cantConnectToServerError.setVisible(true);
+                return;
+            }
             startMenu.setVisible(false);           //hide start menu
             onlinePlayMenu.setVisible(true);       //online play menu
-            this.clientController = new ClientController();
-            this.clientController.start();
         });
     }
 
