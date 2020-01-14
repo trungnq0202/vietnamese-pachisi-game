@@ -86,7 +86,7 @@ public class BotController {
                 false, false, false, false, false, false, null));
 
         SequentialTransition sequentialTransition =  new SequentialTransition(
-                new PauseTransition(Duration.millis(500))
+                new PauseTransition(Duration.millis(1000))
         );
 
         sequentialTransition.setOnFinished(actionEvent -> {

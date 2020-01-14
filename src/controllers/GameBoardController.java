@@ -77,7 +77,6 @@ public class GameBoardController {
     private BotController botController;
 
     public GameBoardController(){
-//        System.out.println("gameboardcontroller construct");
         horseIdOfPosition = new String[48];
         horseIdOfHomePosition = new String[25];
         horsesWithValidMovesList = new ArrayList<>();
@@ -348,7 +347,6 @@ public class GameBoardController {
             horseIdOfPosition[convertPositionToIntegerForm(startPosition)] = null;
             horseIdOfPosition[nextPositionInt] = horse.getId();
             horse.setTempPosition(nextPosition);
-            System.out.println(mainController.getPlayerName() + ": " + tempPlayerIdTurn);
             if (isOnlineGame){
                 if (mainController.getPlayersNameList().get(playerIdTurnAtThisTime).equals(mainController.getPlayerName())) showPossibleHorsesMoves();
             } else showPossibleHorsesMoves();

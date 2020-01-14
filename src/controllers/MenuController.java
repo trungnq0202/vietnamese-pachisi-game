@@ -453,6 +453,7 @@ public class MenuController{
         playerDisconnectedBtn.setOnMouseClicked(e -> {
             startMenu.setVisible(true);
             playerDisconnectedMenu.setVisible(false);
+            mainController.displayGameBoard(false,false);
         });
     }
 
@@ -584,6 +585,7 @@ public class MenuController{
                     clientController.start();
                 }
             } catch (IOException e) {
+                this.clientController = null;
                 cantConnectToServerError.setVisible(true);
                 return;
             }
@@ -619,7 +621,7 @@ public class MenuController{
     private void setBackToMainMenuBtnEventHandler() {
         backToMainOnlinePlayBtn.setOnMouseClicked(mouseEvent -> {
             SoundController.playButtonClickSound();
-            this.clientController.disconnect();
+            if (this.clientController != null) this.clientController.disconnect();
             this.clientController = null;
             this.onlinePlayMenu.setVisible(false);
             this.startMenu.setVisible(true);
@@ -637,8 +639,8 @@ public class MenuController{
     // display stop game menu
     public void displayStopGameMenu(boolean isDisplayed, boolean isOnlineGame){
         if (isDisplayed) {
-            if (isOnlineGame) SGNewGameBtn.setVisible(false);
-            else SGNewGameBtn.setVisible(true);
+            if (isOnlineGame) SGPlayAgainBtn.setVisible(false);
+            else SGPlayAgainBtn.setVisible(true);
             rootMenu.setVisible(true);
             stopGameMenu.setVisible(true);
         } else {

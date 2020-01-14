@@ -9,6 +9,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <VBox fx:id="gameBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" stylesheets="@../css/gameboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameBoardController">
    <children>
@@ -197,31 +198,61 @@
                                     <StackPane fx:id="HY1" prefHeight="150.0" prefWidth="200.0">
                                        <children>
                                           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                          <Text fill="WHITE" rotate="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+                                             <font>
+                                                <Font name="System Bold" size="38.0" />
+                                             </font>
+                                          </Text>
                                        </children>
                                     </StackPane>
                                     <StackPane fx:id="HY2" prefHeight="150.0" prefWidth="200.0">
                                        <children>
                                           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                          <Text fill="WHITE" rotate="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                                             <font>
+                                                <Font name="System Bold" size="38.0" />
+                                             </font>
+                                          </Text>
                                        </children>
                                     </StackPane>
                                     <StackPane fx:id="HY3" prefHeight="150.0" prefWidth="200.0">
                                        <children>
                                           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                          <Text fill="WHITE" rotate="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+                                             <font>
+                                                <Font name="System Bold" size="38.0" />
+                                             </font>
+                                          </Text>
                                        </children>
                                     </StackPane>
                                     <StackPane fx:id="HY4" prefHeight="150.0" prefWidth="200.0">
                                        <children>
                                           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                          <Text fill="WHITE" rotate="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
+                                             <font>
+                                                <Font name="System Bold" size="38.0" />
+                                             </font>
+                                          </Text>
                                        </children>
                                     </StackPane>
                                     <StackPane fx:id="HY5" prefHeight="150.0" prefWidth="200.0">
                                        <children>
                                           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                          <Text fill="WHITE" rotate="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5">
+                                             <font>
+                                                <Font name="System Bold" size="38.0" />
+                                             </font>
+                                          </Text>
                                        </children>
                                     </StackPane>
                                     <StackPane fx:id="HY6" prefHeight="150.0" prefWidth="200.0">
                                        <children>
                                           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ddd31e" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                          <Text fill="WHITE" rotate="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6">
+                                             <font>
+                                                <Font name="System Bold" size="38.0" />
+                                             </font>
+                                          </Text>
                                        </children>
                                     </StackPane>
                                  </children>
@@ -347,31 +378,61 @@
                         <StackPane fx:id="HB1" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Text fill="WHITE" rotate="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+                                 <font>
+                                    <Font name="System Bold" size="38.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </StackPane>
                         <StackPane fx:id="HB2" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Text fill="WHITE" rotate="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                                 <font>
+                                    <Font name="System Bold" size="38.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </StackPane>
                         <StackPane fx:id="HB3" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Text fill="WHITE" rotate="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+                                 <font>
+                                    <Font name="System Bold" size="38.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </StackPane>
                         <StackPane fx:id="HB4" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Text fill="WHITE" rotate="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
+                                 <font>
+                                    <Font name="System Bold" size="38.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </StackPane>
                         <StackPane fx:id="HB5" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Text fill="WHITE" rotate="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5">
+                                 <font>
+                                    <Font name="System Bold" size="38.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </StackPane>
                         <StackPane fx:id="HB6" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1183ee" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Text fill="WHITE" rotate="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6">
+                                 <font>
+                                    <Font name="System Bold" size="38.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </StackPane>
                      </children>
@@ -394,31 +455,61 @@
                         <StackPane fx:id="HG6" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="6">
+                                 <font>
+                                    <Font name="System Bold" size="38.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </StackPane>
                         <StackPane fx:id="HG5" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="5">
+                                 <font>
+                                    <Font name="System Bold" size="38.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </StackPane>
                         <StackPane fx:id="HG4" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
+                                 <font>
+                                    <Font name="System Bold" size="38.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </StackPane>
                         <StackPane fx:id="HG3" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+                                 <font>
+                                    <Font name="System Bold" size="38.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </StackPane>
                         <StackPane fx:id="HG2" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                                 <font>
+                                    <Font name="System Bold" size="38.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </StackPane>
                         <StackPane fx:id="HG1" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b940b" height="55.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+                                 <font>
+                                    <Font name="System Bold" size="38.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </StackPane>
                         <StackPane fx:id="G0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="66.0" prefWidth="87.0">
@@ -548,31 +639,61 @@
                               <StackPane fx:id="HR6" prefHeight="150.0" prefWidth="200.0">
                                  <children>
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    <Text fill="WHITE" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6">
+                                       <font>
+                                          <Font name="System Bold" size="38.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </StackPane>
                               <StackPane fx:id="HR5" prefHeight="150.0" prefWidth="200.0">
                                  <children>
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    <Text fill="WHITE" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5">
+                                       <font>
+                                          <Font name="System Bold" size="38.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </StackPane>
                               <StackPane fx:id="HR4" prefHeight="150.0" prefWidth="200.0">
                                  <children>
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    <Text fill="WHITE" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
+                                       <font>
+                                          <Font name="System Bold" size="38.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </StackPane>
                               <StackPane fx:id="HR3" prefHeight="150.0" prefWidth="200.0">
                                  <children>
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    <Text fill="WHITE" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+                                       <font>
+                                          <Font name="System Bold" size="38.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </StackPane>
                               <StackPane fx:id="HR2" prefHeight="150.0" prefWidth="200.0">
                                  <children>
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    <Text fill="WHITE" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                                       <font>
+                                          <Font name="System Bold" size="38.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </StackPane>
                               <StackPane fx:id="HR1" prefHeight="150.0" prefWidth="200.0">
                                  <children>
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="130.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    <Text fill="WHITE" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+                                       <font>
+                                          <Font name="System Bold" size="38.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </StackPane>
                               <StackPane fx:id="R0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="82.0" prefWidth="78.0">

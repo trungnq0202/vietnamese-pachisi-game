@@ -55,12 +55,10 @@ public class DicesController {
 
     // constructor
     public DicesController(){
-        System.out.println("DicesController construct");
     }
 
     //populate HBox with 2 dices
     @FXML public void initialize() {
-        System.out.println("DicesController init");
         dice1 = new Dice();
         dice2 = new Dice();
         createDiceArrow1();

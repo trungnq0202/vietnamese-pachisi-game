@@ -45,14 +45,11 @@ public class MainController {
 
     // constructor
     public MainController(){
-        System.out.println("maincontroller construct");
-        System.out.println(this);
-        System.out.println(I18NController.getLocale().getDisplayCountry());
+
     }
 
     // FXML initializing
     @FXML private void initialize(){
-        System.out.println("maincontroller init");
         injectMainControllerInNestedControllers();
         setBackgroundVideo();
     }
