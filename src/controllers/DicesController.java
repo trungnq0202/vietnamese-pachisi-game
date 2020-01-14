@@ -123,17 +123,13 @@ public class DicesController {
         unsetEventHandlerForDices();
         gameBoardController.unhighlightHorsesInsideNest();
         if (horse.isInHome()) {
-            gameBoardController.unhighlightHorseOutsideNest(false);
+            gameBoardController.unhighlightHorseOutsideNest();
             if (gameBoardController.isOnlineGame()) gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber(), true,gameBoardController.getTempPlayerIdTurn());
             else gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber(), false,gameBoardController.getTempPlayerIdTurn());
             gameBoardController.setHorseGoingOutsideNest(false);
         }
         else if (horse.isInHomeDoorPosition()) {
-            if (otherDice.isUsable()) {
-                gameBoardController.unhighlightHorseOutsideNest(true);
-                horse.setJustEnteredHome(true);
-            }
-            else gameBoardController.unhighlightHorseOutsideNest(false);
+            gameBoardController.unhighlightHorseOutsideNest();
             if (gameBoardController.isOnlineGame()) gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber(), true,gameBoardController.getTempPlayerIdTurn());
             else gameBoardController.createHorseMovingInsideHomeAnimation(horse.getTempPosition(), endPosition ,horse, dicePick.getRollNumber(), false,gameBoardController.getTempPlayerIdTurn());
             gameBoardController.setHorseGoingOutsideNest(false);

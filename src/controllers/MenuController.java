@@ -531,6 +531,8 @@ public class MenuController{
         for (int i = 0; i < noHumanPlayers; i++) {
             StackPane humanPlayerNamePane = (StackPane)rootMenu.lookup("#userPane" + i);
             humanPlayerNamePane.setVisible(true);
+            TextField humanPlayerNameTF = (TextField)humanPlayerNamePane.getChildren().get(1);
+            humanPlayerNameTF.setDisable(false);
         }
 
         //Show disabled text field with virtual players'name default as "Virtual Player + (i - noHumanPlayers + 1)"

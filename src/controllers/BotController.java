@@ -84,15 +84,8 @@ public class BotController {
     private int calculateProspectiveScore(Horse horse, int dicePick){
         //If this horse is already in home
         if (horse.isInHome()){
-            //If this horse just entered home
-            if (horse.isJustEnteredHome()) {
-                int nextHomePosIntegerForm = gameBoardController.convertHomePositionToIntegerForm(gameBoardController.calculateNextHomePosition(horse.getPossibleStepsListByIndex(dicePick), horse));
-                int tempHomePosIntegerForm = gameBoardController.convertHomePositionToIntegerForm(horse.getTempPosition());
-                return nextHomePosIntegerForm - tempHomePosIntegerForm;
-            } else {
-                //Going upper home only get 1 point
-                return 1;
-            }
+            //Going upper home only get 1 point
+            return 1;
         } else if (horse.isInHomeDoorPosition()) return horse.getPossibleStepsListByIndex(dicePick);
             else {
                 int nextPositionIntegerForm = gameBoardController.convertPositionToIntegerForm(gameBoardController.calculateNextPosition(horse.getPossibleStepsListByIndex(dicePick), horse.getTempPosition(), null));

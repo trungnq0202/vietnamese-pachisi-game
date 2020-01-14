@@ -20,7 +20,6 @@ public class Horse extends HBox implements Serializable {
     private char horseColor;
     private boolean isInNest;
     private boolean isInHome;
-    private boolean isJustEnteredHome;
     private int rowIndex;
     private int columnIndex;
     private String tempPosition;
@@ -32,7 +31,6 @@ public class Horse extends HBox implements Serializable {
         this.horseColor = horseColor;
         this.isInNest = true;
         this.isInHome = false;
-        this.isJustEnteredHome = false;
         this.tempPosition = null;
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
@@ -178,11 +176,4 @@ public class Horse extends HBox implements Serializable {
         return rowIndex;
     }
 
-    public boolean isJustEnteredHome() {
-        return isJustEnteredHome;
-    }
-
-    public void setJustEnteredHome(boolean justEnteredHome) {
-        isJustEnteredHome = justEnteredHome;
-    }
 }
