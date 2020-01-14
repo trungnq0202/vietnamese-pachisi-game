@@ -117,6 +117,11 @@ public class MainController {
         clientController.sendToServer(message);
     }
 
+    public void sendGameOverMessageToServer() throws IOException{
+        Message message = new Message("gameOver", "");
+        clientController.sendToServer(message);
+    }
+
     public GameBoardController getGameBoardController() {
         return gameBoardController;
     }

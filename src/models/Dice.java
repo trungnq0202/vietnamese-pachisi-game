@@ -32,6 +32,7 @@ public class Dice extends Button {
     public void roll(){
         rollNumber = new Random().nextInt(6) + 1;
         setRollNumber(rollNumber);
+        setRollNumber(3);
     }
 
     //method to get roll number of a dice

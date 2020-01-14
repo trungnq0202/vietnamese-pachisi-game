@@ -56,16 +56,6 @@ public class ClientController {
         }
     }
 
-    public void move(Move move) throws IOException {
-        Message moveMessage = new Message("move", move);
-        sendToServer(moveMessage);
-    }
-
-    public void leave() throws IOException {
-        Message leavingMessage = new Message("leave", this.name);
-        sendToServer(leavingMessage);
-    }
-
     public void sendToServer(Message message) throws IOException {
         this.outputStream.writeObject(message);
         this.outputStream.flush();

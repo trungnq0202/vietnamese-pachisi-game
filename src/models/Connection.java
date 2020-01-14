@@ -58,6 +58,10 @@ public class Connection implements Runnable {
                 handleMoveMessage(message);
                 break;
             }
+            case "gameOver": {
+                handleGameOverMessage(message);
+                break;
+            }
             case "leave": {
                 handleLeaveMessage(message);
                 break;
@@ -78,6 +82,10 @@ public class Connection implements Runnable {
         if (move.isGameOver()) {
             this.serverController.prepareForNewGame();
         }
+    }
+
+    private void handleGameOverMessage(Message message) {
+        this.serverController.prepareForNewGame();
     }
 
     private void handleLeaveMessage(Message message) {

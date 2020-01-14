@@ -58,7 +58,7 @@ public class MenuController{
     @FXML private Button SGPlayAgainBtn;
     @FXML private Button SGNewGameBtn;
     @FXML private Button SGQuitBtn;
-    @FXML private Button BackToMainOnlinePlayBtn;
+    @FXML private Button backToMainOnlinePlayBtn;
     @FXML private Button playerDisconnectedBtn; // TODO: 1/14/20 handle language for this button
 
     @FXML private Label noHumanPlayersLabel;
@@ -150,8 +150,8 @@ public class MenuController{
         I18NController.setUpButtonText(onlineGameBtn,"menu.play_online");
         I18NController.setUpButtonText(cantConnectToServerBtn,"menu.server_error_btn");
         I18NController.setUpButtonText(onlinePlayBtn,"menu.online_player_play_btn");
-        I18NController.setUpButtonText(BackToMainOnlinePlayBtn,"menu.online_player_back_btn");
-        I18NController.setUpButtonText(playerDisconnectedBtn, "menu.error_exit_button");
+        I18NController.setUpButtonText(backToMainOnlinePlayBtn,"menu.online_player_back_btn");
+        I18NController.setUpButtonText(playerDisconnectedBtn, "menu.error_exit_btn");
     }
 
     private void setLabelBindingText(){
@@ -406,8 +406,13 @@ public class MenuController{
         EGNewGameBtn.setOnMouseClicked(e -> {
             endGameMenu.setVisible(false);
             rootMenu.setVisible(true);
-            preGameMenu.setVisible(true);
+            startMenu.setVisible(true);
             mainController.displayGameBoard(false, false);
+            onlinePlayBtn.setMouseTransparent(false);
+            onlinePlayBtn.setDisable(false);
+            I18NController.setUpButtonText(onlinePlayBtn,"menu.online_player_play_btn");
+            onlinePlayerTextField.setDisable(false);
+
         });
     }
 
@@ -561,12 +566,12 @@ public class MenuController{
             try {
                 if (this.clientController == null) {
                     this.clientController = new ClientController();
+                    this.clientController.injectMenuController(this);
+                    this.clientController.injectMainController(mainController);
+                    this.mainController.injectClientController(clientController);
+                    this.clientController.injectGameBoardController(mainController.getGameBoardController());
+                    clientController.start();
                 }
-                this.clientController.injectMenuController(this);
-                this.clientController.injectMainController(mainController);
-                mainController.injectClientController(clientController);
-                this.clientController.injectGameBoardController(mainController.getGameBoardController());
-                clientController.start();
             } catch (IOException e) {
                 cantConnectToServerError.setVisible(true);
                 return;
@@ -602,7 +607,7 @@ public class MenuController{
     }
 
     private void setBackToMainMenuBtnEventHandler() {
-        BackToMainOnlinePlayBtn.setOnMouseClicked(mouseEvent -> {
+        backToMainOnlinePlayBtn.setOnMouseClicked(mouseEvent -> {
             SoundController.playButtonClickSound();
             this.clientController.disconnect();
             this.clientController = null;
