@@ -78,10 +78,6 @@ public class Connection implements Runnable {
 
     private void handleMoveMessage(Message message) {
         this.serverController.broadcast(message, this);
-        Move move = (Move) message.getData();
-        if (move.isGameOver()) {
-            this.serverController.prepareForNewGame();
-        }
     }
 
     private void handleGameOverMessage(Message message) {
