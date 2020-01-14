@@ -19,7 +19,6 @@ public class Move implements Serializable {
     private String endPosition;
     private int playerIdTurnAtThisTime;
     private int steps;
-    private boolean gameOver = false;
 
     //Sending dice value to other players
     public Move(type moveType, int dice1, int dice2){
@@ -95,13 +94,5 @@ public class Move implements Serializable {
 
     public type getMoveType() {
         return moveType;
-    }
-
-    public boolean isGameOver() {
-        return (this.gameOver);
-    }
-
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
     }
 }
