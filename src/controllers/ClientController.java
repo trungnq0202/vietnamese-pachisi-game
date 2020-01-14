@@ -61,6 +61,11 @@ public class ClientController {
         sendToServer(moveMessage);
     }
 
+    public void leave() throws IOException {
+        Message leavingMessage = new Message("leave", this.name);
+        sendToServer(leavingMessage);
+    }
+
     public void sendToServer(Message message) throws IOException {
         this.outputStream.writeObject(message);
         this.outputStream.flush();
@@ -111,6 +116,11 @@ public class ClientController {
             case "move": {
                 // TODO: implement this, @Trung
                  this.gameBoardController.executeMove((Move) message.getData());
+            }
+            case "leaving": {
+                // TODO: implement this, @Trung
+                // message.getData() contains name of the leaving player
+                // this.gameBoardController.handlePlayerLeaving((String) message.getData());
             }
         }
     }
