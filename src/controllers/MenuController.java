@@ -537,7 +537,9 @@ public class MenuController{
         onlineGameBtn.setOnMouseClicked(event -> {
             SoundController.playButtonClickSound();
             try {
-                this.clientController = new ClientController();
+                if (this.clientController == null) {
+                    this.clientController = new ClientController();
+                }
                 this.clientController.injectMenuController(this);
                 this.clientController.injectMainController(mainController);
                 mainController.injectClientController(clientController);

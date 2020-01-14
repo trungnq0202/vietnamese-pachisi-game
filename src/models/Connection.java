@@ -36,16 +36,16 @@ public class Connection implements Runnable {
             }
         } catch (IOException e) {
             // client probably disconnected
-            removeThisConnectionFromPool();
+            this.serverController.disconnectPlayer(this);
+            if (this.serverController.isGameStarted()) {
+                Message leavingMessage = new Message("leave", this.player.getName());
+                this.serverController.broadcast(leavingMessage, this);
+                this.serverController.prepareForNewGame();
+            }
             System.out.printf("%s disconnected.\n", this.inetAddress.getHostAddress());
         } catch (ClassNotFoundException e) {
-            // shits gone wild, idk what happened
             e.printStackTrace();
         }
-    }
-
-    private void removeThisConnectionFromPool() {
-        this.serverController.removeConnection(this);
     }
 
     private void handleMessage(Message message) {
@@ -80,9 +80,9 @@ public class Connection implements Runnable {
         }
     }
 
-    public void handleLeaveMessage(Message message) {
+    private void handleLeaveMessage(Message message) {
         this.serverController.broadcast(message, this);
-        this.serverController.handlePlayerLeaving(this);
+        this.serverController.prepareForNewGame();
     }
 
     public Player constructNewPlayer(String playerName) {
@@ -98,18 +98,18 @@ public class Connection implements Runnable {
         this.ready = ready;
     }
 
+    public boolean isConnected() {
+        return this.socket.isConnected();
+    }
+
     public Player getPlayer() {
         return this.player;
     }
 
-    public void send(Object object) {
-        try {
-            this.outputStream.writeObject(object);
-            this.outputStream.flush();
-            this.outputStream.reset();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void send(Object object) throws IOException {
+        this.outputStream.writeObject(object);
+        this.outputStream.flush();
+        this.outputStream.reset();
     }
 
     public void disconnect() throws IOException {

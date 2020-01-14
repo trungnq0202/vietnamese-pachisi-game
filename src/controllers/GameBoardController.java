@@ -388,6 +388,7 @@ public class GameBoardController {
         int firstFinishId = checkEndGame();
         if (firstFinishId != -1) {
             mainController.displayEndGameMenu(firstFinishId);
+            // TODO: dit me trung
         }
         else if (isOnlineGame){
             if (mainController.getPlayersNameList().get(playerIdTurnAtThisTime).equals(mainController.getPlayerName())) showPossibleHorsesMoves();
