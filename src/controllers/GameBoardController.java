@@ -376,14 +376,14 @@ public class GameBoardController {
         horse.setTempPosition(endPosition);
         StackPane endPositionNode = (StackPane)gameBoard.lookup("#" + endPosition);
         endPositionNode.getChildren().add(1, horse);
-        printMoveInsideHomeStatus(Integer.parseInt(endPosition.substring(2)));
+        printMoveInsideHomeStatus(Integer.parseInt(endPosition.substring(2)), playerIdTurnAtThisTime);
         SoundController.playHorseJumpSound();
         if (sendMessageToServerEnabled ){
             Move message = new Move(Move.type.HORSEMOVINGINSIDEHOME, startPosition ,endPosition, horse.getId(), steps, playerIdTurnAtThisTime);
             mainController.sendMessageToServer(message);
         }
         printMoveInsideHomeStatus(Integer.parseInt(endPosition.substring(2)), playerIdTurnAtThisTime);
-        horseGoingHomeSound.play();
+        SoundController.playHorseJumpSound();
         resetFillColorOfPosition(endPositionNode, horse);
         int firstFinishId = checkEndGame();
         if (firstFinishId != -1) {

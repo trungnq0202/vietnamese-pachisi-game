@@ -13,7 +13,7 @@
 
 <StackPane fx:id="rootMenu" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
     <children>
-        <VBox fx:id="startMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="263.0" spacing="30.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-background-color: rgba(124,147,166,0.3);" visible="false" StackPane.alignment="CENTER">
+        <VBox fx:id="startMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="263.0" spacing="30.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-background-color: rgba(124,147,166,0.3);" StackPane.alignment="CENTER">
             <children>
                 <Button fx:id="offlineGameBtn" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="Play Offline" textFill="WHITE">
                     <font>
@@ -424,7 +424,7 @@
                 </StackPane>
             </children>
         </VBox>
-      <VBox fx:id="stopGameMenu" prefHeight="200.0" prefWidth="100.0">
+      <VBox fx:id="stopGameMenu" prefHeight="200.0" prefWidth="100.0" visible="false">
          <children>
             <Label fx:id="SGTitleLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="69.0" prefWidth="481.0" text="Game Has Ended" textFill="#fcf940">
                <font>
