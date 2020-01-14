@@ -14,6 +14,7 @@ public class ServerController {
     private static final String[] COLORS = {"R", "B", "Y", "G"};
     private Server server = new Server();
     private boolean listening = true;
+    private boolean gameStarted = false;
 
     public ServerController() { }
 
@@ -52,15 +53,15 @@ public class ServerController {
         this.listening = true;
     }
 
-    public void removeConnection(Connection connection) {
-        this.server.deleteConnection(connection);
-    }
-
     // broadcast to all the clients in connectionPool except the sender
     public void broadcast(Object object, Connection sender) {
         for (Connection client:this.server.getConnectionPool()) {
             if (client != sender) {
-                client.send(object);
+                try {
+                    client.send(object);
+                } catch (IOException e) {
+                    System.out.println("Unable to send message. " + e.getMessage());
+                }
             }
         }
     }
@@ -79,11 +80,16 @@ public class ServerController {
         return true;
     }
 
+    public boolean isGameStarted() {
+        return this.gameStarted;
+    }
+
     public void startGame() {
         MatchInformation match = constructNewMatchInformation();
         Message startGameMessage = new Message("startGame", match);
         System.out.printf("Game started with %d players...\n", this.server.countConnections());
         stopListening();
+        this.gameStarted = true;
         // broadcast to everyone
         broadcast(startGameMessage, null);
     }
@@ -98,22 +104,27 @@ public class ServerController {
 
     public void prepareForNewGame() {
         System.out.println("Game over, preparing for new game...");
-        changeEveryConnectionToNotReady();
+        setAllConnectionsToNotReady();
         resumeListening();
+        this.gameStarted = false;
     }
 
-    private void changeEveryConnectionToNotReady() {
-        for (Connection connection:this.server.getConnectionPool()) {
-            connection.setReady(false);
+    private void setAllConnectionsToNotReady() {
+        for (Connection player:this.server.getConnectionPool()) {
+            player.setReady(false);
         }
     }
 
-    public void handlePlayerLeaving(Connection connection) {
+    public void disconnectPlayer(Connection connection) {
         try {
-            connection.disconnect();
+            if (connection.isConnected()) connection.disconnect();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         removeConnection(connection);
+    }
+
+    public void removeConnection(Connection connection) {
+        this.server.deleteConnection(connection);
     }
 }

@@ -250,6 +250,7 @@ public class GameBoardController {
         Arrays.fill(scores, 0);
         isRollingDiceTurn = true;                           //set rolling dice turn state yo true
         isFreeze = false;                                   //unfreeze rolling dices
+        tempPlayerIdTurn = 0;                               //First turn belongs to player "GREEN"
         isHorseGoingOutsideNest = false;
         isGameRunning = true;
         resetTurn();
@@ -973,7 +974,6 @@ public class GameBoardController {
                 updatePlayerTurnOnline(move.getNextPlayerName());
                 break;
             }
-            //If the received message is to update the next player turn
             case DICESVALUE:{
                 dicesController.setDicesFromMoveMessage(move);
                 break;
