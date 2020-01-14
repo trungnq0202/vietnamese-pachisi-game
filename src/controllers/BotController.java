@@ -1,3 +1,15 @@
+/*
+  RMIT University Vietnam
+  Course: INTE2512 Object-Oriented Programming
+  Semester: 2019C
+  Assessment: Final Project
+  Created date: 01/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Last modified: 14/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Acknowledgement: none.
+*/
+
 package controllers;
 
 import javafx.animation.*;
@@ -10,6 +22,7 @@ import models.Dice;
 import models.Horse;
 
 public class BotController {
+    // fields
     private Dice dice2;
     private Dice dice1;
     Horse horsePick;
@@ -18,6 +31,7 @@ public class BotController {
     int tempMinDistanceFromHomeDoorPos;
     private GameBoardController gameBoardController;
 
+    // constructor
     public BotController(Dice dice1, Dice dice2, GameBoardController gameBoardController){
         this.dice1 = dice1;
         this.dice2 = dice2;
@@ -26,15 +40,21 @@ public class BotController {
         dicePick = -1;
     }
 
+    // trigger dice roll
     public void autoRollDice(){
+        if (gameBoardController.isGameRunning())
         hoverThenClick(dice1);
     }
 
+    // auto pick random horse going outside nest
     public void autoPickRandomHorseGoingOutsideNest(){
-        Horse pickHorse =  gameBoardController.getRandomHorseInsideNest();
-        hoverThenClick(pickHorse);
+        if (gameBoardController.isGameRunning()){
+            Horse pickHorse =  gameBoardController.getRandomHorseInsideNest();
+            hoverThenClick(pickHorse);
+        }
     }
 
+    // auto pick most reasonable horse
     public void autoPickMostReasonableHorse(){
         tempMinDistanceFromHomeDoorPos = 49;
         tempMaxScore = 0;
@@ -60,8 +80,8 @@ public class BotController {
         else hoverThenClick(dice2);
     }
 
+    // hover then click on node
     private void hoverThenClick(Node node){
-
         Event.fireEvent(node, new MouseEvent(MouseEvent.MOUSE_ENTERED, 0,0,0,0, null, 0, false, false, false, false,
                 false, false, false, false, false, false, null));
 
@@ -78,18 +98,12 @@ public class BotController {
         sequentialTransition.play();
     }
 
+    // calculate prospective score
     private int calculateProspectiveScore(Horse horse, int dicePick){
         //If this horse is already in home
         if (horse.isInHome()){
-            //If this horse just entered home
-            if (horse.isJustEnteredHome()) {
-                int nextHomePosIntegerForm = gameBoardController.convertHomePositionToIntegerForm(gameBoardController.calculateNextHomePosition(horse.getPossibleStepsListByIndex(dicePick), horse));
-                int tempHomePosIntegerForm = gameBoardController.convertHomePositionToIntegerForm(horse.getTempPosition());
-                return nextHomePosIntegerForm - tempHomePosIntegerForm;
-            } else {
-                //Going upper home only get 1 point
-                return 1;
-            }
+            //Going upper home only get 1 point
+            return 1;
         } else if (horse.isInHomeDoorPosition()) return horse.getPossibleStepsListByIndex(dicePick);
             else {
                 int nextPositionIntegerForm = gameBoardController.convertPositionToIntegerForm(gameBoardController.calculateNextPosition(horse.getPossibleStepsListByIndex(dicePick), horse.getTempPosition(), null));
@@ -98,6 +112,7 @@ public class BotController {
             return 0;
     }
 
+    // calculate prospective distance from home door position
     private int calculateProspectiveDistanceFromHomeDoorPos(Horse horse, int dicePick){
         String startPos = horse.getTempPosition();
         String nextPos = gameBoardController.calculateNextPosition(horse.getPossibleStepsListByIndex(dicePick), startPos, null);
@@ -111,6 +126,7 @@ public class BotController {
         return stepsCountToHomeDoorPos;
     }
 
+    // analyze prospective distance from home door position
     private void analyzeProspectiveDistanceFromHomeDoorPos(Horse horse){
         if (horse.getPossibleStepsListByIndex(0) != 0) {
             int distanceFromHomeDoorPos1 = calculateProspectiveDistanceFromHomeDoorPos(horse, 0);
@@ -131,6 +147,7 @@ public class BotController {
         }
     }
 
+    // analyze prospective score
     private void analyzeProspectiveScore(Horse horse){
         if (horse.getPossibleStepsListByIndex(0) != 0) {
             int prospectiveScore = calculateProspectiveScore(horse, 0);
@@ -150,6 +167,4 @@ public class BotController {
             }
         }
     }
-
-
 }

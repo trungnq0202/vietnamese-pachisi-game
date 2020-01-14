@@ -1,14 +1,25 @@
+/*
+  RMIT University Vietnam
+  Course: INTE2512 Object-Oriented Programming
+  Semester: 2019C
+  Assessment: Final Project
+  Created date: 01/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Last modified: 14/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Acknowledgement: none.
+*/
+
 package models;
 
-import javafx.event.EventType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 import java.util.Random;
 
 public class Dice extends Button {
+    // fields
     private int rollNumber; //roll number for dice
     private Image rollImage; //roll image for dice
     private ImageView imageView; //ImageView for rollImage
@@ -32,7 +43,6 @@ public class Dice extends Button {
     public void roll(){
         rollNumber = new Random().nextInt(6) + 1;
         setRollNumber(rollNumber);
-//        setRollNumber(3);
     }
 
     //method to get roll number of a dice
@@ -55,6 +65,7 @@ public class Dice extends Button {
         setGraphic(imageView);
     }
 
+    // check if dice is usable
     public boolean isUsable() {
         return isUsable;
     }

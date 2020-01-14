@@ -1,11 +1,23 @@
+/*
+  RMIT University Vietnam
+  Course: INTE2512 Object-Oriented Programming
+  Semester: 2019C
+  Assessment: Final Project
+  Created date: 01/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Last modified: 14/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Acknowledgement: none.
+*/
+
 package controllers;
 
 import javafx.animation.*;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 import models.*;
@@ -13,10 +25,11 @@ import models.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class GameBoardController {
     @FXML private HBox dices;
+    @FXML private Button soundBtn;
+    @FXML private Button stopBtn;
     @FXML private Button diceArrow;
     @FXML private Label PN0;
     @FXML private Label PN1;
@@ -60,14 +73,8 @@ public class GameBoardController {
     private int tempPlayerIdTurn;
     private boolean isHorseGoingOutsideNest;
     private boolean isOnlineGame;
+    private boolean isGameRunning;
     private BotController botController;
-
-    //Sound
-    private Sound horseMoveSound;
-    private Sound horseGoingHomeSound;
-    private Sound horseAppearSound;
-    private Sound horseKickedSound;
-    private Sound launchSound;
 
     public GameBoardController(){
 //        System.out.println("gameboardcontroller construct");
@@ -76,14 +83,10 @@ public class GameBoardController {
         horsesWithValidMovesList = new ArrayList<>();
         Arrays.fill(horseIdOfPosition,null);
         Arrays.fill(horseIdOfHomePosition,null);
-        horseMoveSound = new Sound(Sound.SoundType.HORSE_MOVE_SFX);
-        horseGoingHomeSound = new Sound(Sound.SoundType.HORSE_JUMP_SFX);
-        horseAppearSound = new Sound(Sound.SoundType.HORSE_APPEAR_SFX);
-        horseKickedSound = new Sound(Sound.SoundType.HORSE_KICKED_SFX);
-        launchSound = new Sound(Sound.SoundType.GAME_LAUNCH_SFX);
         scores = new int[4];
         isHorseGoingOutsideNest = false;
-        isOnlineGame = true;
+        isOnlineGame = false;
+        isGameRunning = false;
     }
 
     @FXML private void initialize(){
@@ -95,6 +98,9 @@ public class GameBoardController {
         dicesController.injectGameBoardController(this);
         setUpLabelBindingText();
         botController = new BotController(dicesController.getDice1(), dicesController.getDice2() , this);
+        setSoundBtnEventHandler();
+        this.soundBtn.setBackground(SoundController.bgSoundOnImg);
+        setStopBtnEventHandler();
     }
 
     public void injectMainController(MainController mainController){
@@ -147,15 +153,9 @@ public class GameBoardController {
     public String calculateNextHomePosition(int steps, Horse horse){
         String tempPosition = horse.getTempPosition();
         //If the horse is already in home
-        if (horse.isInHome() && !horse.isJustEnteredHome()) {
+        if (horse.isInHome()) {
             if (steps != 1 || tempPosition.charAt(2) == '6') return null;
             else return tempPosition.substring(0, 2) + (Integer.parseInt(tempPosition.substring(2)) + 1);
-
-            //If the horse just entered home in this turn
-        } else  if (horse.isJustEnteredHome()){
-            int nextHomeInt = Integer.parseInt(horse.getTempPosition().substring(2)) + steps;
-            if (nextHomeInt <= 6)
-                return tempPosition.substring(0, 2) + nextHomeInt;
             //If the horse is at the home door position
         } else {
             if (steps <= 6)
@@ -218,6 +218,7 @@ public class GameBoardController {
         }
     }
 
+    //Create all horse nests at the start of the online game
     private void createHorseNestsOnline(){
         for (int i = 0; i < mainController.getNoOnlinePlayers() ; i++) {
             StackPane nestStackPane = (StackPane)gameBoard.lookup("#" + colors[i] + "NSP");
@@ -227,6 +228,7 @@ public class GameBoardController {
         }
     }
 
+    //Update players name view in the nests
     private void updatePlayersNameView(){
         ArrayList<String> playersNameList = mainController.getPlayersNameList();
         PN0.setText(playersNameList.get(0));
@@ -235,8 +237,19 @@ public class GameBoardController {
         PN3.setText(playersNameList.get(3));
     }
 
+    //reset turn to the 1st player
+    private void resetTurn(){
+        tempPlayerIdTurn = 0;                               //First turn belongs to player "GREEN"
+        gameBoard.lookup("#TURN0").setVisible(true);
+        gameBoard.lookup("#TURN1").setVisible(false);
+        gameBoard.lookup("#TURN2").setVisible(false);
+        gameBoard.lookup("#TURN3").setVisible(false);
+    }
+
     //initialize game process
     public void startGame(){
+        dicesController.hideSideArrow1();
+        dicesController.hideSideArrow2();
         clearHorseNestsAndScore();
         createHorseNests();                                 //Create all horse nest
         updatePlayersNameView();                            //Update players'name
@@ -248,13 +261,17 @@ public class GameBoardController {
         isFreeze = false;                                   //unfreeze rolling dices
         tempPlayerIdTurn = 0;                               //First turn belongs to player "GREEN"
         isHorseGoingOutsideNest = false;
-        gameBoard.lookup("#TURN0").setVisible(true);
+        isGameRunning = true;
+        resetTurn();
         dicesController.setEventHandlerForDiceRoll();
         if (checkBotPlayerTurn()) botController.autoRollDice();
 //        debug();
     }
 
+    //initialize game online process
     public void startGameOnline(){
+        dicesController.hideSideArrow1();
+        dicesController.hideSideArrow2();
         clearHorseNestsAndScore();
         createHorseNestsOnline();                                 //Create all horse nest
         updatePlayersNameView();                            //Update players'name
@@ -263,22 +280,24 @@ public class GameBoardController {
         Arrays.fill(horseIdOfHomePosition, null);       //no home position is occupied yet
         Arrays.fill(scores, 0);
         isFreeze = false;                                   //unfreeze rolling dices
-        tempPlayerIdTurn = 0;
         isHorseGoingOutsideNest = false;
+        isGameRunning = true;
+        resetTurn();
         if (mainController.getPlayersNameList().get(tempPlayerIdTurn).equals(mainController.getPlayerName())) {
             isRollingDiceTurn = true;                           //set rolling dice turn state yo true
             dicesController.setEventHandlerForDiceRoll();
             highLightDices(true);
         }
-        gameBoard.lookup("#TURN0").setVisible(true);
 //        debug();
     }
 
     //Show the game board
     public void showGameBoard(boolean isDisplayed){
         if (isDisplayed) {
-            launchSound.play();
+            SoundController.playGameLaunchSound();
             gameBoard.setVisible(true);
+            SoundController.playBackgroundSound();
+            startGame();
             if (isOnlineGame) startGameOnline();
             else startGame();
         } else {
@@ -299,10 +318,10 @@ public class GameBoardController {
         //Moving animation
         StackPane nextPositionNode = (StackPane)gameBoard.lookup("#" + nextPosition);
         nextPositionNode.getChildren().add(1, horse);
-        horseMoveSound.play();
+        SoundController.playHorseMoveSound();
 
         if (sendMessageToServerEnabled){
-            Move message = new Move(Move.type.HORSEMOVING, endPosition, horse.getId(), steps, playerIdTurnAtThisTime);
+            Move message = new Move(Move.type.HORSE_MOVING, endPosition, horse.getId(), steps, playerIdTurnAtThisTime);
             mainController.sendMessageToServer(message);
         }
 
@@ -358,7 +377,7 @@ public class GameBoardController {
         horse.setTempPosition(startPosition);
         startPositionNode.getChildren().add(1, horse);
         resetFillColorOfPosition(startPositionNode, horse);
-        horseAppearSound.play();
+        SoundController.playHorseAppearSound();
     }
 
     //Horse going outside nest animation for online game
@@ -381,16 +400,19 @@ public class GameBoardController {
         horse.setTempPosition(endPosition);
         StackPane endPositionNode = (StackPane)gameBoard.lookup("#" + endPosition);
         endPositionNode.getChildren().add(1, horse);
+//        printMoveInsideHomeStatus(Integer.parseInt(endPosition.substring(2)), playerIdTurnAtThisTime);
+        SoundController.playHorseJumpSound();
         if (sendMessageToServerEnabled ){
-            Move message = new Move(Move.type.HORSEMOVINGINSIDEHOME, startPosition ,endPosition, horse.getId(), steps, playerIdTurnAtThisTime);
+            Move message = new Move(Move.type.HORSE_MOVING_INSIDE_HOME, startPosition ,endPosition, horse.getId(), steps, playerIdTurnAtThisTime);
             mainController.sendMessageToServer(message);
         }
         printMoveInsideHomeStatus(Integer.parseInt(endPosition.substring(2)), playerIdTurnAtThisTime);
-        horseGoingHomeSound.play();
+        SoundController.playHorseJumpSound();
         resetFillColorOfPosition(endPositionNode, horse);
         int firstFinishId = checkEndGame();
         if (firstFinishId != -1) {
-            mainController.displayEndGameMenu(firstFinishId);
+            mainController.displayEndGameMenu(firstFinishId, isOnlineGame);
+            if (mainController.getPlayersNameList().get(playerIdTurnAtThisTime).equals(mainController.getPlayerName())) mainController.sendGameOverMessageToServer();
         }
         else if (isOnlineGame){
             if (mainController.getPlayersNameList().get(playerIdTurnAtThisTime).equals(mainController.getPlayerName())) showPossibleHorsesMoves();
@@ -398,6 +420,7 @@ public class GameBoardController {
         else showPossibleHorsesMoves();
     }
 
+    //Horse going inside home animation for online game
     public void createHorseMovingInsideHomeAnimationOnline(String startPosition, String endPosition, String horseId ,int steps , int playerIdTurnAtThisTime) throws IOException {
         Horse horse = (Horse)gameBoard.lookup("#" + horseId);
         createHorseMovingInsideHomeAnimation(startPosition,endPosition, horse, steps ,false, playerIdTurnAtThisTime);
@@ -410,9 +433,10 @@ public class GameBoardController {
         GridPane nestSP = (GridPane)gameBoard.lookup("#" + horse.getHorseColor() + "N");
         nestSP.add(horse,horse.getColumnIndex(), horse.getRowIndex());
         printKickStatus(getPlayerIdByColor(horse.getHorseColor()));
-        horseKickedSound.play();
+        SoundController.playHorseKickedSound();
     }
 
+    //Reset the color of the position
     public void resetFillColorOfPosition(StackPane endPositionNodeSP, Horse horse){
         if (horse.isInHome() || horse.isInHomeDoorPosition()){
             switch (horse.getHorseColor()){
@@ -430,7 +454,40 @@ public class GameBoardController {
 
     /*************** End Horse Animation **************/
 
+    /*************** Event handlers for buttons *********************/
+    //set sound button event handler
+    public void setSoundBtnEventHandler() {
+        this.soundBtn.setOnMouseClicked((MouseEvent e) -> {
+            //If the system's sound is enabled
+            if (SoundController.isSoundEnabled()) {
+                SoundController.toggleSound();                  //Set the system's sound to mute state
+                this.soundBtn.setBackground(SoundController.bgSoundOffImg);   //Set "sound off" background image for soundEnabledBtn
+            } else { //If the system's sound is being muted
+                SoundController.playButtonClickSound();         //Make "button sound" when clicked
+                SoundController.toggleSound();                          //Set the system's sound to on state
+                this.soundBtn.setBackground(SoundController.bgSoundOnImg);    //Set "sound on" background image for soundEnabledBtn
+            }
+        });
+    }
+
+    //set stop button event handler
+    public void setStopBtnEventHandler() {
+        this.stopBtn.setOnMouseClicked((MouseEvent e) -> {
+            // TODO: SG implement
+            mainController.displayStopGameMenu(true, isOnlineGame);
+            isGameRunning = false;
+            if (isOnlineGame){
+                try {
+                    mainController.sendLeavingMessageToServer();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+
     /*************** Event Handlers for horse OnClick event **************/
+    //set event handler for horse going outside nest
     private void activateEventHandlerForHorseGoingOutOfNest(Horse horse){
         String startPosition = calculateNextPosition(0, null, null);    //Get fxid of start position
         StackPane startPositionSP = (StackPane)gameBoard.lookup("#" + startPosition);;
@@ -439,7 +496,7 @@ public class GameBoardController {
             horse.setInNest(false); //This horse is no longer in the nest
             createHorseGoingOutsideNestAnimation(startPosition, horse);
             if (isOnlineGame){
-                Move message = new Move(Move.type.HORSEGOINGOUTSIDENEST, startPosition, horse.getId());
+                Move message = new Move(Move.type.HORSE_GOING_OUTSIDE_NEST, startPosition, horse.getId());
                 try {
                     mainController.sendMessageToServer(message);
                 } catch (IOException e) {
@@ -448,7 +505,7 @@ public class GameBoardController {
             }
             unhighlightHorsesInsideNest();
             dicesController.unsetEventHandlerForDices();
-            unhighlightHorseOutsideNest(false);
+            unhighlightHorseOutsideNest();
             setDicesUnusable();
             try {
                 updatePlayerTurn();
@@ -467,12 +524,14 @@ public class GameBoardController {
         });
     }
 
+    //unset event handler of horse going outside nest
     private void deactivateEventHandlerForHorseGoingOutOfNest(Horse horse){
         horse.setOnMouseClicked(null);
         horse.setOnMouseEntered(null);
         horse.setOnMouseExited(null);
     }
 
+    //set event handler for horse outside nest
     private void activateEventHandlerForHorseOutsideNest(Horse horse){
         horse.setOnMouseClicked(event -> {
             horse.pauseArrowAnimation();
@@ -483,6 +542,7 @@ public class GameBoardController {
         });
     }
 
+    //unset event handler for horse outside nest
     public void deactivateShowPossibleMovesForHorseOutsideNest(Horse horse){
         horse.resumeArrowAnimation();
         dicesController.unsetEventHandlerForDices();
@@ -501,6 +561,7 @@ public class GameBoardController {
         return -1;
     }
 
+    //Update next player turn
     private void updatePlayerTurn() throws IOException {
         //If this is an online game
         if (isOnlineGame){
@@ -508,7 +569,7 @@ public class GameBoardController {
                 gameBoard.lookup("#TURN" + tempPlayerIdTurn).setVisible(false);
                 if (tempPlayerIdTurn == (mainController.getNoOnlinePlayers() - 1)) tempPlayerIdTurn = 0; else tempPlayerIdTurn++;
                 gameBoard.lookup("#TURN" + tempPlayerIdTurn).setVisible(true);
-                Move message = new Move(Move.type.NEXTTURN, mainController.getPlayersNameList().get(tempPlayerIdTurn));
+                Move message = new Move(Move.type.NEXT_TURN, mainController.getPlayersNameList().get(tempPlayerIdTurn));
                 mainController.sendMessageToServer(message);
             } else {
                 isRollingDiceTurn = true;
@@ -577,17 +638,18 @@ public class GameBoardController {
     /*************** End Inside Nest Horses control **************/
 
     /*************** Outside Nest Horses control **************/
-    public void unhighlightHorseOutsideNest(boolean existHorseJustEnteredHome) {
+    //Unhighlight horse outside nest
+    public void unhighlightHorseOutsideNest() {
         for (int i = 0; i < 4; i++) {
             Horse horse = (Horse) gameBoard.lookup("#" + colors[tempPlayerIdTurn] + "H" + i);
             if (!horse.isInNest()) {
                 horse.hideSideArrow();
                 horse.setOnMouseClicked(null);
-                if (horse.isJustEnteredHome() && !existHorseJustEnteredHome) horse.setJustEnteredHome(false);
             }
         }
     }
 
+    //highlight horse outside nest
     public void highlightHorseOutsideNest(){
         for (Horse horse:horsesWithValidMovesList) {
             horse.showSideArrow();
@@ -595,6 +657,7 @@ public class GameBoardController {
         }
     }
 
+    //check if there is any horse outside nest
     private boolean checkAvailableOutsideNestHorse(){
         for (int i = 0; i < 4; i++){
             Horse tempHorse = (Horse)gameBoard.lookup("#" + colors[tempPlayerIdTurn] + "H" + i);
@@ -606,6 +669,7 @@ public class GameBoardController {
     /*************** End Outside Nest Horses control **************/
 
     /*************** Check possible moves and display **************/
+    //Find all horses with available moves
     private void getHorsesWithValidMoves(){
         horsesWithValidMovesList.clear();               //reset the list
         Dice dice1 = dicesController.getDice1();
@@ -628,7 +692,7 @@ public class GameBoardController {
         boolean hasPossibleMove = false;
         horse.resetListOfPossibleSteps();
         //If temp Horse is already in home and not just entered the home in this turn
-        if (horse.isInHome() && !horse.isJustEnteredHome()){
+        if (horse.isInHome()){
             //If dice1 roll number is 1         sou
             if (dice1 != null && (dice1.getRollNumber() == Integer.parseInt(horse.getTempPosition().substring(2)) + 1) && checkInvalidScalingHome(horse)){
                 hasPossibleMove = true;
@@ -642,7 +706,8 @@ public class GameBoardController {
             }
 
             //If tempHorse is at home door position
-        } else if (horse.isInHomeDoorPosition() || horse.isJustEnteredHome()){
+        } else if (horse.isInHomeDoorPosition()){
+
             if (dice1 != null && checkEnterHomeBlocked(dice1.getRollNumber(), horse)) {hasPossibleMove = true; horse.setPossibleStepsListByIndex(0,dice1.getRollNumber());}
             if (dice2 != null && checkEnterHomeBlocked(dice2.getRollNumber(), horse)) {hasPossibleMove = true; horse.setPossibleStepsListByIndex(1,dice2.getRollNumber()); }
 
@@ -715,7 +780,7 @@ public class GameBoardController {
                 else botController.autoPickMostReasonableHorse();
             }
         } else {
-            unhighlightHorseOutsideNest(false);
+            unhighlightHorseOutsideNest();
             if (isHorseGoingOutsideNest){
                 if (checkBotPlayerTurn()) botController.autoPickRandomHorseGoingOutsideNest();
             }
@@ -770,18 +835,22 @@ public class GameBoardController {
         dicesController.getDice2().setUsable(false);
     }
 
+    //Check if rolling dice is allowed
     public boolean isRollingDiceTurn() {
         return isRollingDiceTurn;
     }
 
+    //Check if rolling dice is freeze
     public boolean isFreeze() {
         return isFreeze;
     }
 
+    //Set rolling dice is freeze
     public void setFreeze(boolean freeze) {
         isFreeze = freeze;
     }
 
+    //Get the fxml gameBoard object
     public VBox getGameBoard() {
         return gameBoard;
     }
@@ -880,11 +949,12 @@ public class GameBoardController {
     }
 
     /*************** End Update and display latest move status **************/
-
+    //Check if this turn belongs to bot player
     public boolean checkBotPlayerTurn(){
         return !isOnlineGame && tempPlayerIdTurn > (mainController.getNoHumanPlayers() - 1);
     }
 
+    //Tell bot to pick a random horse inside nest to go out
     public Horse getRandomHorseInsideNest(){
         for (int i = 0; i < 4; i++){
             Horse horse = (Horse)gameBoard.lookup("#" + colors[tempPlayerIdTurn] + "H" + i);
@@ -893,6 +963,7 @@ public class GameBoardController {
         return null;
     }
 
+    //Check if exists any horse inside nest
     public boolean existHorseInsideNest(){
         for (int i = 0; i < 4; i++){
             Horse horse = (Horse)gameBoard.lookup("#" + colors[tempPlayerIdTurn] + "H" + i);
@@ -902,18 +973,22 @@ public class GameBoardController {
     }
 
     /*************** Getter and Setter **************/
+    //Get array list of horses with available moves
     public static ArrayList<Horse> getHorsesWithValidMovesList() {
         return horsesWithValidMovesList;
     }
-//
+
+    //Note that this turn has horse going outside nest
     public void setHorseGoingOutsideNest(boolean horseGoingOutsideNest) {
         isHorseGoingOutsideNest = horseGoingOutsideNest;
     }
 
+    //Get score of a player
     public static int[] getScores() {
         return scores;
     }
 
+    //Note that this game is online game
     public void setOnlineGame(boolean onlineGame) {
         isOnlineGame = onlineGame;
     }
@@ -922,24 +997,26 @@ public class GameBoardController {
         return isOnlineGame;
     }
 
+    //Send message to server
     public void sendMessageToServer(Move move) throws IOException {
         mainController.sendMessageToServer(move);
     }
 
+    //Handle "move" message when received
     public void executeMove(Move move){
         //If the received message is to update the dice value
         switch (move.getMoveType()){
             //If the received message is to update the next player turn
-            case NEXTTURN:{
+            case NEXT_TURN:{
                 updatePlayerTurnOnline(move.getNextPlayerName());
                 break;
             }
-            case DICESVALUE:{
+            case DICES_VALUE:{
                 dicesController.setDicesFromMoveMessage(move);
                 break;
             }
             //If the received message is to update a horse moving normally
-            case HORSEMOVING:{
+            case HORSE_MOVING:{
                 Platform.runLater(() -> {
                     try {
                         createHorseMovingAnimationOnline(move.getEndPosition(),move.getHorseId(), move.getSteps(), move.getPlayerIdTurnAtThisTime());
@@ -950,12 +1027,12 @@ public class GameBoardController {
                 break;
             }
             //If the received message is to update a horse going outside its nest
-            case HORSEGOINGOUTSIDENEST:{
+            case HORSE_GOING_OUTSIDE_NEST:{
                 Platform.runLater(() -> createHorseGoingOutsideNestAnimationOnline(move.getStartPosition(), move.getHorseId()));
                 break;
             }
             //If the received message is to update a horse moving inside home
-            case HORSEMOVINGINSIDEHOME:{
+            case HORSE_MOVING_INSIDE_HOME:{
                 Platform.runLater(() -> {
                     try {
                         createHorseMovingInsideHomeAnimationOnline(move.getStartPosition(), move.getEndPosition(), move.getHorseId(), move.getSteps(), move.getPlayerIdTurnAtThisTime());
@@ -965,57 +1042,60 @@ public class GameBoardController {
                 });
                 break;
             }
+            //If the received message is to update a player has quited the game
         }
     }
 
+    //Handle when an online player leave
+    public void handlePlayerLeaving(String message){
+        // TODO: 1/14/20  handle client disconnect
+
+        mainController.displayPlayerDisconnectedMenu();
+    }
+
+    //get the player id of the temporary turn
     public int getTempPlayerIdTurn() {
         return tempPlayerIdTurn;
     }
 
-    private void debug(){
-////        Horse horse = (Horse)gameBoard.lookup("#BH0");
-////        horse.setTempPosition("B0");
-////        horseIdOfPosition[convertPositionToIntegerForm("B0")] = "BH0";
-////        horse.setInNest(false);
-////        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#B0");
-////        nextPositionNode.getChildren().add(1, horse);
-//
-        Horse horse = (Horse)gameBoard.lookup("#RH0");
-        horse.setTempPosition("HR6");
-        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR6")] = "RH0";
-        horse.setInNest(false);
-        horse.setInHome(true);
-        horse.setJustEnteredHome(false);
-        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#HR6");
-        nextPositionNode.getChildren().add(1, horse);
-
-
-        Horse horse1 = (Horse)gameBoard.lookup("#RH1");
-        horse1.setTempPosition("HR5");
-        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR5")] = "RH1";
-        horse1.setInNest(false);
-        horse1.setInHome(true);
-        horse1.setJustEnteredHome(false);
-        StackPane nextPositionNode1 = (StackPane)gameBoard.lookup("#HR5");
-        nextPositionNode1.getChildren().add(1, horse1);
-
-        Horse horse2 = (Horse)gameBoard.lookup("#RH2");
-        horse2.setTempPosition("HR4");
-        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR4")] = "RH2";
-        horse2.setInNest(false);
-        horse2.setInHome(true);
-        horse2.setJustEnteredHome(false);
-        StackPane nextPositionNode2 = (StackPane)gameBoard.lookup("#HR4");
-        nextPositionNode2.getChildren().add(1, horse2);
-
-        Horse horse3 = (Horse)gameBoard.lookup("#RH3");
-        horse3.setTempPosition("R0");
-        horseIdOfPosition[convertPositionToIntegerForm("R0")] = "RH3";
-        horse3.setInNest(false);
-        horse3.setInHome(false);
-        horse3.setJustEnteredHome(false);
-        StackPane nextPositionNode3 = (StackPane)gameBoard.lookup("#R0");
-        nextPositionNode3.getChildren().add(1, horse3);
-
+    //check if the game is running
+    public boolean isGameRunning() {
+        return isGameRunning;
     }
+
+//    private void debug(){
+//        Horse horse = (Horse)gameBoard.lookup("#RH0");
+//        horse.setTempPosition("HR6");
+//        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR6")] = "RH0";
+//        horse.setInNest(false);
+//        horse.setInHome(true);
+//        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#HR6");
+//        nextPositionNode.getChildren().add(1, horse);
+//
+//
+//        Horse horse1 = (Horse)gameBoard.lookup("#RH1");
+//        horse1.setTempPosition("HR5");
+//        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR5")] = "RH1";
+//        horse1.setInNest(false);
+//        horse1.setInHome(true);
+//        StackPane nextPositionNode1 = (StackPane)gameBoard.lookup("#HR5");
+//        nextPositionNode1.getChildren().add(1, horse1);
+//
+//        Horse horse2 = (Horse)gameBoard.lookup("#RH2");
+//        horse2.setTempPosition("HR4");
+//        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR4")] = "RH2";
+//        horse2.setInNest(false);
+//        horse2.setInHome(true);
+//        StackPane nextPositionNode2 = (StackPane)gameBoard.lookup("#HR4");
+//        nextPositionNode2.getChildren().add(1, horse2);
+//
+//        Horse horse3 = (Horse)gameBoard.lookup("#RH3");
+//        horse3.setTempPosition("R0");
+//        horseIdOfPosition[convertPositionToIntegerForm("R0")] = "RH3";
+//        horse3.setInNest(false);
+//        horse3.setInHome(false);
+//        StackPane nextPositionNode3 = (StackPane)gameBoard.lookup("#R0");
+//        nextPositionNode3.getChildren().add(1, horse3);
+//
+//    }
 }
