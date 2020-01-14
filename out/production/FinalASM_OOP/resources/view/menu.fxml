@@ -396,7 +396,7 @@
                 </StackPane>
             </children>
         </VBox>
-      <VBox fx:id="stopGameMenu" prefHeight="200.0" prefWidth="100.0" visible="false">
+      <VBox fx:id="stopGameMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="182.0" prefWidth="480.0" style="-fx-background-color: rgba(124,147,166,1) rgba(124,147,166,1); -fx-border-width: 5px; -fx-border-color: black;" visible="false">
          <children>
             <Label fx:id="SGTitleLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="69.0" prefWidth="481.0" text="Game Has Ended" textFill="#fcf940">
                <font>
@@ -440,5 +440,19 @@
                 </Button>
             </children>
         </VBox>
+      <VBox fx:id="playerDisconnectedMenu" alignment="CENTER" fillWidth="false" layoutX="68.0" layoutY="113.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="197.0" prefWidth="367.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-background-color: rgba(124,147,166,1);" visible="false">
+         <children>
+            <Label fx:id="playerDisconnectedLabel" prefHeight="75.0" prefWidth="327.0" text="A player has disconnected!" wrapText="true">
+               <font>
+                  <Font name="Consolas" size="18.0" />
+               </font>
+            </Label>
+            <Button id="cc" fx:id="playerDisconnectedBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 2px;" styleClass="btn" stylesheets="@../css/main.css" text="Got it" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
     </children>
 </StackPane>

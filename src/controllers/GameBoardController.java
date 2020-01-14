@@ -63,6 +63,7 @@ public class GameBoardController {
     private int tempPlayerIdTurn;
     private boolean isHorseGoingOutsideNest;
     private boolean isOnlineGame;
+    private boolean isGameRunning;
     private BotController botController;
 
     public GameBoardController(){
@@ -74,7 +75,8 @@ public class GameBoardController {
         Arrays.fill(horseIdOfHomePosition,null);
         scores = new int[4];
         isHorseGoingOutsideNest = false;
-        isOnlineGame = true;
+        isOnlineGame = false;
+        isGameRunning = false;
     }
 
     @FXML private void initialize(){
@@ -88,6 +90,7 @@ public class GameBoardController {
         botController = new BotController(dicesController.getDice1(), dicesController.getDice2() , this);
         setSoundBtnEventHandler();
         this.soundBtn.setBackground(SoundController.bgSoundOnImg);
+        setStopBtnEventHandler();
     }
 
     public void injectMainController(MainController mainController){
@@ -228,6 +231,14 @@ public class GameBoardController {
         PN3.setText(playersNameList.get(3));
     }
 
+    private void resetTurn(){
+        tempPlayerIdTurn = 0;                               //First turn belongs to player "GREEN"
+        gameBoard.lookup("#TURN0").setVisible(true);
+        gameBoard.lookup("#TURN1").setVisible(false);
+        gameBoard.lookup("#TURN2").setVisible(false);
+        gameBoard.lookup("#TURN3").setVisible(false);
+    }
+
     //initialize game process
     public void startGame(){
         clearHorseNestsAndScore();
@@ -239,9 +250,9 @@ public class GameBoardController {
         Arrays.fill(scores, 0);
         isRollingDiceTurn = true;                           //set rolling dice turn state yo true
         isFreeze = false;                                   //unfreeze rolling dices
-        tempPlayerIdTurn = 0;                               //First turn belongs to player "GREEN"
         isHorseGoingOutsideNest = false;
-        gameBoard.lookup("#TURN0").setVisible(true);
+        isGameRunning = true;
+        resetTurn();
         dicesController.setEventHandlerForDiceRoll();
         if (checkBotPlayerTurn()) botController.autoRollDice();
 //        debug();
@@ -256,14 +267,14 @@ public class GameBoardController {
         Arrays.fill(horseIdOfHomePosition, null);       //no home position is occupied yet
         Arrays.fill(scores, 0);
         isFreeze = false;                                   //unfreeze rolling dices
-        tempPlayerIdTurn = 0;
         isHorseGoingOutsideNest = false;
+        isGameRunning = true;
+        resetTurn();
         if (mainController.getPlayersNameList().get(tempPlayerIdTurn).equals(mainController.getPlayerName())) {
             isRollingDiceTurn = true;                           //set rolling dice turn state yo true
             dicesController.setEventHandlerForDiceRoll();
             highLightDices(true);
         }
-        gameBoard.lookup("#TURN0").setVisible(true);
 //        debug();
     }
 
@@ -387,7 +398,8 @@ public class GameBoardController {
         resetFillColorOfPosition(endPositionNode, horse);
         int firstFinishId = checkEndGame();
         if (firstFinishId != -1) {
-            mainController.displayEndGameMenu(firstFinishId);
+            mainController.displayEndGameMenu(firstFinishId, isOnlineGame);
+
         }
         else if (isOnlineGame){
             if (mainController.getPlayersNameList().get(playerIdTurnAtThisTime).equals(mainController.getPlayerName())) showPossibleHorsesMoves();
@@ -442,9 +454,18 @@ public class GameBoardController {
         });
     }
 
-    public void setBtnEventHandler() {
+    public void setStopBtnEventHandler() {
         this.stopBtn.setOnMouseClicked((MouseEvent e) -> {
             // TODO: SG implement
+            mainController.displayStopGameMenu(true, isOnlineGame);
+            isGameRunning = false;
+            if (isOnlineGame){
+                try {
+                    mainController.sendLeavingMessageToServer();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
         });
     }
 
@@ -952,6 +973,7 @@ public class GameBoardController {
                 updatePlayerTurnOnline(move.getNextPlayerName());
                 break;
             }
+            //If the received message is to update the next player turn
             case DICESVALUE:{
                 dicesController.setDicesFromMoveMessage(move);
                 break;
@@ -983,57 +1005,67 @@ public class GameBoardController {
                 });
                 break;
             }
+            //If the received message is to update a player has quited the game
         }
+    }
+
+    public void handlePlayerLeaving(String message){
+        // TODO: 1/14/20  handle client disconnect
+        mainController.displayPlayerDisconnectedMenu();
     }
 
     public int getTempPlayerIdTurn() {
         return tempPlayerIdTurn;
     }
 
-    private void debug(){
-////        Horse horse = (Horse)gameBoard.lookup("#BH0");
-////        horse.setTempPosition("B0");
-////        horseIdOfPosition[convertPositionToIntegerForm("B0")] = "BH0";
-////        horse.setInNest(false);
-////        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#B0");
-////        nextPositionNode.getChildren().add(1, horse);
-//
-        Horse horse = (Horse)gameBoard.lookup("#RH0");
-        horse.setTempPosition("HR6");
-        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR6")] = "RH0";
-        horse.setInNest(false);
-        horse.setInHome(true);
-        horse.setJustEnteredHome(false);
-        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#HR6");
-        nextPositionNode.getChildren().add(1, horse);
-
-
-        Horse horse1 = (Horse)gameBoard.lookup("#RH1");
-        horse1.setTempPosition("HR5");
-        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR5")] = "RH1";
-        horse1.setInNest(false);
-        horse1.setInHome(true);
-        horse1.setJustEnteredHome(false);
-        StackPane nextPositionNode1 = (StackPane)gameBoard.lookup("#HR5");
-        nextPositionNode1.getChildren().add(1, horse1);
-
-        Horse horse2 = (Horse)gameBoard.lookup("#RH2");
-        horse2.setTempPosition("HR4");
-        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR4")] = "RH2";
-        horse2.setInNest(false);
-        horse2.setInHome(true);
-        horse2.setJustEnteredHome(false);
-        StackPane nextPositionNode2 = (StackPane)gameBoard.lookup("#HR4");
-        nextPositionNode2.getChildren().add(1, horse2);
-
-        Horse horse3 = (Horse)gameBoard.lookup("#RH3");
-        horse3.setTempPosition("R0");
-        horseIdOfPosition[convertPositionToIntegerForm("R0")] = "RH3";
-        horse3.setInNest(false);
-        horse3.setInHome(false);
-        horse3.setJustEnteredHome(false);
-        StackPane nextPositionNode3 = (StackPane)gameBoard.lookup("#R0");
-        nextPositionNode3.getChildren().add(1, horse3);
-
+    public boolean isGameRunning() {
+        return isGameRunning;
     }
+
+//    private void debug(){
+//////        Horse horse = (Horse)gameBoard.lookup("#BH0");
+//////        horse.setTempPosition("B0");
+//////        horseIdOfPosition[convertPositionToIntegerForm("B0")] = "BH0";
+//////        horse.setInNest(false);
+//////        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#B0");
+//////        nextPositionNode.getChildren().add(1, horse);
+////
+////        Horse horse = (Horse)gameBoard.lookup("#RH0");
+////        horse.setTempPosition("HR6");
+////        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR6")] = "RH0";
+////        horse.setInNest(false);
+////        horse.setInHome(true);
+////        horse.setJustEnteredHome(false);
+////        StackPane nextPositionNode = (StackPane)gameBoard.lookup("#HR6");
+////        nextPositionNode.getChildren().add(1, horse);
+////
+////
+////        Horse horse1 = (Horse)gameBoard.lookup("#RH1");
+////        horse1.setTempPosition("HR5");
+////        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR5")] = "RH1";
+////        horse1.setInNest(false);
+////        horse1.setInHome(true);
+////        horse1.setJustEnteredHome(false);
+////        StackPane nextPositionNode1 = (StackPane)gameBoard.lookup("#HR5");
+////        nextPositionNode1.getChildren().add(1, horse1);
+////
+////        Horse horse2 = (Horse)gameBoard.lookup("#RH2");
+////        horse2.setTempPosition("HR4");
+////        horseIdOfHomePosition[convertHomePositionToIntegerForm("HR4")] = "RH2";
+////        horse2.setInNest(false);
+////        horse2.setInHome(true);
+////        horse2.setJustEnteredHome(false);
+////        StackPane nextPositionNode2 = (StackPane)gameBoard.lookup("#HR4");
+////        nextPositionNode2.getChildren().add(1, horse2);
+////
+////        Horse horse3 = (Horse)gameBoard.lookup("#RH3");
+////        horse3.setTempPosition("R0");
+////        horseIdOfPosition[convertPositionToIntegerForm("R0")] = "RH3";
+////        horse3.setInNest(false);
+////        horse3.setInHome(false);
+////        horse3.setJustEnteredHome(false);
+////        StackPane nextPositionNode3 = (StackPane)gameBoard.lookup("#R0");
+////        nextPositionNode3.getChildren().add(1, horse3);
+//
+//    }
 }

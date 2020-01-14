@@ -75,8 +75,8 @@ public class MainController {
         }
     }
 
-    public void displayEndGameMenu(int firstFinishId){
-        menuController.displayEndGameMenu(firstFinishId);
+    public void displayEndGameMenu(int firstFinishId, boolean isOnlineGame){
+        menuController.displayEndGameMenu(firstFinishId, isOnlineGame);
     }
 
     public int getNoHumanPlayers() {
@@ -112,6 +112,11 @@ public class MainController {
         clientController.sendToServer(message);
     }
 
+    public void sendLeavingMessageToServer() throws IOException{
+        Message message = new Message("leave", "");
+        clientController.sendToServer(message);
+    }
+
     public GameBoardController getGameBoardController() {
         return gameBoardController;
     }
@@ -123,4 +128,14 @@ public class MainController {
     public int getNoOnlinePlayers() {
         return noOnlinePlayers;
     }
+
+    public void displayStopGameMenu(boolean isDisplayed, boolean isOnlineGame){
+        menuController.displayStopGameMenu(isDisplayed, isOnlineGame);
+    }
+
+    public void displayPlayerDisconnectedMenu() {
+        menuController.displayPlayerDisconnectedMenu();
+    }
+
+
 }

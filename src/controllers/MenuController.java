@@ -35,6 +35,8 @@ public class MenuController{
     @FXML private VBox startMenu;
     @FXML private VBox langMenu;
     @FXML private VBox endGameMenu;
+    @FXML private VBox stopGameMenu;
+    @FXML private VBox playerDisconnectedMenu;
     @FXML private StackPane rootMenu;
 
     @FXML private Button exitErrorBtn1;
@@ -57,7 +59,7 @@ public class MenuController{
     @FXML private Button SGNewGameBtn;
     @FXML private Button SGQuitBtn;
     @FXML private Button BackToMainOnlinePlayBtn;
-
+    @FXML private Button playerDisconnectedBtn; // TODO: 1/14/20 handle language for this button
 
     @FXML private Label noHumanPlayersLabel;
     @FXML private Label noVirtualPlayersLabel;
@@ -86,6 +88,8 @@ public class MenuController{
     @FXML private Label highestPointsPN;
     @FXML private Label onlinePlayerNameLabel;
     @FXML private Label cantConnectToServerLabel;
+    @FXML private Label playerDisconnectedLabel; // TODO: 1/14/20 handle language for this label
+
     private static final String red = "-fx-background-color: " +
             "linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%)," +
             "#9d4024,#d86e3a," +
@@ -147,6 +151,7 @@ public class MenuController{
         I18NController.setUpButtonText(cantConnectToServerBtn,"menu.server_error_btn");
         I18NController.setUpButtonText(onlinePlayBtn,"menu.online_player_play_btn");
         I18NController.setUpButtonText(BackToMainOnlinePlayBtn,"menu.online_player_back_btn");
+        I18NController.setUpButtonText(playerDisconnectedBtn, "menu.error_exit_button");
     }
 
     private void setLabelBindingText(){
@@ -167,6 +172,7 @@ public class MenuController{
         I18NController.setUpLabelText(EGMostPointsLabel, "menu.player_has_highest_score");
         I18NController.setUpLabelText(onlinePlayerNameLabel,"menu.online_player_name");
         I18NController.setUpLabelText(cantConnectToServerLabel,"menu.server_error_label");
+        I18NController.setUpLabelText(playerDisconnectedLabel, "menu.player_disconnected");
     }
 
     //Set event handler for
@@ -186,12 +192,10 @@ public class MenuController{
         setBackBtnEventHandler();
         setNextBtnEventHandler();
         setExitErrorBtnEventHandler();
-
         //recently added for online players
         setOnlineGameBtnEventHandler();
         setOnlinePlayBtnEventHandler();
         setBackToMainMenuBtnEventHandler();
-
         // Recently add these 3 function
 //        setUserSelectionMenuTextField();
         setBackLevelBtnEventHandler();
@@ -206,6 +210,7 @@ public class MenuController{
         setSGPlayAgainBtnEventHandler();
         setSGNewGameBtn();
         setSGQuitBtn();
+        setPlayerDisconnectedBtn();
     }
 
     //Event handler when clicking on the circles to choose the number of human and machine players
@@ -390,6 +395,9 @@ public class MenuController{
     private void setSGPlayAgainBtnEventHandler(){
         SGPlayAgainBtn.setOnMouseClicked(mouseEvent -> {
             // TODO: SG implement this
+            stopGameMenu.setVisible(false);
+            rootMenu.setVisible(false);
+            mainController.restartGame();
         });
     }
 
@@ -406,7 +414,10 @@ public class MenuController{
     //Event handler for "New Game" button at stop game
     private void setSGNewGameBtn(){
         SGNewGameBtn.setOnMouseClicked(e -> {
-            // TODO: SG implement this
+            stopGameMenu.setVisible(false);
+            rootMenu.setVisible(true);
+            preGameMenu.setVisible(true);
+            mainController.displayGameBoard(false, false);
         });
     }
 
@@ -422,6 +433,16 @@ public class MenuController{
     private void setSGQuitBtn(){
         SGQuitBtn.setOnMouseClicked(e -> {
             // TODO: SG implement this
+            SoundController.playButtonClickSound();
+            System.exit(0);         //Exit the program
+        });
+    }
+
+    //Event handler for "Stop Game" button
+    private void setPlayerDisconnectedBtn(){
+        playerDisconnectedBtn.setOnMouseClicked(e -> {
+            startMenu.setVisible(true);
+            playerDisconnectedMenu.setVisible(false);
         });
     }
 
@@ -449,12 +470,13 @@ public class MenuController{
     }
 
     //EndgameMenu
-    public void displayEndGameMenu(int firstFinishId){
+    public void displayEndGameMenu(int firstFinishId, boolean isOnlineGame){
         rootMenu.setVisible(true);
         endGameMenu.setVisible(true);
+        if (isOnlineGame) EGPlayAgainBtn.setVisible(false);
+        else EGPlayAgainBtn.setVisible(true);
         displayPlayersName();
         displayPlayersPoints();
-        displayFirstPlayerToFinishGame(firstFinishId);
         displayFirstPlayerToFinishGame(firstFinishId);
         displayPlayerWithMostPoints();
     }
@@ -599,4 +621,22 @@ public class MenuController{
     public ArrayList<String> getPlayersNameList() {
         return playersNameList;
     }
+
+    public void displayStopGameMenu(boolean isDisplayed, boolean isOnlineGame){
+        if (isDisplayed) {
+            if (isOnlineGame) SGNewGameBtn.setVisible(false);
+            else SGNewGameBtn.setVisible(true);
+            rootMenu.setVisible(true);
+            stopGameMenu.setVisible(true);
+        } else {
+            rootMenu.setVisible(false);
+            stopGameMenu.setVisible(false);
+        }
+    }
+
+    public void displayPlayerDisconnectedMenu(){
+        rootMenu.setVisible(true);
+        playerDisconnectedMenu.setVisible(true);
+    }
+
 }

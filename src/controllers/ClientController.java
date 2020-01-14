@@ -114,13 +114,13 @@ public class ClientController {
                 break;
             }
             case "move": {
-                // TODO: implement this, @Trung
                  this.gameBoardController.executeMove((Move) message.getData());
+                 break;
             }
-            case "leaving": {
+            case "leave": {
                 // TODO: implement this, @Trung
-                // message.getData() contains name of the leaving player
-                // this.gameBoardController.handlePlayerLeaving((String) message.getData());
+                 this.gameBoardController.handlePlayerLeaving((String) message.getData());
+
             }
         }
     }

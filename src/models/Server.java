@@ -3,7 +3,7 @@ package models;
 import java.util.ArrayList;
 
 public class Server {
-    public static final String HOST = "localhost";
+    public static final String HOST = "157.230.37.0";
     public static final int PORT = 10000;
     private ArrayList<Connection> connectionPool = new ArrayList<>();
 

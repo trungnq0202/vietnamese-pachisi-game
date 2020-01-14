@@ -15,7 +15,7 @@ public class Sound {
     private static final String BUTTON_CLICK_SFX_URL = "../resources/sounds/sound_button_click.mp3";
     private static final String HORSE_KICKED_SFX_URL = "../resources/sounds/sound_horsekicked.mp3";
     private static final String GAME_LAUNCH_SFX_URL = "../resources/sounds/sound_launch.mp3";
-    private static final String NULL_SOUND_URL = "../resources/sounds/backgroundsong.wav"; // TODO: find a sound for this
+    private static final String NULL_SOUND_URL = "../resources/sounds/backgroundsong.wav";
 
     public enum SoundType {
         BACKGROUND_MUSIC,

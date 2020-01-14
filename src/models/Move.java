@@ -8,7 +8,7 @@ public class Move implements Serializable {
         NEXTTURN,
         HORSEGOINGOUTSIDENEST,
         HORSEMOVING,
-        HORSEMOVINGINSIDEHOME
+        HORSEMOVINGINSIDEHOME,
     }
     private type moveType;
     private int dice1;

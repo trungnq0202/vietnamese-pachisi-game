@@ -27,12 +27,15 @@ public class BotController {
     }
 
     public void autoRollDice(){
+        if (gameBoardController.isGameRunning())
         hoverThenClick(dice1);
     }
 
     public void autoPickRandomHorseGoingOutsideNest(){
-        Horse pickHorse =  gameBoardController.getRandomHorseInsideNest();
-        hoverThenClick(pickHorse);
+        if (gameBoardController.isGameRunning()){
+            Horse pickHorse =  gameBoardController.getRandomHorseInsideNest();
+            hoverThenClick(pickHorse);
+        }
     }
 
     public void autoPickMostReasonableHorse(){
