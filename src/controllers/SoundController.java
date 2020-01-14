@@ -1,9 +1,6 @@
 package controllers;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import models.Sound;
 
@@ -22,16 +19,17 @@ public class SoundController {
     //Background object for setting "sound off" image as soundEnabledBtn background image
     public static Background bgSoundOffImg = generateSoundButtonBackground(soundOffImg);
     //Sound object for playing background music
-    private static Sound backgroundMusic = new Sound(Sound.SoundType.BACKGROUND_MUSIC);
+    private static Sound backgroundMusic = new Sound(Sound.Type.BACKGROUND_MUSIC);
     //Button sound object, for making sound when pressing the sound enabled button
-    private static Sound buttonClickedSound = new Sound(Sound.SoundType.BUTTON_CLICK_SFX);
-    private static Sound diceRollSound = new Sound(Sound.SoundType.DICE_ROLL_SFX);
-    private static Sound horseJumpSound = new Sound(Sound.SoundType.HORSE_JUMP_SFX);
-    private static Sound horseMoveSound = new Sound(Sound.SoundType.HORSE_MOVE_SFX);
-    private static Sound horseAppearSound = new Sound(Sound.SoundType.HORSE_APPEAR_SFX);
-    private static Sound horseKickedSound = new Sound(Sound.SoundType.HORSE_KICKED_SFX);
-    private static Sound gameLaunchSound = new Sound(Sound.SoundType.GAME_LAUNCH_SFX);
+    private static Sound buttonClickedSound = new Sound(Sound.Type.BUTTON_CLICK_SFX);
+    private static Sound diceRollSound = new Sound(Sound.Type.DICE_ROLL_SFX);
+    private static Sound horseJumpSound = new Sound(Sound.Type.HORSE_JUMP_SFX);
+    private static Sound horseMoveSound = new Sound(Sound.Type.HORSE_MOVE_SFX);
+    private static Sound horseAppearSound = new Sound(Sound.Type.HORSE_APPEAR_SFX);
+    private static Sound horseKickedSound = new Sound(Sound.Type.HORSE_KICKED_SFX);
+    private static Sound gameLaunchSound = new Sound(Sound.Type.GAME_LAUNCH_SFX);
 
+    // generating sound button background
     private static Background generateSoundButtonBackground(Image img) {
         return new Background(new BackgroundImage(img,
                                                 BackgroundRepeat.NO_REPEAT,
@@ -41,10 +39,12 @@ public class SoundController {
                                                 true, true, true, false)));
     }
 
+    // check if sound is enabled
     public static boolean isSoundEnabled() {
         return isEnabledSound;
     }
 
+    // toggle sound on and off
     public static void toggleSound() {
         if (isSoundEnabled()) {
             isEnabledSound = false;
@@ -55,6 +55,7 @@ public class SoundController {
         }
     }
 
+    // stop all sounds
     private static void muteSound() {
         backgroundMusic.pause();
         diceRollSound.stop();
@@ -66,10 +67,12 @@ public class SoundController {
         gameLaunchSound.stop();
     }
 
+    // resume the background music
     private static void unmuteSound() {
         backgroundMusic.play();
     }
 
+    // play sound if sound is enabled
     private static void playSound(Sound sound) {
         if (isSoundEnabled()) sound.play();
     }

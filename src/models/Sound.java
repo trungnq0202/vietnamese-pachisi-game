@@ -13,11 +13,11 @@ public class Sound {
     private static final String HORSE_MOVE_SFX_URL = "../resources/sounds/sound_horse_move.wav";
     private static final String HORSE_APPEAR_SFX_URL = "../resources/sounds/sound_appear.wav";
     private static final String BUTTON_CLICK_SFX_URL = "../resources/sounds/sound_button_click.mp3";
-    private static final String HORSE_KICKED_SFX_URL = "../resources/sounds/sound_horsekicked.mp3";
+    private static final String HORSE_KICKED_SFX_URL = "../resources/sounds/sound_horse_kicked.mp3";
     private static final String GAME_LAUNCH_SFX_URL = "../resources/sounds/sound_launch.mp3";
-    private static final String NULL_SOUND_URL = "../resources/sounds/backgroundsong.wav"; // TODO: find a sound for this
+    private static final String NULL_SOUND_URL = "../resources/sounds/sound_null.mp3"; 
 
-    public enum SoundType {
+    public enum Type {
         BACKGROUND_MUSIC,
         DICE_ROLL_SFX,
         HORSE_JUMP_SFX,
@@ -30,18 +30,18 @@ public class Sound {
 
     private MediaPlayer sound;
 
-    public Sound(SoundType soundType) {
+    public Sound(Type soundType) {
         try {
             this.sound = new MediaPlayer(new Media(getResourceURL(soundType)));
         } catch (Exception e) {
             System.out.println("Cannot load sound.");
         }
-        if (soundType == SoundType.BACKGROUND_MUSIC || soundType == SoundType.DICE_ROLL_SFX) {
+        if (soundType == Type.BACKGROUND_MUSIC || soundType == Type.DICE_ROLL_SFX) {
             this.sound.setCycleCount(MediaPlayer.INDEFINITE);
         }
     }
 
-    private String getResourceURL(SoundType soundType) {
+    private String getResourceURL(Type soundType) {
         URL resource;
         switch (soundType) {
             case BACKGROUND_MUSIC: {
