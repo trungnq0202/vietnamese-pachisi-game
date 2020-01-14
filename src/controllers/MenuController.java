@@ -250,10 +250,10 @@ public class MenuController{
     }
 
     public void resetPlayersNameList() {
-        playersNameList.set(0," ");
-        playersNameList.set(1," ");
-        playersNameList.set(2," ");
-        playersNameList.set(3," ");
+        playersNameList.set(0,"");
+        playersNameList.set(1,"");
+        playersNameList.set(2,"");
+        playersNameList.set(3,"");
     }
 
     //Set value for each object in playersNameList from textfield
@@ -494,10 +494,10 @@ public class MenuController{
     }
 
     private void displayPlayersPoints(){
-        EGP1P0.setText(String.valueOf(mainController.getScoreList()[0]));
-        EGP1P1.setText(String.valueOf(mainController.getScoreList()[1]));
-        EGP1P2.setText(String.valueOf(mainController.getScoreList()[2]));
-        EGP1P3.setText(String.valueOf(mainController.getScoreList()[3]));
+        if (playersNameList.get(0).length() != 0) EGP1P0.setText(String.valueOf(mainController.getScoreList()[0]));
+        if (playersNameList.get(1).length() != 0) EGP1P1.setText(String.valueOf(mainController.getScoreList()[1]));
+        if (playersNameList.get(2).length() != 0) EGP1P2.setText(String.valueOf(mainController.getScoreList()[2]));
+        if (playersNameList.get(3).length() != 0) EGP1P3.setText(String.valueOf(mainController.getScoreList()[3]));
     }
 
     private void displayFirstPlayerToFinishGame(int firstFinishId){

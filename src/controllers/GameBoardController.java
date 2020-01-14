@@ -276,7 +276,7 @@ public class GameBoardController {
             dicesController.setEventHandlerForDiceRoll();
             highLightDices(true);
         }
-        debug();
+//        debug();
     }
 
     //Show the game board

@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="rootMenu" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
+<StackPane fx:id="rootMenu" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
     <children>
         <VBox fx:id="startMenu" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="263.0" spacing="30.0" style="-fx-border-width: 5px; -fx-border-color: black; -fx-background-color: rgba(124,147,166,0.3);" StackPane.alignment="CENTER">
             <children>
@@ -326,25 +326,25 @@
                 <HBox alignment="CENTER" layoutX="15.0" layoutY="60.0" prefHeight="40.0" prefWidth="473.0" spacing="100.0">
                     <children>
                         <Label fx:id="EGPN0" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="112.0" text="player 1" />
-                        <Label fx:id="EGP1P0" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" text="0" />
+                        <Label fx:id="EGP1P0" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" />
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" layoutX="15.0" layoutY="60.0" prefHeight="40.0" prefWidth="473.0" spacing="100.0">
                     <children>
                         <Label fx:id="EGPN1" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="112.0" text="player 2" />
-                        <Label fx:id="EGP1P1" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" text="0" />
+                        <Label fx:id="EGP1P1" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" />
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" layoutX="15.0" layoutY="60.0" prefHeight="40.0" prefWidth="473.0" spacing="100.0">
                     <children>
                         <Label fx:id="EGPN2" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="112.0" text="player 3" />
-                        <Label fx:id="EGP1P2" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" text="0" />
+                        <Label fx:id="EGP1P2" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" />
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" layoutX="15.0" layoutY="60.0" prefHeight="40.0" prefWidth="473.0" spacing="100.0">
                     <children>
                         <Label fx:id="EGPN3" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="112.0" text="player 4" />
-                        <Label fx:id="EGP1P3" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" text="0" />
+                        <Label fx:id="EGP1P3" alignment="CENTER" prefHeight="17.0" prefWidth="92.0" />
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" layoutX="15.0" layoutY="235.0" prefHeight="40.0" prefWidth="473.0" spacing="40.0">
@@ -359,7 +359,7 @@
                         <Label fx:id="highestPointsPN" alignment="CENTER" prefHeight="17.0" prefWidth="177.0" />
                     </children>
                 </HBox>
-                <HBox alignment="CENTER" layoutX="15.0" layoutY="321.0" prefHeight="40.0" prefWidth="473.0" spacing="67.0">
+                <HBox alignment="CENTER" layoutX="15.0" layoutY="321.0" prefHeight="73.0" prefWidth="473.0" spacing="67.0">
                     <children>
                         <Button fx:id="EGPlayAgainBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="119.0" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="Play Again" textFill="WHITE" />
                         <Button fx:id="EGNewGameBtn" layoutX="217.0" layoutY="17.0" mnemonicParsing="false" style="-fx-border-width: 2px; -fx-border-color: black;" styleClass="btn" stylesheets="@../css/main.css" text="New Game" textFill="WHITE" />
