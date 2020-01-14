@@ -1,3 +1,15 @@
+/*
+  RMIT University Vietnam
+  Course: INTE2512 Object-Oriented Programming
+  Semester: 2019C
+  Assessment: Final Project
+  Created date: 01/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Last modified: 14/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Acknowledgement: none.
+*/
+
 package controllers;
 
 import javafx.animation.Animation;
@@ -6,8 +18,6 @@ import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DicesController {
+    // fields
     private MainController mainController;
     private GameBoardController gameBoardController;
     private Dice dice1, dice2;
@@ -30,8 +41,8 @@ public class DicesController {
     private Button diceArrow2;
     private Animation diceArrow1Animation;
     private Animation diceArrow2Animation;
-
     private static List<Image> images = new ArrayList<>(); //array of animation for rolling dices
+
     @FXML private HBox dices; //HBox to store 2 dices
 
     //method to load images into array images
@@ -42,6 +53,7 @@ public class DicesController {
         }
     }
 
+    // constructor
     public DicesController(){
         System.out.println("DicesController construct");
     }
@@ -57,20 +69,25 @@ public class DicesController {
         dices.getChildren().addAll(diceArrow1,dice1, dice2,diceArrow2);
     }
 
+    // inject main controller into this
     public void injectMainController(MainController mainController){
         this.mainController = mainController;
     }
 
+    // inject game board controller into this
     public void injectGameBoardController(GameBoardController gameBoardController){this.gameBoardController = gameBoardController;}
 
+    // event handler for dice 1 pick
     public void setEventHandlerForDice1Pick(GameBoardController gameBoardController, Horse horse){
         eventHandlerForDicePick(gameBoardController, horse, 0);
     }
 
+    // event handler for dice 2 pick
     public void setEventHandlerForDice2Pick(GameBoardController gameBoardController, Horse horse){
         eventHandlerForDicePick(gameBoardController, horse, 1);
     }
 
+    // event handler for dice pick
     public void eventHandlerForDicePick(GameBoardController gameBoardController, Horse horse, int dicePickIndex){
         if (horse.getPossibleStepsListByIndex(dicePickIndex) == 0) return;
         Dice dicePick, otherDice;
@@ -107,6 +124,7 @@ public class DicesController {
         });
     }
 
+    // event handler for on mouse entered
     private void onMouseEnteredDiceEventHandler(String endPosition, StackPane endPositionNodeSP , Horse horse){
         if (!horse.isInHome() && !horse.isInHomeDoorPosition() &&
                 GameBoardController.getHorseIdOfPositionByIndex(gameBoardController.convertPositionToIntegerForm(endPosition)) != null)
@@ -114,10 +132,12 @@ public class DicesController {
         endPositionNodeSP.getChildren().get(0).setStyle("-fx-fill: yellow");
     }
 
+    // event handler for on mouse exited dice
     private void onMouseExitedDiceEventHandler(StackPane endPositionNodeSP , Horse horse){
         gameBoardController.resetFillColorOfPosition(endPositionNodeSP, horse);
     }
 
+    // event handler for mouse clicked dice
     private void onMouseClickedDiceEventHandler(String endPosition, Horse horse, Dice dicePick, Dice otherDice) throws IOException {
         dicePick.setUsable(false); //dice 1 can no longer be chosen for a horse move
         unsetEventHandlerForDices();
@@ -141,6 +161,7 @@ public class DicesController {
         }
     }
 
+    // unset event handler for dices
     public void unsetEventHandlerForDices(){
         dice1.setOnMouseClicked(null);
         dice2.setOnMouseClicked(null);
@@ -152,26 +173,31 @@ public class DicesController {
         hideSideArrow2();       //hide dice 2 side arrow animation
     }
 
+    // show side arrow 1
     public void showSideArrow1(){
         diceArrow1.setVisible(true);
         diceArrow1Animation.play();
     }
 
+    // hide side arrow 1
     public void hideSideArrow1(){
         diceArrow1Animation.stop();
         diceArrow1.setVisible(false);
     }
 
+    // show side arrow 2
     public void showSideArrow2(){
         diceArrow2.setVisible(true);
         diceArrow2Animation.play();
     }
 
+    // hide side arrow 2
     public void hideSideArrow2(){
         diceArrow2Animation.stop();
         diceArrow2.setVisible(false);
     }
 
+    // create dice arrow 1
     private void createDiceArrow1(){
         diceArrow1 = new Button();
         diceArrow1.getStyleClass().add("leftArrow");
@@ -182,6 +208,7 @@ public class DicesController {
         diceArrow1Animation.setCycleCount(Timeline.INDEFINITE);
     }
 
+    // create dice arrow 2
     private void createDiceArrow2(){
         diceArrow2 = new Button();
         diceArrow2.getStyleClass().add("rightArrow");
@@ -192,11 +219,13 @@ public class DicesController {
         diceArrow2Animation.setCycleCount(Timeline.INDEFINITE);
     }
 
+    // move left side arrow
     private void moveLeftSideArrow(){
         if (diceArrow1.getTranslateX() == 0) diceArrow1.setTranslateX(10);
         else diceArrow1.setTranslateX(0);
     }
 
+    // move right side arrow
     private void moveRightSideArrow(){
         if (diceArrow2.getTranslateX() == 0) diceArrow2.setTranslateX(-10);
         else diceArrow2.setTranslateX(0);
@@ -232,7 +261,7 @@ public class DicesController {
                 if (dice == dice2) {
                     //If this is an online game, send all dices value to other players
                     if (gameBoardController.isOnlineGame()){
-                        Move move = new Move(Move.type.DICESVALUE, dice1.getRollNumber(), dice2.getRollNumber());
+                        Move move = new Move(Move.type.DICES_VALUE, dice1.getRollNumber(), dice2.getRollNumber());
                         try {
                             gameBoardController.sendMessageToServer(move);
                         } catch (IOException e) {
@@ -250,6 +279,7 @@ public class DicesController {
             rollAnimation.play();
         }
 
+    // set dices from move message
     public void setDicesFromMoveMessage(Move move){
         Platform.runLater(() -> {
             dice1.setRollImage(move.getDice1());

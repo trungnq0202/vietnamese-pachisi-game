@@ -1,4 +1,17 @@
+/*
+  RMIT University Vietnam
+  Course: INTE2512 Object-Oriented Programming
+  Semester: 2019C
+  Assessment: Final Project
+  Created date: 01/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Last modified: 14/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Acknowledgement: none.
+*/
+
 package controllers;
+
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,22 +25,27 @@ import javafx.scene.shape.Circle;
 import models.MatchInformation;
 import models.Player;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class MenuController{
-    // Recently added
+    // fields
+    private static MenuController menuController;
+    private ClientController clientController;
+    private MainController mainController;  //Make connection with mainController
+    private int noHumanPlayers;             //Number of human players
+    private int noVirtualPlayers;            //Number of virtual players
+    private ArrayList<String> playersNameList;
+    private static final String UNCHOSEN_COLOR = "#48da40";
+    private static final String CHOSEN_COLOR = "#c93b14";
+    private static final int MAX_NO_PLAYERS = 4;
+
+    // FXML
     @FXML private Button onlineGameBtn;
     @FXML private Button offlineGameBtn;
     @FXML private VBox onlinePlayMenu;
     @FXML private TextField onlinePlayerTextField;
     @FXML private Button onlinePlayBtn;
-
-    private static MenuController menuController;
-    private ClientController clientController;
-
-    //Old ones
     @FXML private VBox userSetNameMenu;
     @FXML private VBox emptyPlayerNameError;
     @FXML private VBox startMenuError;
@@ -38,7 +56,6 @@ public class MenuController{
     @FXML private VBox stopGameMenu;
     @FXML private VBox playerDisconnectedMenu;
     @FXML private StackPane rootMenu;
-
     @FXML private Button exitErrorBtn1;
     @FXML private Button backLevelBtn;
     @FXML private Button nextPlaySceneBtn;
@@ -59,8 +76,7 @@ public class MenuController{
     @FXML private Button SGNewGameBtn;
     @FXML private Button SGQuitBtn;
     @FXML private Button backToMainOnlinePlayBtn;
-    @FXML private Button playerDisconnectedBtn; // TODO: 1/14/20 handle language for this button
-
+    @FXML private Button playerDisconnectedBtn;
     @FXML private Label noHumanPlayersLabel;
     @FXML private Label noVirtualPlayersLabel;
     @FXML private Label noPlayersErrLabel;
@@ -76,19 +92,13 @@ public class MenuController{
     @FXML private Label EGPointsTitleLabel;
     @FXML private Label EGFirstFinishLabel;
     @FXML private Label EGMostPointsLabel;
-    @FXML private Label EGPN0;
-    @FXML private Label EGPN1;
-    @FXML private Label EGPN2;
-    @FXML private Label EGPN3;
-    @FXML private Label EGP1P0;
-    @FXML private Label EGP1P1;
-    @FXML private Label EGP1P2;
-    @FXML private Label EGP1P3;
+    @FXML private Label EGPN0, EGPN1, EGPN2, EGPN3;
+    @FXML private Label EGP1P0, EGP1P1, EGP1P2, EGP1P3;
     @FXML private Label finishPN;
     @FXML private Label highestPointsPN;
     @FXML private Label onlinePlayerNameLabel;
     @FXML private Label cantConnectToServerLabel;
-    @FXML private Label playerDisconnectedLabel; // TODO: 1/14/20 handle language for this label
+    @FXML private Label playerDisconnectedLabel;
 
     private static final String red = "-fx-background-color: " +
             "linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%)," +
@@ -99,16 +109,7 @@ public class MenuController{
             "#0b169d, #5b50ff," +
             "radial-gradient(center 50% 50%, radius 100%, #5b50ff, #3b4ec5);";
 
-
-    private MainController mainController;  //Make connection with mainController
-    private int noHumanPlayers;             //Number of human players
-    private int noVirtualPlayers;            //Number of virtual players
-
-    private ArrayList<String> playersNameList;
-    private static final String UNCHOSEN_COLOR = "#48da40";
-    private static final String CHOSEN_COLOR = "#c93b14";
-    private static final int MAX_NO_PLAYERS = 4;
-
+    // constructor
     public MenuController(){
         playersNameList = new ArrayList<>() {
             {
@@ -119,10 +120,12 @@ public class MenuController{
         noVirtualPlayers = 0;    //there is no virtual player by default
     }
 
+    // inject main controller into this
     public void injectMainController(MainController mainController){
         this.mainController = mainController;
     }
 
+    // FXML initialize
     @FXML public void initialize(){
         setNoPlayersChoiceEventHandler();
         setMenuButtonsEventHandler();
@@ -130,6 +133,7 @@ public class MenuController{
         setLabelBindingText();
     }
 
+    // set button binding text
     private void setBtnBindingText(){
         I18NController.setUpButtonText(offlineGameBtn, "menu.play_offline");
         I18NController.setUpButtonText(changeLanguageBtn, "menu.change_language");
@@ -154,6 +158,7 @@ public class MenuController{
         I18NController.setUpButtonText(playerDisconnectedBtn, "menu.error_exit_btn");
     }
 
+    // set label binding text
     private void setLabelBindingText(){
         I18NController.setUpLabelText(noHumanPlayersLabel, "menu.no_human_players");
         I18NController.setUpLabelText(noVirtualPlayersLabel, "menu.no_virtual_players");
@@ -192,12 +197,9 @@ public class MenuController{
         setBackBtnEventHandler();
         setNextBtnEventHandler();
         setExitErrorBtnEventHandler();
-        //recently added for online players
         setOnlineGameBtnEventHandler();
         setOnlinePlayBtnEventHandler();
         setBackToMainMenuBtnEventHandler();
-        // Recently add these 3 function
-//        setUserSelectionMenuTextField();
         setBackLevelBtnEventHandler();
         setNextPlaySceneBtnEventHandler();
         setChangeLanguageBtnEventHandler();
@@ -249,11 +251,12 @@ public class MenuController{
         tempCircle.setStyle("-fx-fill: " + colorCode);  //Fill color in the circle
     }
 
+    // reset players name list
     public void resetPlayersNameList() {
-        playersNameList.set(0,"");
-        playersNameList.set(1,"");
-        playersNameList.set(2,"");
-        playersNameList.set(3,"");
+        playersNameList.set(0, "");
+        playersNameList.set(1, "");
+        playersNameList.set(2, "");
+        playersNameList.set(3, "");
     }
 
     //Set value for each object in playersNameList from textfield
@@ -270,6 +273,7 @@ public class MenuController{
         }
     }
 
+    // set online players name list
     private void setOnlinePlayersNameList(ArrayList<Player> players) {
         for (int i = 0; i < players.size(); i++) {
             this.playersNameList.set(i, players.get(i).getName());
@@ -286,6 +290,7 @@ public class MenuController{
         });
     }
 
+    // vietnamese language button event handler
     public void setVietnameseLangBtnEventHandler(){
         vietnameseLangBtn.setOnMouseClicked(event -> {
             SoundController.playButtonClickSound();
@@ -295,6 +300,7 @@ public class MenuController{
         });
     }
 
+    // english language button event handler
     public void setEnglishLangBtnEventHandler(){
         englishLangBtn.setOnMouseClicked(event -> {
             SoundController.playButtonClickSound();
@@ -304,6 +310,7 @@ public class MenuController{
         });
     }
 
+    // language back button event handler
     private void setLangBackBtnEventHandler(){
         langBackBtn.setOnMouseClicked(event -> {
             SoundController.playButtonClickSound();
@@ -394,7 +401,6 @@ public class MenuController{
     //Event handler for "Play Again" button at end game
     private void setSGPlayAgainBtnEventHandler(){
         SGPlayAgainBtn.setOnMouseClicked(mouseEvent -> {
-            // TODO: SG implement this
             stopGameMenu.setVisible(false);
             rootMenu.setVisible(false);
             mainController.restartGame();
@@ -437,7 +443,6 @@ public class MenuController{
     //Event handler for "Exit" button at stop game
     private void setSGQuitBtn(){
         SGQuitBtn.setOnMouseClicked(e -> {
-            // TODO: SG implement this
             SoundController.playButtonClickSound();
             System.exit(0);         //Exit the program
         });
@@ -460,6 +465,7 @@ public class MenuController{
         return true;
     }
 
+    // set next play scene button event handler
     private void setNextPlaySceneBtnEventHandler(){
         nextPlaySceneBtn.setOnMouseClicked(event->{
             SoundController.playButtonClickSound();
@@ -474,7 +480,7 @@ public class MenuController{
         });
     }
 
-    //EndgameMenu
+    // display end game menu
     public void displayEndGameMenu(int firstFinishId, boolean isOnlineGame){
         rootMenu.setVisible(true);
         endGameMenu.setVisible(true);
@@ -486,6 +492,7 @@ public class MenuController{
         displayPlayerWithMostPoints();
     }
 
+    // display player name
     private void displayPlayersName(){
         EGPN0.setText(playersNameList.get(0));
         EGPN1.setText(playersNameList.get(1));
@@ -493,6 +500,7 @@ public class MenuController{
         EGPN3.setText(playersNameList.get(3));
     }
 
+    // display players point
     private void displayPlayersPoints(){
         if (playersNameList.get(0).length() != 0) EGP1P0.setText(String.valueOf(mainController.getScoreList()[0]));
         if (playersNameList.get(1).length() != 0) EGP1P1.setText(String.valueOf(mainController.getScoreList()[1]));
@@ -500,10 +508,12 @@ public class MenuController{
         if (playersNameList.get(3).length() != 0) EGP1P3.setText(String.valueOf(mainController.getScoreList()[3]));
     }
 
+    // display first player to finish game
     private void displayFirstPlayerToFinishGame(int firstFinishId){
         finishPN.setText(playersNameList.get(firstFinishId));
     }
 
+    // display player with most points
     private void displayPlayerWithMostPoints(){
         int max = mainController.getScoreList()[0];
         int winnerId = 0;
@@ -516,6 +526,7 @@ public class MenuController{
         highestPointsPN.setText(playersNameList.get(winnerId));
     }
 
+    // start online game
     public void startOnlineGame(MatchInformation matchInformation) {
         setOnlinePlayersNameList(matchInformation.getPlayers());
         Platform.runLater(() -> {
@@ -560,8 +571,7 @@ public class MenuController{
         return noVirtualPlayers;
     }
 
-
-    //recently added
+    // online game button event handler
     private void setOnlineGameBtnEventHandler(){
         onlineGameBtn.setOnMouseClicked(event -> {
             SoundController.playButtonClickSound();
@@ -569,7 +579,6 @@ public class MenuController{
                 if (this.clientController == null) {
                     this.clientController = new ClientController();
                     this.clientController.injectMenuController(this);
-                    this.clientController.injectMainController(mainController);
                     this.mainController.injectClientController(clientController);
                     this.clientController.injectGameBoardController(mainController.getGameBoardController());
                     clientController.start();
@@ -583,17 +592,15 @@ public class MenuController{
         });
     }
 
-    //create event handler for online play button
+    // create event handler for online play button
     private void setOnlinePlayBtnEventHandler(){
         onlinePlayBtn.setOnMouseClicked(mouseEvent -> {
             SoundController.playButtonClickSound();
-            //check if text field is empty -> show error
+            // check if text field is empty -> show error
             if(onlinePlayerTextField.getText().equals("")){
                 emptyPlayerNameError.setVisible(true);
-            }
-            else {
+            } else {
                 if (onlinePlayerTextField.getText() != null) {
-
                     //create new player with given name
                     //update game connection field
                     Platform.runLater(() -> {
@@ -608,6 +615,7 @@ public class MenuController{
         });
     }
 
+    // back to main menu button event handler
     private void setBackToMainMenuBtnEventHandler() {
         backToMainOnlinePlayBtn.setOnMouseClicked(mouseEvent -> {
             SoundController.playButtonClickSound();
@@ -621,16 +629,12 @@ public class MenuController{
         });
     }
 
-    public static MenuController getMenuController(){
-        if (menuController == null){
-            menuController = new MenuController();
-        } return menuController;
-    }
-
+    // get players name list
     public ArrayList<String> getPlayersNameList() {
         return playersNameList;
     }
 
+    // display stop game menu
     public void displayStopGameMenu(boolean isDisplayed, boolean isOnlineGame){
         if (isDisplayed) {
             if (isOnlineGame) SGNewGameBtn.setVisible(false);
@@ -643,6 +647,7 @@ public class MenuController{
         }
     }
 
+    // display player disconnected menu
     public void displayPlayerDisconnectedMenu(){
         rootMenu.setVisible(true);
         playerDisconnectedMenu.setVisible(true);

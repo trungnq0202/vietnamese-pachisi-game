@@ -1,3 +1,15 @@
+/*
+  RMIT University Vietnam
+  Course: INTE2512 Object-Oriented Programming
+  Semester: 2019C
+  Assessment: Final Project
+  Created date: 01/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Last modified: 14/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Acknowledgement: none.
+*/
+
 package controllers;
 
 import javafx.beans.binding.Bindings;
@@ -13,9 +25,8 @@ import java.util.ResourceBundle;
 import java.util.concurrent.Callable;
 
 public final class I18NController {
-    // Attributes
+    // fields
     public enum Language {ENGLISH, VIETNAMESE}
-
     private static final ObjectProperty<Locale> locale;
 
     static {
@@ -41,18 +52,17 @@ public final class I18NController {
         return MessageFormat.format(bundle.getString(key), args);
     }
 
+    // create string binding
     public static StringBinding createStringBinding(final String key, Object... args) {
         return Bindings.createStringBinding(() -> get(key, args), locale);
     }
 
-    public static StringBinding createStringBinding(Callable<String> func) {
-        return Bindings.createStringBinding(func, locale);
-    }
-
+    // setup label text
     public static void setUpLabelText(Label label, final String key, final Object... args) {
         label.textProperty().bind(createStringBinding(key));
     }
 
+    // setup button text
     public static void setUpButtonText(Button button, final String key, final Object... args) {
         button.textProperty().bind(createStringBinding(key));
     }
@@ -71,14 +81,12 @@ public final class I18NController {
         }
     }
 
+    // switch language
     public static void switchLanguage(Locale locale) {
         setLocale(locale);
     }
 
-    public static boolean isVietnamese(){
-        return locale.get().getDisplayCountry().equals("Vietnam");
-    }
-
+    // check if current locale is US
     public static boolean isEnglish(){
         return locale.get().getDisplayCountry().equals("United States");
     }

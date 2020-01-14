@@ -1,8 +1,19 @@
+/*
+  RMIT University Vietnam
+  Course: INTE2512 Object-Oriented Programming
+  Semester: 2019C
+  Assessment: Final Project
+  Created date: 01/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Last modified: 14/01/2020
+  By: Group 10 (3426353,3791159,3742774,3748575,3695662)
+  Acknowledgement: none.
+*/
+
 package controllers;
 
 import javafx.animation.*;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,7 +25,6 @@ import models.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class GameBoardController {
     @FXML private HBox dices;
@@ -307,7 +317,7 @@ public class GameBoardController {
         SoundController.playHorseMoveSound();
 
         if (sendMessageToServerEnabled){
-            Move message = new Move(Move.type.HORSEMOVING, endPosition, horse.getId(), steps, playerIdTurnAtThisTime);
+            Move message = new Move(Move.type.HORSE_MOVING, endPosition, horse.getId(), steps, playerIdTurnAtThisTime);
             mainController.sendMessageToServer(message);
         }
 
@@ -389,7 +399,7 @@ public class GameBoardController {
 //        printMoveInsideHomeStatus(Integer.parseInt(endPosition.substring(2)), playerIdTurnAtThisTime);
         SoundController.playHorseJumpSound();
         if (sendMessageToServerEnabled ){
-            Move message = new Move(Move.type.HORSEMOVINGINSIDEHOME, startPosition ,endPosition, horse.getId(), steps, playerIdTurnAtThisTime);
+            Move message = new Move(Move.type.HORSE_MOVING_INSIDE_HOME, startPosition ,endPosition, horse.getId(), steps, playerIdTurnAtThisTime);
             mainController.sendMessageToServer(message);
         }
         printMoveInsideHomeStatus(Integer.parseInt(endPosition.substring(2)), playerIdTurnAtThisTime);
@@ -477,7 +487,7 @@ public class GameBoardController {
             horse.setInNest(false); //This horse is no longer in the nest
             createHorseGoingOutsideNestAnimation(startPosition, horse);
             if (isOnlineGame){
-                Move message = new Move(Move.type.HORSEGOINGOUTSIDENEST, startPosition, horse.getId());
+                Move message = new Move(Move.type.HORSE_GOING_OUTSIDE_NEST, startPosition, horse.getId());
                 try {
                     mainController.sendMessageToServer(message);
                 } catch (IOException e) {
@@ -546,7 +556,7 @@ public class GameBoardController {
                 gameBoard.lookup("#TURN" + tempPlayerIdTurn).setVisible(false);
                 if (tempPlayerIdTurn == (mainController.getNoOnlinePlayers() - 1)) tempPlayerIdTurn = 0; else tempPlayerIdTurn++;
                 gameBoard.lookup("#TURN" + tempPlayerIdTurn).setVisible(true);
-                Move message = new Move(Move.type.NEXTTURN, mainController.getPlayersNameList().get(tempPlayerIdTurn));
+                Move message = new Move(Move.type.NEXT_TURN, mainController.getPlayersNameList().get(tempPlayerIdTurn));
                 mainController.sendMessageToServer(message);
             } else {
                 isRollingDiceTurn = true;
@@ -968,16 +978,16 @@ public class GameBoardController {
         //If the received message is to update the dice value
         switch (move.getMoveType()){
             //If the received message is to update the next player turn
-            case NEXTTURN:{
+            case NEXT_TURN:{
                 updatePlayerTurnOnline(move.getNextPlayerName());
                 break;
             }
-            case DICESVALUE:{
+            case DICES_VALUE:{
                 dicesController.setDicesFromMoveMessage(move);
                 break;
             }
             //If the received message is to update a horse moving normally
-            case HORSEMOVING:{
+            case HORSE_MOVING:{
                 Platform.runLater(() -> {
                     try {
                         createHorseMovingAnimationOnline(move.getEndPosition(),move.getHorseId(), move.getSteps(), move.getPlayerIdTurnAtThisTime());
@@ -988,12 +998,12 @@ public class GameBoardController {
                 break;
             }
             //If the received message is to update a horse going outside its nest
-            case HORSEGOINGOUTSIDENEST:{
+            case HORSE_GOING_OUTSIDE_NEST:{
                 Platform.runLater(() -> createHorseGoingOutsideNestAnimationOnline(move.getStartPosition(), move.getHorseId()));
                 break;
             }
             //If the received message is to update a horse moving inside home
-            case HORSEMOVINGINSIDEHOME:{
+            case HORSE_MOVING_INSIDE_HOME:{
                 Platform.runLater(() -> {
                     try {
                         createHorseMovingInsideHomeAnimationOnline(move.getStartPosition(), move.getEndPosition(), move.getHorseId(), move.getSteps(), move.getPlayerIdTurnAtThisTime());
