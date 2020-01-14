@@ -22,11 +22,14 @@ public class ServerController {
             ServerSocket serverSocket = new ServerSocket(Server.PORT);
             System.out.println("server started");
             while (true) {
-                if (this.listening == false) continue;
                 // waiting for a client to connect
+                Socket socket = serverSocket.accept();
+                if (this.listening == false) {
+                    socket.close();
+                    continue;
+                }
                 if (this.server.countConnections() < CONNECTIONS_COUNT_LIMIT) {
                     // only allow maximum 4 connections at a time
-                    Socket socket = serverSocket.accept();
                     // bingo! we got a connection
                     Connection newConnection = new Connection(socket, this);
                     // connectionPool is used in order to control
@@ -43,6 +46,10 @@ public class ServerController {
 
     public void stopListening() {
         this.listening = false;
+    }
+
+    public void resumeListening() {
+        this.listening = true;
     }
 
     public void removeConnection(Connection connection) {
@@ -75,7 +82,7 @@ public class ServerController {
     public void startGame() {
         MatchInformation match = constructNewMatchInformation();
         Message startGameMessage = new Message("startGame", match);
-        System.out.println("Players are ready, starting game...");
+        System.out.printf("Game started with %d players...\n", this.server.countConnections());
         stopListening();
         // broadcast to everyone
         broadcast(startGameMessage, null);
@@ -87,5 +94,26 @@ public class ServerController {
             match.addPlayer(connection.getPlayer());
         }
         return match;
+    }
+
+    public void prepareForNewGame() {
+        System.out.println("Game over, preparing for new game...");
+        changeEveryConnectionToNotReady();
+        resumeListening();
+    }
+
+    private void changeEveryConnectionToNotReady() {
+        for (Connection connection:this.server.getConnectionPool()) {
+            connection.setReady(false);
+        }
+    }
+
+    public void handlePlayerLeaving(Connection connection) {
+        try {
+            connection.disconnect();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        removeConnection(connection);
     }
 }
