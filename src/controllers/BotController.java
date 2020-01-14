@@ -119,6 +119,9 @@ public class BotController {
         int stepsCountToHomeDoorPos = 1;
         String nextPosAfterProspectiveOne = gameBoardController.calculateNextPosition(1, nextPos, null);
         String homeDoorPos = "" + horse.getHorseColor() + 0;
+        if (nextPos.equals(homeDoorPos)){
+            return 0;
+        }
         while (!nextPosAfterProspectiveOne.equals(homeDoorPos)){
             stepsCountToHomeDoorPos++;
             nextPosAfterProspectiveOne = gameBoardController.calculateNextPosition(1, nextPosAfterProspectiveOne, null);
