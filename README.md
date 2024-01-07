@@ -41,22 +41,6 @@ The starting options for the players to choose is built by scene builder in the 
 
 By implementing this way, the amount of **fxml** file for each pop up window will be reduced.
 
-## Machine player moving algorithm pseudo code 
- If (**can choose a horse to go outside nest**) <br/>
-** **choose a random horse inside nest**<br/>
-else { <br/>
-for (**horse : horseWithValidMoveList**){<br/>
-**	**choose horse with move which produces the most points**<br/>
-		}<br/>
-}<br/>
-If (**no horse move produces points**){<br/>
-	for (**horse : horseWithValidMoveList**){<br/>
-	**	**choose horse with move which makes it the closest one to its home arrival space**<br/>
-	}<br/>
-}<br/>
-} else {<br/>
-** **return**<br/>
-}<br/>
 
  
 ## Installation
